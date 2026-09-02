@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JN5LK66MY0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JN5LK66MY0');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản Lý Sản Xuất Thời Gian Thực &amp; Tính Giá Thành Chính Xác Với ERP</title>
+<meta name="description" content="Cách ERP sản xuất theo dõi tiến độ trên shop floor theo thời gian thực, phát hiện nghẽn công đoạn sớm, và tính giá thành thực tế theo từng lệnh sản xuất thay vì chờ đến cuối kỳ. Kèm checklist đánh giá vendor.">
+<link rel="canonical" href="https://erpsanxuat.com/quan-ly-san-xuat-gia-thanh.html">
+<link rel="icon" type="image/png" href="https://s4.com.vn/wp-content/uploads/2024/10/cropped-favicon.png">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quản Lý Sản Xuất Thời Gian Thực &amp; Tính Giá Thành Chính Xác Với ERP">
+<meta property="og:description" content="Shop floor management, Work Order và cách ERP tính giá thành sản xuất thực tế theo từng lệnh sản xuất thay vì chờ đến cuối kỳ.">
+<meta property="og:url" content="https://erpsanxuat.com/quan-ly-san-xuat-gia-thanh.html">
+<meta property="og:site_name" content="erpsanxuat.com">
+<meta property="og:image" content="https://s4.com.vn/wp-content/uploads/2026/08/S4-Consulting-web-Image.jpg">
+<meta property="og:locale" content="vi_VN">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quản Lý Sản Xuất Thời Gian Thực &amp; Tính Giá Thành Chính Xác Với ERP">
+<meta name="twitter:description" content="Shop floor management, Work Order và cách ERP tính giá thành sản xuất thực tế theo từng lệnh sản xuất thay vì chờ đến cuối kỳ.">
+<meta name="twitter:image" content="https://s4.com.vn/wp-content/uploads/2026/08/S4-Consulting-web-Image.jpg">
+
+<!-- JSON-LD: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Quản Lý Sản Xuất Thời Gian Thực & Tính Giá Thành Chính Xác Với ERP",
+  "description": "Cách ERP sản xuất theo dõi tiến độ trên shop floor theo thời gian thực, phát hiện nghẽn công đoạn sớm, và tính giá thành thực tế theo từng lệnh sản xuất thay vì chờ đến cuối kỳ.",
+  "author": { "@type": "Organization", "name": "S4 Consulting", "url": "https://s4.com.vn" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "S4 Consulting",
+    "logo": { "@type": "ImageObject", "url": "https://s4.com.vn/wp-content/uploads/2024/10/cropped-logo-main.png" }
+  },
+  "mainEntityOfPage": "https://erpsanxuat.com/quan-ly-san-xuat-gia-thanh.html",
+  "datePublished": "2026-09-02",
+  "dateModified": "2026-09-02",
+  "image": "https://s4.com.vn/wp-content/uploads/2026/08/S4-Consulting-web-Image.jpg",
+  "inLanguage": "vi"
+}
+</script>
+
+<!-- JSON-LD: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://erpsanxuat.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Quản lý sản xuất & giá thành", "item": "https://erpsanxuat.com/quan-ly-san-xuat-gia-thanh.html" }
+  ]
+}
+</script>
+
+<!-- JSON-LD: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Shop floor management là gì?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Shop floor management là việc ghi nhận và theo dõi hoạt động sản xuất thực tế tại xưởng - tiến độ từng công đoạn, thời gian máy chạy, sản lượng và tiêu hao nguyên vật liệu - ngay khi phát sinh, thay vì tổng hợp thủ công vào cuối ca hoặc cuối ngày." }
+    },
+    {
+      "@type": "Question",
+      "name": "Work Order (lệnh sản xuất) là gì?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Work Order (hay Production Order) là lệnh sản xuất được tạo ra để sản xuất một số lượng thành phẩm hoặc bán thành phẩm cụ thể, dựa trên BOM và Routing. Lệnh sản xuất là đơn vị để theo dõi tiến độ, tiêu hao nguyên vật liệu và tính giá thành thực tế." }
+    },
+    {
+      "@type": "Question",
+      "name": "Giá thành kế hoạch (standard cost) khác gì giá thành thực tế (actual cost)?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Standard cost là giá thành ước tính trước dựa trên định mức BOM/Routing và đơn giá chuẩn. Actual cost là giá thành thực tế phát sinh sau khi lệnh sản xuất hoàn tất, tính theo tiêu hao nguyên vật liệu, thời gian máy và nhân công thực tế. Chênh lệch giữa hai giá trị này gọi là cost variance." }
+    },
+    {
+      "@type": "Question",
+      "name": "Vì sao cần phát hiện cost variance sớm thay vì chờ đến cuối kỳ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nếu chỉ phát hiện chênh lệch giá thành sau khi kỳ kế toán đóng sổ, doanh nghiệp đã mất cơ hội điều chỉnh giá bán, đàm phán lại với nhà cung cấp, hoặc xử lý nguyên nhân gốc ở xưởng. Phát hiện sớm theo từng lệnh sản xuất cho phép hành động trước khi ảnh hưởng lan rộng ra nhiều đơn hàng." }
+    },
+    {
+      "@type": "Question",
+      "name": "OEE là gì và có cần thiết với mọi doanh nghiệp sản xuất không?",
+      "acceptedAnswer": { "@type": "Answer", "text": "OEE (Overall Equipment Effectiveness) là chỉ số đo hiệu suất tổng thể của thiết bị, kết hợp giữa tính sẵn sàng, hiệu suất và tỷ lệ chất lượng. OEE hữu ích với doanh nghiệp có mức độ tự động hoá cao hoặc thiết bị là điểm nghẽn chính; doanh nghiệp sản xuất thủ công nhiều có thể ưu tiên các chỉ số tiến độ và tiêu hao nguyên vật liệu trước." }
+    },
+    {
+      "@type": "Question",
+      "name": "Acumatica có hỗ trợ theo dõi shop floor và tính giá thành sản xuất theo thời gian thực không?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Acumatica Manufacturing Edition có phân hệ Shop Floor Data Collection cho phép ghi nhận tiến độ và tiêu hao ngay tại xưởng, cùng phân hệ Production Costing tính giá thành thực tế theo từng lệnh sản xuất và so sánh với giá thành kế hoạch theo thời gian thực." }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --s4m-main:#cc3a19;
+    --s4m-sub:#0e979f;
+    --s4m-ink:#111827;
+    --s4m-body:#4b5563;
+    --s4m-light-bg:#f9fafb;
+    --s4m-orange-tint:#fff1ec;
+    --s4m-teal-tint:#e8f7f6;
+    --s4m-font-head:'mainm', Arial, sans-serif;
+    --s4m-font-bold:'mainb', Arial, sans-serif;
+    --s4m-font-body:'Inter', Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--s4m-font-body);color:var(--s4m-body);line-height:1.65;background:#ffffff;-webkit-font-smoothing:antialiased;}
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  h1,h2,h3,h4{font-family:var(--s4m-font-head);color:var(--s4m-ink);margin:0 0 16px;line-height:1.25;}
+  .s4m-wrap{max-width:1300px;margin:0 auto;padding:0 50px;}
+  .s4m-section{padding:80px 0;}
+  .s4m-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--s4m-font-bold);font-size:12.5px;letter-spacing:0.03em;text-transform:uppercase;color:#fff;background:var(--s4m-main);padding:7px 15px;border-radius:20px;margin-bottom:20px;}
+  .s4m-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:#ffe9a8;flex:none;}
+  .s4m-eyebrow-teal{background:var(--s4m-sub);}
+  .s4m-eyebrow-teal::before{background:#fff;}
+  .s4m-hl{background:var(--s4m-main);color:#fff;padding:2px 10px;border-radius:4px;display:inline-block;}
+  .s4m-hl-teal{background:var(--s4m-sub);color:#fff;padding:2px 10px;border-radius:4px;display:inline-block;}
+  .s4m-btn{display:inline-block;background:var(--s4m-main);color:#fff !important;font-family:var(--s4m-font-bold);font-size:16px;padding:14px 30px;border-radius:4px;border:none;cursor:pointer;transition:background .2s ease;}
+  .s4m-btn:hover{background:var(--s4m-sub);}
+  .s4m-btn-outline{display:inline-block;background:transparent;color:var(--s4m-ink) !important;font-family:var(--s4m-font-bold);font-size:16px;padding:13px 28px;border-radius:4px;border:1.5px solid #d1d5db;transition:border-color .2s ease, color .2s ease;}
+  .s4m-btn-outline:hover{border-color:var(--s4m-sub);color:var(--s4m-sub) !important;}
+
+  .s4m-topbar{position:relative;background:#16232e;border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0;}
+  .s4m-topbar::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg, #0e979f, #3fb8bd, #cc3a19);}
+  .s4m-topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .s4m-topbar-logo img{height:32px;width:auto;display:block;filter:brightness(0) invert(1);}
+  .s4m-topbar-meta{display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:13.5px;color:#9ca8b5;}
+  .s4m-topbar-meta a{color:#cbd5e1;}
+  .s4m-topbar-meta a:hover{color:#ffffff;}
+  .s4m-topbar-meta span{font-family:var(--s4m-font-bold);color:#ffffff;}
+
+  .s4m-navbar{position:sticky;top:0;z-index:40;background:#1f2937;box-shadow:0 2px 14px rgba(17,24,39,0.18);}
+  .s4m-nav-inner{position:relative;display:flex;align-items:center;}
+  .s4m-nav-toggle{display:none;align-items:center;gap:10px;background:none;border:none;cursor:pointer;padding:14px 0;font-family:var(--s4m-font-bold);font-size:13.5px;color:#ffffff;}
+  .s4m-nav-toggle-bars{position:relative;width:20px;height:14px;flex:none;}
+  .s4m-nav-toggle-bars span{position:absolute;left:0;right:0;height:2px;background:#ffffff;border-radius:2px;transition:transform .2s ease, opacity .2s ease, top .2s ease;}
+  .s4m-nav-toggle-bars span:nth-child(1){top:0;}
+  .s4m-nav-toggle-bars span:nth-child(2){top:6px;}
+  .s4m-nav-toggle-bars span:nth-child(3){top:12px;}
+  .s4m-nav-toggle.is-active .s4m-nav-toggle-bars span:nth-child(1){top:6px;transform:rotate(45deg);}
+  .s4m-nav-toggle.is-active .s4m-nav-toggle-bars span:nth-child(2){opacity:0;}
+  .s4m-nav-toggle.is-active .s4m-nav-toggle-bars span:nth-child(3){top:6px;transform:rotate(-45deg);}
+  .s4m-nav-links{display:flex;align-items:center;gap:2px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;flex:1;}
+  .s4m-nav-links::-webkit-scrollbar{display:none;}
+  .s4m-nav-link{flex:none;padding:15px 14px;font-family:var(--s4m-font-bold);font-size:13.5px;color:#cbd5e1;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s ease, border-color .15s ease;}
+  .s4m-nav-link:hover{color:#ffffff;border-color:var(--s4m-main);}
+  .s4m-nav-link.is-current{color:#ffffff;border-color:var(--s4m-sub);}
+  .s4m-nav-cta{flex:none;margin-left:auto;padding-left:16px;}
+  .s4m-nav-cta a{display:inline-block;background:var(--s4m-main);color:#fff !important;font-family:var(--s4m-font-bold);font-size:13px;padding:9px 18px;border-radius:4px;white-space:nowrap;transition:background .2s ease;}
+  .s4m-nav-cta a:hover{background:var(--s4m-sub);}
+  .s4m-section, header.s4m-art-hero{scroll-margin-top:54px;}
+  @media (max-width:860px){
+    .s4m-nav-toggle{display:flex;}
+    .s4m-nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#1f2937;box-shadow:0 12px 24px rgba(17,24,39,0.25);padding:6px 0 12px;overflow-x:visible;}
+    .s4m-nav-links.is-open{display:flex;}
+    .s4m-nav-link{padding:13px 4px;border-bottom:1px solid rgba(255,255,255,0.08);white-space:normal;}
+    .s4m-nav-cta{margin-left:0;padding:14px 4px 4px;}
+    .s4m-nav-cta a{display:block;text-align:center;}
+  }
+
+  .s4m-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid #e5e7eb;}
+  table.s4m-table{width:100%;border-collapse:collapse;min-width:640px;}
+  table.s4m-table th, table.s4m-table td{text-align:left;padding:16px 18px;font-size:15px;border-bottom:1px solid #e5e7eb;vertical-align:top;}
+  table.s4m-table thead th{font-family:var(--s4m-font-bold);background:#1f2937;color:#ffffff;font-size:13.5px;letter-spacing:0.01em;}
+  table.s4m-table tbody tr:last-child td{border-bottom:none;}
+  table.s4m-table td:first-child{font-family:var(--s4m-font-bold);color:var(--s4m-ink);}
+  table.s4m-table td.good{color:#0e7d84;font-weight:700;}
+  table.s4m-table td.warn{color:#b64225;font-weight:700;}
+  .s4m-quote{border-left:3px solid var(--s4m-sub);background:var(--s4m-light-bg);border-radius:0 8px 8px 0;padding:18px 24px;margin:24px 0;}
+  .s4m-quote p{margin:0;font-style:italic;color:var(--s4m-ink);font-size:16px;line-height:1.65;}
+
+  header.s4m-art-hero{position:relative;padding:64px 0 40px;background:var(--s4m-light-bg);border-bottom:1px solid #e5e7eb;}
+  .s4m-breadcrumb{font-size:13px;color:#6b7280;margin-bottom:18px;}
+  .s4m-breadcrumb a{color:var(--s4m-sub);}
+  .s4m-breadcrumb a:hover{text-decoration:underline;}
+  .s4m-art-hero h1{font-size:34px;max-width:900px;}
+  .s4m-art-lead{font-size:17px;max-width:760px;margin-top:14px;}
+  .s4m-art-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:13.5px;color:#6b7280;margin-top:14px;}
+  .s4m-art-meta b{color:var(--s4m-ink);font-family:var(--s4m-font-bold);}
+  .s4m-art-body-wrap{max-width:820px;margin:0 auto;padding:56px 50px;}
+  .s4m-tldr{background:var(--s4m-teal-tint);border:1px solid rgba(14,151,159,0.28);border-radius:10px;padding:24px 26px;margin-bottom:40px;}
+  .s4m-tldr-tag{font-family:var(--s4m-font-bold);font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--s4m-sub);display:block;margin-bottom:10px;}
+  .s4m-tldr p{margin:0 0 10px;font-size:15.5px;color:var(--s4m-ink);}
+  .s4m-tldr p:last-child{margin-bottom:0;}
+  .s4m-toc{background:#ffffff;border:1px solid #e5e7eb;border-radius:10px;padding:22px 26px;margin-bottom:44px;}
+  .s4m-toc-tag{font-family:var(--s4m-font-bold);font-size:13px;color:var(--s4m-ink);display:block;margin-bottom:12px;}
+  .s4m-toc ol{margin:0;padding-left:20px;}
+  .s4m-toc li{font-size:14.5px;margin-bottom:8px;}
+  .s4m-toc a{color:var(--s4m-sub);}
+  .s4m-toc a:hover{text-decoration:underline;}
+  .s4m-art-body h2{font-size:25px;margin-top:48px;scroll-margin-top:70px;}
+  .s4m-art-body h3{font-size:19px;margin-top:28px;}
+  .s4m-art-body p{font-size:16px;margin:0 0 18px;}
+  .s4m-art-body ul, .s4m-art-body ol{font-size:16px;padding-left:22px;margin:0 0 18px;}
+  .s4m-art-body li{margin-bottom:8px;}
+  .s4m-art-body .s4m-table-wrap{margin:24px 0;}
+  .s4m-art-cta{background:var(--s4m-orange-tint);border:1px solid rgba(204,58,25,0.25);border-radius:10px;padding:26px 28px;margin:40px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .s4m-art-cta div b{display:block;font-family:var(--s4m-font-bold);color:var(--s4m-ink);font-size:16px;margin-bottom:4px;}
+  .s4m-art-cta div span{font-size:14px;color:var(--s4m-body);}
+  .s4m-art-faq{border-top:1px solid #e5e7eb;margin-top:48px;padding-top:8px;}
+  .s4m-faq-item{border-bottom:1px solid #e5e7eb;padding:22px 0 22px 20px;border-left:3px solid var(--s4m-sub);}
+  .s4m-faq-item:nth-child(3n+2){border-left-color:var(--s4m-main);}
+  .s4m-faq-item:nth-child(3n+3){border-left-color:#1f2937;}
+  .s4m-faq-item h3{font-size:17px;margin-bottom:8px;font-family:var(--s4m-font-bold);margin-top:0;}
+  .s4m-faq-item p{font-size:15px;margin:0;}
+  .s4m-author-box{display:flex;align-items:center;gap:14px;margin-top:48px;padding-top:24px;border-top:1px solid #e5e7eb;}
+  .s4m-author-avatar{flex:none;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#0e979f,#cc3a19);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--s4m-font-bold);font-size:15px;}
+  .s4m-author-box p{margin:0;font-size:13.5px;color:var(--s4m-body);}
+  .s4m-author-box b{color:var(--s4m-ink);font-family:var(--s4m-font-bold);}
+
+  .s4m-related{background:var(--s4m-light-bg);border-top:1px solid #e5e7eb;}
+  .s4m-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px;}
+  .s4m-related-card{background:#ffffff;border:1px solid #e5e7eb;border-radius:10px;padding:22px 22px;transition:transform .2s ease, box-shadow .2s ease;}
+  .s4m-related-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(17,24,39,0.08);}
+  .s4m-related-card span.s4m-related-tag{font-family:var(--s4m-font-bold);font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--s4m-sub);display:block;margin-bottom:8px;}
+  .s4m-related-card h3{font-size:16.5px;margin-bottom:0;line-height:1.4;}
+  .s4m-related-card.is-current{opacity:.55;pointer-events:none;}
+
+  .s4m-about{position:relative;overflow:hidden;color:#f3f4f6;background:radial-gradient(900px 550px at 92% -10%, rgba(14,151,159,0.22) 0%, transparent 55%),radial-gradient(1000px 650px at 4% 60%, rgba(204,58,25,0.18) 0%, transparent 55%),linear-gradient(160deg, #16232e 0%, #1d3438 45%, #22383c 100%);}
+  .s4m-cta-stripes{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 14px);pointer-events:none;}
+  .s4m-cta-bar{position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg, #0e979f, #3fb8bd, #cc3a19);}
+  .s4m-about-cta{position:relative;max-width:640px;margin:0 auto;text-align:center;}
+  .s4m-about-cta h3{color:#ffffff;font-size:26px;margin-bottom:14px;line-height:1.3;}
+  .s4m-about-cta p{color:#cbd5e1;font-size:16px;margin-bottom:28px;}
+
+  footer.s4m-foot{background:#0b1220;padding:48px 0 28px;}
+  .s4m-foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:20px;}
+  .s4m-foot-logo img{height:32px;width:auto;display:block;margin-bottom:14px;filter:brightness(0) invert(1);}
+  .s4m-foot-logo p{color:#9ca3af;font-size:13.5px;max-width:320px;margin:0;}
+  .s4m-foot-nav{display:flex;flex-direction:column;gap:8px;font-size:13.5px;}
+  .s4m-foot-nav a{color:#cbd5e1;}
+  .s4m-foot-nav a:hover{color:var(--s4m-sub);}
+  .s4m-foot-contact{display:grid;gap:8px;font-size:13.5px;color:#cbd5e1;}
+  .s4m-foot-contact a{color:#cbd5e1;}
+  .s4m-foot-contact a:hover{color:var(--s4m-sub);}
+  footer.s4m-foot p.s4m-foot-copy{color:#6b7280;font-size:13px;margin:0;}
+
+  @media (max-width:1000px){
+    .s4m-wrap{padding:0 24px;}
+    .s4m-related-grid{grid-template-columns:1fr;}
+    .s4m-art-body-wrap{padding:40px 24px;}
+    .s4m-art-hero{padding:44px 0 32px;}
+    .s4m-art-hero h1{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="s4m-topbar">
+  <div class="s4m-wrap s4m-topbar-inner">
+    <a href="/" class="s4m-topbar-logo" aria-label="Về trang chủ">
+      <img src="https://s4.com.vn/wp-content/uploads/2024/10/cropped-logo-main.png" alt="Logo S4 Consulting - đối tác triển khai Acumatica và Oracle NetSuite">
+    </a>
+    <div class="s4m-topbar-meta">
+      <a href="tel:+84932724396"><span>Hotline:</span> (+84) 93 2724 396</a>
+      <a href="mailto:ERP@s4.com.vn"><span>Email:</span> ERP@s4.com.vn</a>
+    </div>
+  </div>
+</div>
+
+<nav class="s4m-navbar" aria-label="Điều hướng chính">
+  <div class="s4m-wrap s4m-nav-inner">
+    <button type="button" class="s4m-nav-toggle" id="s4mNavToggle" aria-expanded="false" aria-controls="s4mNavLinks">
+      <span class="s4m-nav-toggle-bars"><span></span><span></span><span></span></span>
+      Menu
+    </button>
+    <div class="s4m-nav-links" id="s4mNavLinks">
+      <a href="/" class="s4m-nav-link">Trang chủ</a>
+      <a href="/mrp-bom-lap-ke-hoach-san-xuat.html" class="s4m-nav-link">MRP &amp; BOM</a>
+      <a href="/quan-ly-san-xuat-gia-thanh.html" class="s4m-nav-link is-current">Sản xuất &amp; giá thành</a>
+      <a href="/chat-luong-bao-tri-ton-kho.html" class="s4m-nav-link">Chất lượng &amp; bảo trì</a>
+      <a href="/#tai-lieu" class="s4m-nav-link">Tài liệu</a>
+      <a href="/#faq" class="s4m-nav-link">FAQ</a>
+      <span class="s4m-nav-cta"><a href="https://s4.com.vn/lien-he/">Liên hệ tư vấn</a></span>
+    </div>
+  </div>
+</nav>
+<script>
+(function(){
+  var toggle = document.getElementById('s4mNavToggle');
+  var links = document.getElementById('s4mNavLinks');
+  if(!toggle || !links) return;
+  toggle.addEventListener('click', function(){
+    var isOpen = links.classList.toggle('is-open');
+    toggle.classList.toggle('is-active', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  var navLinkEls = links.querySelectorAll('a');
+  for (var i = 0; i < navLinkEls.length; i++) {
+    navLinkEls[i].addEventListener('click', function(){
+      links.classList.remove('is-open');
+      toggle.classList.remove('is-active');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+})();
+</script>
+
+<header class="s4m-art-hero">
+  <div class="s4m-wrap">
+    <p class="s4m-breadcrumb"><a href="/">Trang chủ</a> / Quản lý sản xuất &amp; giá thành</p>
+    <span class="s4m-eyebrow">Nghiệp vụ cốt lõi 02/03</span>
+    <h1>Quản Lý Sản Xuất Thời Gian Thực &amp; Tính Giá Thành Chính Xác Với ERP</h1>
+    <p class="s4m-art-lead">Theo dõi tiến độ sản xuất và tính giá thành là hai nghiệp vụ luôn đi cùng nhau: dữ liệu ghi nhận tại xưởng chính là đầu vào để tính giá thành thực tế theo từng lệnh sản xuất.</p>
+    <div class="s4m-art-meta">
+      <span>Cập nhật: <b>02/09/2026</b></span>
+      <span>Thời gian đọc: <b>~8 phút</b></span>
+      <span>Biên soạn: <b>S4 Consulting</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="s4m-art-body-wrap">
+  <div class="s4m-tldr">
+    <span class="s4m-tldr-tag">Tóm tắt nhanh</span>
+    <p><b>Shop floor management</b> là ghi nhận tiến độ, thời gian máy và sản lượng ngay tại xưởng theo thời gian thực, thay vì tổng hợp cuối ca. <b>Work Order (lệnh sản xuất)</b> là đơn vị theo dõi tiêu hao và tiến độ. <b>Giá thành sản xuất</b> dùng chính dữ liệu đó để tính <b>actual cost</b> theo từng lệnh, so sánh với <b>standard cost</b> để phát hiện <b>cost variance</b>.</p>
+    <p>Một ERP sản xuất phù hợp phải kết nối ba nghiệp vụ này trong cùng một luồng dữ liệu: tiến độ xưởng → tiêu hao thực tế → giá thành - để CFO nhìn thấy chênh lệch chi phí trước khi lệnh sản xuất hoàn tất, không phải sau khi đóng sổ kỳ kế toán.</p>
+  </div>
+
+  <nav class="s4m-toc" aria-label="Mục lục bài viết">
+    <span class="s4m-toc-tag">Mục lục</span>
+    <ol>
+      <li><a href="#shop-floor-la-gi">Shop floor management là gì</a></li>
+      <li><a href="#cuoi-ca-vs-thoi-gian-thuc">Vì sao ghi nhận cuối ca/cuối ngày không còn đủ</a></li>
+      <li><a href="#work-order">Work Order vận hành ra sao trong ERP</a></li>
+      <li><a href="#gia-thanh">Giá thành sản xuất: standard cost và actual cost</a></li>
+      <li><a href="#cost-variance">Cost variance và vì sao CFO cần thấy sớm</a></li>
+      <li><a href="#thu-cong-vs-erp">Bảng so sánh: tính giá thành thủ công vs ERP tích hợp</a></li>
+      <li><a href="#checklist">Checklist đánh giá năng lực shop floor &amp; costing</a></li>
+      <li><a href="#acumatica">Acumatica xử lý shop floor &amp; giá thành như thế nào</a></li>
+      <li><a href="#faq-gia-thanh">Câu hỏi thường gặp</a></li>
+    </ol>
+  </nav>
+
+  <article class="s4m-art-body">
+    <h2 id="shop-floor-la-gi">Shop floor management là gì?</h2>
+    <p>Shop floor management (quản lý xưởng sản xuất) là việc ghi nhận hoạt động sản xuất thực tế ngay tại nơi diễn ra - công nhân bắt đầu/kết thúc một công đoạn, thời gian máy chạy, sản lượng đạt được, và nguyên vật liệu tiêu hao - thay vì để quản đốc tổng hợp bằng tay vào cuối ca hoặc cuối ngày.</p>
+    <p>Trong ERP sản xuất, phân hệ này thường gọi là <b>Shop Floor Data Collection</b>, cho phép công nhân hoặc quản đốc nhập liệu qua máy trạm, máy quét mã vạch, hoặc tích hợp trực tiếp với thiết bị/máy móc.</p>
+
+    <h2 id="cuoi-ca-vs-thoi-gian-thuc">Vì sao ghi nhận cuối ca/cuối ngày không còn đủ?</h2>
+    <p>Khi doanh nghiệp còn nhỏ, tổng hợp tiến độ sản xuất cuối ca bằng sổ tay hoặc Excel là đủ. Nhưng khi số lượng đơn hàng và công đoạn tăng, độ trễ giữa lúc sự cố xảy ra và lúc quản lý biết đến sẽ kéo dài - một công đoạn bị nghẽn từ đầu ca có thể chỉ được phát hiện vào cuối ngày, khi đã ảnh hưởng đến toàn bộ kế hoạch giao hàng.</p>
+    <p>Ghi nhận theo thời gian thực giúp phát hiện nghẽn công đoạn, thiếu nguyên vật liệu, hoặc sự cố thiết bị ngay khi phát sinh - đủ sớm để điều chỉnh kế hoạch trước khi ảnh hưởng lan ra các đơn hàng khác.</p>
+
+    <h2 id="work-order">Work Order vận hành ra sao trong ERP?</h2>
+    <p><b>Work Order</b> (hay Production Order - lệnh sản xuất) là đơn vị trung tâm để sản xuất một số lượng thành phẩm hoặc bán thành phẩm cụ thể, được tạo ra từ đơn hàng hoặc kế hoạch sản xuất, dựa trên BOM và Routing đã thiết lập. Mỗi Work Order theo dõi:</p>
+    <ul>
+      <li>Tiến độ hoàn thành theo từng công đoạn trong Routing.</li>
+      <li>Tiêu hao nguyên vật liệu thực tế so với định mức trong BOM.</li>
+      <li>Thời gian máy và nhân công thực tế so với thời gian chuẩn.</li>
+      <li>Kết quả kiểm tra chất lượng gắn với lệnh sản xuất đó.</li>
+    </ul>
+    <p>Khi Work Order đóng lại (hoàn tất), toàn bộ dữ liệu tiêu hao thực tế được dùng để tính giá thành - đây là điểm kết nối trực tiếp giữa shop floor và tài chính.</p>
+
+    <h2 id="gia-thanh">Giá thành sản xuất: standard cost và actual cost</h2>
+    <p><b>Standard cost</b> (giá thành kế hoạch) là giá thành ước tính trước khi sản xuất, dựa trên định mức BOM/Routing và đơn giá chuẩn của nguyên vật liệu, nhân công, chi phí máy móc. Đây là con số dùng để lập kế hoạch giá bán và ngân sách.</p>
+    <p><b>Actual cost</b> (giá thành thực tế) là giá thành phát sinh thực tế sau khi Work Order hoàn tất, tính theo tiêu hao nguyên vật liệu, thời gian máy và nhân công thực tế đã ghi nhận trên shop floor. Actual cost thường khác standard cost do biến động giá nguyên vật liệu, hao hụt ngoài định mức, hoặc thời gian sản xuất kéo dài hơn dự kiến.</p>
+
+    <h2 id="cost-variance">Cost variance và vì sao CFO cần thấy sớm</h2>
+    <p>Chênh lệch giữa actual cost và standard cost gọi là <b>cost variance</b>, thường được phân tách thành biến động do giá nguyên vật liệu (price variance), biến động do tiêu hao vượt định mức (usage variance), và biến động do năng suất lao động/máy móc (efficiency variance).</p>
+    <p>Nếu cost variance chỉ được phát hiện sau khi kỳ kế toán đóng sổ, doanh nghiệp đã bỏ lỡ cơ hội điều chỉnh giá bán cho các đơn hàng còn mở, đàm phán lại với nhà cung cấp, hoặc xử lý nguyên nhân gốc ngay tại xưởng. Một ERP sản xuất tốt phải hiển thị cost variance ngay khi Work Order đóng lại, theo từng lệnh sản xuất - không phải chờ đến báo cáo tổng hợp cuối tháng.</p>
+
+    <h2 id="thu-cong-vs-erp">Bảng so sánh: tính giá thành thủ công vs ERP tích hợp</h2>
+    <div class="s4m-table-wrap">
+      <table class="s4m-table">
+        <thead><tr><th>Tiêu chí</th><th>Tính giá thành thủ công (Excel)</th><th>ERP sản xuất tích hợp</th></tr></thead>
+        <tbody>
+          <tr><td>Thời điểm có giá thành thực tế</td><td>Sau khi tổng hợp cuối kỳ, thường chậm nhiều ngày</td><td class="good">Ngay khi Work Order đóng lại</td></tr>
+          <tr><td>Drill-down đến từng nguyên vật liệu</td><td>Khó, cần đối chiếu nhiều file</td><td class="good">Có sẵn trong cùng một lệnh sản xuất</td></tr>
+          <tr><td>Phát hiện cost variance</td><td>Sau khi đóng sổ kế toán</td><td class="good">Theo từng lệnh sản xuất, gần thời gian thực</td></tr>
+          <tr><td>Liên kết với dữ liệu shop floor</td><td>Nhập tay, dễ sai lệch</td><td class="good">Tự động từ Shop Floor Data Collection</td></tr>
+          <tr><td>Khả năng mở rộng khi số lệnh SX tăng</td><td>Giảm dần, cần thêm nhân sự đối chiếu</td><td class="good">Không phụ thuộc số lượng lệnh sản xuất</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="checklist">Checklist đánh giá năng lực shop floor &amp; costing khi chọn ERP</h2>
+    <ul>
+      <li>Công nhân/quản đốc có thể ghi nhận tiến độ ngay tại xưởng (qua máy trạm, mã vạch, hoặc tích hợp thiết bị) không?</li>
+      <li>Hệ thống có tính actual cost tự động ngay khi Work Order đóng lại, không cần thao tác thủ công không?</li>
+      <li>Có tách được cost variance theo nguyên nhân (giá, tiêu hao, hiệu suất) không?</li>
+      <li>Dashboard có hiển thị tiến độ và chênh lệch giá thành theo thời gian thực cho CEO/CFO không?</li>
+      <li>Có thể drill-down từ báo cáo giá thành tổng hợp xuống từng lệnh sản xuất, từng nguyên vật liệu không?</li>
+      <li>Hệ thống có cảnh báo khi một lệnh sản xuất vượt ngưỡng chênh lệch cho phép không?</li>
+    </ul>
+
+    <div class="s4m-art-cta">
+      <div>
+        <b>Checklist Shop Floor &amp; Giá Thành dạng điền sẵn</b>
+        <span>Bộ câu hỏi trên ở dạng file có thể gửi trực tiếp cho vendor để đánh giá.</span>
+      </div>
+      <!-- Anchor #checklist-gia-thanh-san-xuat cần được tạo tương ứng trên trang tài liệu S4 khi upload file -->
+      <a href="https://s4.com.vn/tai-lieu-erp-white-paper-guideline-brochure-s4-consulting/#checklist-gia-thanh-san-xuat" class="s4m-btn">Tải checklist (PDF)</a>
+    </div>
+
+    <h2 id="acumatica">Acumatica xử lý shop floor &amp; giá thành như thế nào?</h2>
+    <p>Acumatica Manufacturing Edition có phân hệ <b>Shop Floor Data Collection</b> cho phép công nhân ghi nhận tiến độ, thời gian và tiêu hao ngay tại xưởng qua giao diện đơn giản hoặc thiết bị di động. Dữ liệu này được đưa thẳng vào phân hệ <b>Production Costing</b>, tự động tính actual cost theo từng Work Order ngay khi lệnh đóng lại, và so sánh với standard cost để hiển thị cost variance theo thời gian thực trên dashboard quản trị.</p>
+    <p>Vì cùng nằm trong một nền tảng ERP, dữ liệu giá thành này liên kết trực tiếp với sổ cái kế toán (GL) - không cần nhập liệu lại hoặc đối chiếu thủ công giữa hệ thống sản xuất và hệ thống tài chính.</p>
+
+    <div class="s4m-quote"><p>Giá thành sản xuất chính xác không đến từ một công thức tính toán phức tạp hơn - nó đến từ việc dữ liệu tiêu hao thực tế tại xưởng được ghi nhận đúng thời điểm, và được dùng trực tiếp để tính giá thành mà không phải nhập lại qua tay người.</p></div>
+
+    <div class="s4m-art-faq" id="faq-gia-thanh">
+      <span class="s4m-eyebrow s4m-eyebrow-teal">Câu hỏi thường gặp</span>
+      <h2>Câu hỏi thường gặp về quản lý sản xuất &amp; giá thành</h2>
+      <div class="s4m-faq-item">
+        <h3>Shop floor management là gì?</h3>
+        <p>Là việc ghi nhận và theo dõi hoạt động sản xuất thực tế tại xưởng - tiến độ, thời gian máy, sản lượng và tiêu hao nguyên vật liệu - ngay khi phát sinh, thay vì tổng hợp thủ công vào cuối ca hoặc cuối ngày.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>Work Order (lệnh sản xuất) là gì?</h3>
+        <p>Là lệnh sản xuất được tạo ra để sản xuất một số lượng thành phẩm hoặc bán thành phẩm cụ thể, dựa trên BOM và Routing. Đây là đơn vị để theo dõi tiến độ, tiêu hao nguyên vật liệu và tính giá thành thực tế.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>Giá thành kế hoạch (standard cost) khác gì giá thành thực tế (actual cost)?</h3>
+        <p>Standard cost là giá thành ước tính trước dựa trên định mức BOM/Routing và đơn giá chuẩn. Actual cost là giá thành thực tế phát sinh sau khi lệnh sản xuất hoàn tất. Chênh lệch giữa hai giá trị này gọi là cost variance.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>Vì sao cần phát hiện cost variance sớm thay vì chờ đến cuối kỳ?</h3>
+        <p>Nếu chỉ phát hiện sau khi kỳ kế toán đóng sổ, doanh nghiệp đã mất cơ hội điều chỉnh giá bán, đàm phán lại với nhà cung cấp, hoặc xử lý nguyên nhân gốc ở xưởng. Phát hiện sớm cho phép hành động trước khi ảnh hưởng lan rộng ra nhiều đơn hàng.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>OEE là gì và có cần thiết với mọi doanh nghiệp sản xuất không?</h3>
+        <p>OEE (Overall Equipment Effectiveness) đo hiệu suất tổng thể của thiết bị. OEE hữu ích với doanh nghiệp có mức độ tự động hoá cao; doanh nghiệp sản xuất thủ công nhiều có thể ưu tiên chỉ số tiến độ và tiêu hao nguyên vật liệu trước.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>Acumatica có hỗ trợ theo dõi shop floor và tính giá thành theo thời gian thực không?</h3>
+        <p>Acumatica Manufacturing Edition có phân hệ Shop Floor Data Collection ghi nhận tiến độ ngay tại xưởng, cùng phân hệ Production Costing tính giá thành thực tế theo từng lệnh sản xuất và so sánh với giá thành kế hoạch theo thời gian thực.</p>
+      </div>
+    </div>
+
+    <div class="s4m-author-box">
+      <div class="s4m-author-avatar">S4</div>
+      <p><b>Biên soạn bởi đội ngũ tư vấn S4 Consulting</b> - đối tác triển khai Acumatica Cloud ERP &amp; Oracle NetSuite tại Việt Nam. Cập nhật lần cuối: 02/09/2026.</p>
+    </div>
+  </article>
+</div>
+
+<section class="s4m-section s4m-related">
+  <div class="s4m-wrap">
+    <span class="s4m-eyebrow">Đọc tiếp</span>
+    <h2>Bài viết liên quan</h2>
+    <div class="s4m-related-grid">
+      <a class="s4m-related-card" href="/mrp-bom-lap-ke-hoach-san-xuat.html">
+        <span class="s4m-related-tag">Bài 01</span>
+        <h3>MRP &amp; BOM Trong ERP Sản Xuất</h3>
+      </a>
+      <a class="s4m-related-card is-current" aria-disabled="true">
+        <span class="s4m-related-tag">Bài 02 - Đang xem</span>
+        <h3>Quản Lý Sản Xuất Thời Gian Thực &amp; Tính Giá Thành</h3>
+      </a>
+      <a class="s4m-related-card" href="/chat-luong-bao-tri-ton-kho.html">
+        <span class="s4m-related-tag">Bài 03</span>
+        <h3>Quản Lý Chất Lượng, Bảo Trì Thiết Bị &amp; Tồn Kho Nguyên Vật Liệu</h3>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="s4m-section s4m-about" id="lien-he">
+  <div class="s4m-cta-stripes"></div>
+  <div class="s4m-wrap">
+    <div class="s4m-about-cta">
+      <h3>Cần <span class="s4m-hl">tư vấn ERP</span> phù hợp với quy trình sản xuất của doanh nghiệp?</h3>
+      <p>Đội ngũ S4 Consulting có thể trao đổi cụ thể về yêu cầu theo dõi tiến độ và giá thành hiện tại của doanh nghiệp bạn.</p>
+      <a href="https://s4.com.vn/lien-he/" class="s4m-btn">Trao đổi với chuyên gia S4</a>
+    </div>
+  </div>
+  <div class="s4m-cta-bar"></div>
+</section>
+
+<footer class="s4m-foot">
+  <div class="s4m-wrap">
+    <div class="s4m-foot-top">
+      <div class="s4m-foot-logo">
+        <img src="https://s4.com.vn/wp-content/uploads/2024/10/cropped-logo-main.png" alt="Logo S4 Consulting - đối tác triển khai Acumatica và Oracle NetSuite">
+        <p>S4 Consulting là đối tác triển khai Acumatica Cloud ERP và Oracle NetSuite tại Việt Nam. Nội dung trên erpsanxuat.com được biên soạn bởi đội ngũ tư vấn của S4.</p>
+      </div>
+      <nav class="s4m-foot-nav" aria-label="Điều hướng bài viết ở footer">
+        <a href="/">Trang chủ</a>
+        <a href="/mrp-bom-lap-ke-hoach-san-xuat.html">MRP &amp; BOM trong ERP sản xuất</a>
+        <a href="/quan-ly-san-xuat-gia-thanh.html">Quản lý sản xuất &amp; giá thành</a>
+        <a href="/chat-luong-bao-tri-ton-kho.html">Chất lượng, bảo trì &amp; tồn kho NVL</a>
+      </nav>
+      <div class="s4m-foot-contact">
+        <span>Công ty TNHH S4 Consulting</span>
+        <span>Tòa Nhà Sabay, 99 Cộng Hòa, Phường Tân Sơn Nhất, TP. Hồ Chí Minh, Việt Nam</span>
+        <span><a href="tel:+84932724396">(+84) 93 2724 396</a></span>
+        <span><a href="mailto:ERP@s4.com.vn">ERP@s4.com.vn</a></span>
+        <span>Mã số thuế: 0318679030</span>
+      </div>
+    </div>
+    <p class="s4m-foot-copy">&copy; 2026 erpsanxuat.com - Nội dung được biên soạn bởi S4 Consulting, đối tác triển khai Acumatica &amp; Oracle NetSuite.</p>
+  </div>
+</footer>
+
+</body>
+</html>

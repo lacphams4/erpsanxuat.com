@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JN5LK66MY0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JN5LK66MY0');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MRP &amp; BOM Trong ERP Sản Xuất: Lập Kế Hoạch Sản Xuất Chính Xác Hơn</title>
+<meta name="description" content="BOM/Routing đa cấp là gì, MRP hoạt động thế nào trong ERP sản xuất, và vì sao đây là nền tảng để lập kế hoạch nguyên vật liệu chính xác thay vì phỏng đoán theo kinh nghiệm. Kèm checklist đánh giá vendor.">
+<link rel="canonical" href="https://erpsanxuat.com/mrp-bom-lap-ke-hoach-san-xuat.html">
+<link rel="icon" type="image/png" href="https://s4.com.vn/wp-content/uploads/2024/10/cropped-favicon.png">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="MRP &amp; BOM Trong ERP Sản Xuất: Lập Kế Hoạch Sản Xuất Chính Xác Hơn">
+<meta property="og:description" content="BOM/Routing đa cấp, MRP và vì sao đây là nền tảng để lập kế hoạch nguyên vật liệu chính xác trong ERP sản xuất.">
+<meta property="og:url" content="https://erpsanxuat.com/mrp-bom-lap-ke-hoach-san-xuat.html">
+<meta property="og:site_name" content="erpsanxuat.com">
+<meta property="og:image" content="https://s4.com.vn/wp-content/uploads/2026/08/S4-Consulting-web-Image.jpg">
+<meta property="og:locale" content="vi_VN">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MRP &amp; BOM Trong ERP Sản Xuất: Lập Kế Hoạch Sản Xuất Chính Xác Hơn">
+<meta name="twitter:description" content="BOM/Routing đa cấp, MRP và vì sao đây là nền tảng để lập kế hoạch nguyên vật liệu chính xác trong ERP sản xuất.">
+<meta name="twitter:image" content="https://s4.com.vn/wp-content/uploads/2026/08/S4-Consulting-web-Image.jpg">
+
+<!-- JSON-LD: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "MRP & BOM Trong ERP Sản Xuất: Lập Kế Hoạch Sản Xuất Chính Xác Hơn",
+  "description": "BOM/Routing đa cấp là gì, MRP hoạt động thế nào trong ERP sản xuất, và vì sao đây là nền tảng để lập kế hoạch nguyên vật liệu chính xác thay vì phỏng đoán theo kinh nghiệm.",
+  "author": { "@type": "Organization", "name": "S4 Consulting", "url": "https://s4.com.vn" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "S4 Consulting",
+    "logo": { "@type": "ImageObject", "url": "https://s4.com.vn/wp-content/uploads/2024/10/cropped-logo-main.png" }
+  },
+  "mainEntityOfPage": "https://erpsanxuat.com/mrp-bom-lap-ke-hoach-san-xuat.html",
+  "datePublished": "2026-09-02",
+  "dateModified": "2026-09-02",
+  "image": "https://s4.com.vn/wp-content/uploads/2026/08/S4-Consulting-web-Image.jpg",
+  "inLanguage": "vi"
+}
+</script>
+
+<!-- JSON-LD: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://erpsanxuat.com/" },
+    { "@type": "ListItem", "position": 2, "name": "MRP & BOM trong ERP sản xuất", "item": "https://erpsanxuat.com/mrp-bom-lap-ke-hoach-san-xuat.html" }
+  ]
+}
+</script>
+
+<!-- JSON-LD: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "BOM là gì?",
+      "acceptedAnswer": { "@type": "Answer", "text": "BOM (Bill of Materials) là danh sách định mức nguyên vật liệu, bán thành phẩm và linh kiện cần thiết để sản xuất ra một sản phẩm, kèm số lượng và đơn vị tính cho từng thành phần. Trong ERP sản xuất, BOM là dữ liệu gốc để tính nhu cầu nguyên vật liệu và giá thành." }
+    },
+    {
+      "@type": "Question",
+      "name": "MRP là gì và khác gì với ERP?",
+      "acceptedAnswer": { "@type": "Answer", "text": "MRP (Material Requirements Planning) là thuật toán lập kế hoạch nguyên vật liệu dựa trên BOM, tồn kho hiện có, đơn hàng và kế hoạch sản xuất, tính ra cần mua hoặc sản xuất những gì, số lượng bao nhiêu, vào thời điểm nào. MRP là một phân hệ nghiệp vụ; ERP là nền tảng quản trị toàn doanh nghiệp trong đó MRP là một trong các phân hệ, kết nối với tài chính, kho, mua hàng." }
+    },
+    {
+      "@type": "Question",
+      "name": "BOM và Routing khác nhau thế nào?",
+      "acceptedAnswer": { "@type": "Answer", "text": "BOM mô tả cần những nguyên vật liệu gì và số lượng bao nhiêu để tạo ra một sản phẩm. Routing mô tả sản phẩm đó được sản xuất qua những công đoạn nào, ở máy/trạm làm việc nào, và mất bao lâu cho mỗi công đoạn. BOM trả lời câu hỏi 'cần gì', Routing trả lời câu hỏi 'làm thế nào'." }
+    },
+    {
+      "@type": "Question",
+      "name": "Vì sao lập kế hoạch nguyên vật liệu bằng Excel không còn đủ khi doanh nghiệp tăng trưởng?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Excel không tự động cập nhật khi BOM, tồn kho hoặc đơn hàng thay đổi, dễ sai sót khi số lượng SKU và cấp BOM tăng, và không có khả năng tính toán MRP hàng loạt theo thời gian thực. Khi số lượng đơn hàng và cấp độ BOM tăng, sai lệch giữa kế hoạch trên Excel và thực tế sản xuất tăng theo, dẫn đến thiếu hụt hoặc tồn kho dư thừa." }
+    },
+    {
+      "@type": "Question",
+      "name": "ECN/ECO trong quản lý BOM là gì?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ECN (Engineering Change Notice) và ECO (Engineering Change Order) là quy trình kiểm soát khi bộ phận kỹ thuật thay đổi thiết kế sản phẩm, dẫn đến thay đổi BOM. ERP sản xuất cần quản lý phiên bản BOM và thời điểm áp dụng thay đổi, để tránh sản xuất nhầm theo định mức cũ." }
+    },
+    {
+      "@type": "Question",
+      "name": "Acumatica có hỗ trợ MRP và BOM đa cấp không?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Acumatica Manufacturing Edition có sẵn phân hệ BOM/Routing đa cấp và MRP trong bản lõi, cho phép chạy MRP theo lịch hoặc theo yêu cầu, tự động sinh đề xuất mua hàng hoặc lệnh sản xuất dựa trên đơn hàng, tồn kho và kế hoạch sản xuất hiện tại." }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root{
+    --s4m-main:#cc3a19;
+    --s4m-sub:#0e979f;
+    --s4m-ink:#111827;
+    --s4m-body:#4b5563;
+    --s4m-light-bg:#f9fafb;
+    --s4m-orange-tint:#fff1ec;
+    --s4m-teal-tint:#e8f7f6;
+    --s4m-font-head:'mainm', Arial, sans-serif;
+    --s4m-font-bold:'mainb', Arial, sans-serif;
+    --s4m-font-body:'Inter', Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--s4m-font-body);color:var(--s4m-body);line-height:1.65;background:#ffffff;-webkit-font-smoothing:antialiased;}
+  img{max-width:100%;display:block;}
+  a{text-decoration:none;color:inherit;}
+  h1,h2,h3,h4{font-family:var(--s4m-font-head);color:var(--s4m-ink);margin:0 0 16px;line-height:1.25;}
+  .s4m-wrap{max-width:1300px;margin:0 auto;padding:0 50px;}
+  .s4m-section{padding:80px 0;}
+  .s4m-eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--s4m-font-bold);font-size:12.5px;letter-spacing:0.03em;text-transform:uppercase;color:#fff;background:var(--s4m-main);padding:7px 15px;border-radius:20px;margin-bottom:20px;}
+  .s4m-eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:#ffe9a8;flex:none;}
+  .s4m-eyebrow-teal{background:var(--s4m-sub);}
+  .s4m-eyebrow-teal::before{background:#fff;}
+  .s4m-hl{background:var(--s4m-main);color:#fff;padding:2px 10px;border-radius:4px;display:inline-block;}
+  .s4m-hl-teal{background:var(--s4m-sub);color:#fff;padding:2px 10px;border-radius:4px;display:inline-block;}
+  .s4m-btn{display:inline-block;background:var(--s4m-main);color:#fff !important;font-family:var(--s4m-font-bold);font-size:16px;padding:14px 30px;border-radius:4px;border:none;cursor:pointer;transition:background .2s ease;}
+  .s4m-btn:hover{background:var(--s4m-sub);}
+  .s4m-btn-outline{display:inline-block;background:transparent;color:var(--s4m-ink) !important;font-family:var(--s4m-font-bold);font-size:16px;padding:13px 28px;border-radius:4px;border:1.5px solid #d1d5db;transition:border-color .2s ease, color .2s ease;}
+  .s4m-btn-outline:hover{border-color:var(--s4m-sub);color:var(--s4m-sub) !important;}
+
+  .s4m-topbar{position:relative;background:#16232e;border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 0;}
+  .s4m-topbar::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg, #0e979f, #3fb8bd, #cc3a19);}
+  .s4m-topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .s4m-topbar-logo img{height:32px;width:auto;display:block;filter:brightness(0) invert(1);}
+  .s4m-topbar-meta{display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:13.5px;color:#9ca8b5;}
+  .s4m-topbar-meta a{color:#cbd5e1;}
+  .s4m-topbar-meta a:hover{color:#ffffff;}
+  .s4m-topbar-meta span{font-family:var(--s4m-font-bold);color:#ffffff;}
+
+  .s4m-navbar{position:sticky;top:0;z-index:40;background:#1f2937;box-shadow:0 2px 14px rgba(17,24,39,0.18);}
+  .s4m-nav-inner{position:relative;display:flex;align-items:center;}
+  .s4m-nav-toggle{display:none;align-items:center;gap:10px;background:none;border:none;cursor:pointer;padding:14px 0;font-family:var(--s4m-font-bold);font-size:13.5px;color:#ffffff;}
+  .s4m-nav-toggle-bars{position:relative;width:20px;height:14px;flex:none;}
+  .s4m-nav-toggle-bars span{position:absolute;left:0;right:0;height:2px;background:#ffffff;border-radius:2px;transition:transform .2s ease, opacity .2s ease, top .2s ease;}
+  .s4m-nav-toggle-bars span:nth-child(1){top:0;}
+  .s4m-nav-toggle-bars span:nth-child(2){top:6px;}
+  .s4m-nav-toggle-bars span:nth-child(3){top:12px;}
+  .s4m-nav-toggle.is-active .s4m-nav-toggle-bars span:nth-child(1){top:6px;transform:rotate(45deg);}
+  .s4m-nav-toggle.is-active .s4m-nav-toggle-bars span:nth-child(2){opacity:0;}
+  .s4m-nav-toggle.is-active .s4m-nav-toggle-bars span:nth-child(3){top:6px;transform:rotate(-45deg);}
+  .s4m-nav-links{display:flex;align-items:center;gap:2px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;flex:1;}
+  .s4m-nav-links::-webkit-scrollbar{display:none;}
+  .s4m-nav-link{flex:none;padding:15px 14px;font-family:var(--s4m-font-bold);font-size:13.5px;color:#cbd5e1;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s ease, border-color .15s ease;}
+  .s4m-nav-link:hover{color:#ffffff;border-color:var(--s4m-main);}
+  .s4m-nav-link.is-current{color:#ffffff;border-color:var(--s4m-sub);}
+  .s4m-nav-cta{flex:none;margin-left:auto;padding-left:16px;}
+  .s4m-nav-cta a{display:inline-block;background:var(--s4m-main);color:#fff !important;font-family:var(--s4m-font-bold);font-size:13px;padding:9px 18px;border-radius:4px;white-space:nowrap;transition:background .2s ease;}
+  .s4m-nav-cta a:hover{background:var(--s4m-sub);}
+  .s4m-section, header.s4m-art-hero{scroll-margin-top:54px;}
+  @media (max-width:860px){
+    .s4m-nav-toggle{display:flex;}
+    .s4m-nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#1f2937;box-shadow:0 12px 24px rgba(17,24,39,0.25);padding:6px 0 12px;overflow-x:visible;}
+    .s4m-nav-links.is-open{display:flex;}
+    .s4m-nav-link{padding:13px 4px;border-bottom:1px solid rgba(255,255,255,0.08);white-space:normal;}
+    .s4m-nav-cta{margin-left:0;padding:14px 4px 4px;}
+    .s4m-nav-cta a{display:block;text-align:center;}
+  }
+
+  .s4m-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid #e5e7eb;}
+  table.s4m-table{width:100%;border-collapse:collapse;min-width:640px;}
+  table.s4m-table th, table.s4m-table td{text-align:left;padding:16px 18px;font-size:15px;border-bottom:1px solid #e5e7eb;vertical-align:top;}
+  table.s4m-table thead th{font-family:var(--s4m-font-bold);background:#1f2937;color:#ffffff;font-size:13.5px;letter-spacing:0.01em;}
+  table.s4m-table tbody tr:last-child td{border-bottom:none;}
+  table.s4m-table td:first-child{font-family:var(--s4m-font-bold);color:var(--s4m-ink);}
+  table.s4m-table td.good{color:#0e7d84;font-weight:700;}
+  table.s4m-table td.warn{color:#b64225;font-weight:700;}
+  .s4m-quote{border-left:3px solid var(--s4m-sub);background:var(--s4m-light-bg);border-radius:0 8px 8px 0;padding:18px 24px;margin:24px 0;}
+  .s4m-quote p{margin:0;font-style:italic;color:var(--s4m-ink);font-size:16px;line-height:1.65;}
+
+  /* ===== ARTICLE TEMPLATE ===== */
+  header.s4m-art-hero{position:relative;padding:64px 0 40px;background:var(--s4m-light-bg);border-bottom:1px solid #e5e7eb;}
+  .s4m-breadcrumb{font-size:13px;color:#6b7280;margin-bottom:18px;}
+  .s4m-breadcrumb a{color:var(--s4m-sub);}
+  .s4m-breadcrumb a:hover{text-decoration:underline;}
+  .s4m-art-hero h1{font-size:34px;max-width:900px;}
+  .s4m-art-lead{font-size:17px;max-width:760px;margin-top:14px;}
+  .s4m-art-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:13.5px;color:#6b7280;margin-top:14px;}
+  .s4m-art-meta b{color:var(--s4m-ink);font-family:var(--s4m-font-bold);}
+  .s4m-art-body-wrap{max-width:820px;margin:0 auto;padding:56px 50px;}
+  .s4m-tldr{background:var(--s4m-teal-tint);border:1px solid rgba(14,151,159,0.28);border-radius:10px;padding:24px 26px;margin-bottom:40px;}
+  .s4m-tldr-tag{font-family:var(--s4m-font-bold);font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--s4m-sub);display:block;margin-bottom:10px;}
+  .s4m-tldr p{margin:0 0 10px;font-size:15.5px;color:var(--s4m-ink);}
+  .s4m-tldr p:last-child{margin-bottom:0;}
+  .s4m-toc{background:#ffffff;border:1px solid #e5e7eb;border-radius:10px;padding:22px 26px;margin-bottom:44px;}
+  .s4m-toc-tag{font-family:var(--s4m-font-bold);font-size:13px;color:var(--s4m-ink);display:block;margin-bottom:12px;}
+  .s4m-toc ol{margin:0;padding-left:20px;}
+  .s4m-toc li{font-size:14.5px;margin-bottom:8px;}
+  .s4m-toc a{color:var(--s4m-sub);}
+  .s4m-toc a:hover{text-decoration:underline;}
+  .s4m-art-body h2{font-size:25px;margin-top:48px;scroll-margin-top:70px;}
+  .s4m-art-body h3{font-size:19px;margin-top:28px;}
+  .s4m-art-body p{font-size:16px;margin:0 0 18px;}
+  .s4m-art-body ul, .s4m-art-body ol{font-size:16px;padding-left:22px;margin:0 0 18px;}
+  .s4m-art-body li{margin-bottom:8px;}
+  .s4m-art-body .s4m-table-wrap{margin:24px 0;}
+  .s4m-art-cta{background:var(--s4m-orange-tint);border:1px solid rgba(204,58,25,0.25);border-radius:10px;padding:26px 28px;margin:40px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .s4m-art-cta div b{display:block;font-family:var(--s4m-font-bold);color:var(--s4m-ink);font-size:16px;margin-bottom:4px;}
+  .s4m-art-cta div span{font-size:14px;color:var(--s4m-body);}
+  .s4m-art-faq{border-top:1px solid #e5e7eb;margin-top:48px;padding-top:8px;}
+  .s4m-faq-item{border-bottom:1px solid #e5e7eb;padding:22px 0 22px 20px;border-left:3px solid var(--s4m-sub);}
+  .s4m-faq-item:nth-child(3n+2){border-left-color:var(--s4m-main);}
+  .s4m-faq-item:nth-child(3n+3){border-left-color:#1f2937;}
+  .s4m-faq-item h3{font-size:17px;margin-bottom:8px;font-family:var(--s4m-font-bold);margin-top:0;}
+  .s4m-faq-item p{font-size:15px;margin:0;}
+  .s4m-author-box{display:flex;align-items:center;gap:14px;margin-top:48px;padding-top:24px;border-top:1px solid #e5e7eb;}
+  .s4m-author-avatar{flex:none;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#0e979f,#cc3a19);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--s4m-font-bold);font-size:15px;}
+  .s4m-author-box p{margin:0;font-size:13.5px;color:var(--s4m-body);}
+  .s4m-author-box b{color:var(--s4m-ink);font-family:var(--s4m-font-bold);}
+
+  .s4m-related{background:var(--s4m-light-bg);border-top:1px solid #e5e7eb;}
+  .s4m-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px;}
+  .s4m-related-card{background:#ffffff;border:1px solid #e5e7eb;border-radius:10px;padding:22px 22px;transition:transform .2s ease, box-shadow .2s ease;}
+  .s4m-related-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(17,24,39,0.08);}
+  .s4m-related-card span.s4m-related-tag{font-family:var(--s4m-font-bold);font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:var(--s4m-sub);display:block;margin-bottom:8px;}
+  .s4m-related-card h3{font-size:16.5px;margin-bottom:0;line-height:1.4;}
+  .s4m-related-card.is-current{opacity:.55;pointer-events:none;}
+
+  .s4m-about{position:relative;overflow:hidden;color:#f3f4f6;background:radial-gradient(900px 550px at 92% -10%, rgba(14,151,159,0.22) 0%, transparent 55%),radial-gradient(1000px 650px at 4% 60%, rgba(204,58,25,0.18) 0%, transparent 55%),linear-gradient(160deg, #16232e 0%, #1d3438 45%, #22383c 100%);}
+  .s4m-cta-stripes{position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 14px);pointer-events:none;}
+  .s4m-cta-bar{position:absolute;bottom:0;left:0;right:0;height:5px;background:linear-gradient(90deg, #0e979f, #3fb8bd, #cc3a19);}
+  .s4m-about-cta{position:relative;max-width:640px;margin:0 auto;text-align:center;}
+  .s4m-about-cta h3{color:#ffffff;font-size:26px;margin-bottom:14px;line-height:1.3;}
+  .s4m-about-cta p{color:#cbd5e1;font-size:16px;margin-bottom:28px;}
+
+  footer.s4m-foot{background:#0b1220;padding:48px 0 28px;}
+  .s4m-foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:20px;}
+  .s4m-foot-logo img{height:32px;width:auto;display:block;margin-bottom:14px;filter:brightness(0) invert(1);}
+  .s4m-foot-logo p{color:#9ca3af;font-size:13.5px;max-width:320px;margin:0;}
+  .s4m-foot-nav{display:flex;flex-direction:column;gap:8px;font-size:13.5px;}
+  .s4m-foot-nav a{color:#cbd5e1;}
+  .s4m-foot-nav a:hover{color:var(--s4m-sub);}
+  .s4m-foot-contact{display:grid;gap:8px;font-size:13.5px;color:#cbd5e1;}
+  .s4m-foot-contact a{color:#cbd5e1;}
+  .s4m-foot-contact a:hover{color:var(--s4m-sub);}
+  footer.s4m-foot p.s4m-foot-copy{color:#6b7280;font-size:13px;margin:0;}
+
+  @media (max-width:1000px){
+    .s4m-wrap{padding:0 24px;}
+    .s4m-related-grid{grid-template-columns:1fr;}
+    .s4m-art-body-wrap{padding:40px 24px;}
+    .s4m-art-hero{padding:44px 0 32px;}
+    .s4m-art-hero h1{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="s4m-topbar">
+  <div class="s4m-wrap s4m-topbar-inner">
+    <a href="/" class="s4m-topbar-logo" aria-label="Về trang chủ">
+      <img src="https://s4.com.vn/wp-content/uploads/2024/10/cropped-logo-main.png" alt="Logo S4 Consulting - đối tác triển khai Acumatica và Oracle NetSuite">
+    </a>
+    <div class="s4m-topbar-meta">
+      <a href="tel:+84932724396"><span>Hotline:</span> (+84) 93 2724 396</a>
+      <a href="mailto:ERP@s4.com.vn"><span>Email:</span> ERP@s4.com.vn</a>
+    </div>
+  </div>
+</div>
+
+<nav class="s4m-navbar" aria-label="Điều hướng chính">
+  <div class="s4m-wrap s4m-nav-inner">
+    <button type="button" class="s4m-nav-toggle" id="s4mNavToggle" aria-expanded="false" aria-controls="s4mNavLinks">
+      <span class="s4m-nav-toggle-bars"><span></span><span></span><span></span></span>
+      Menu
+    </button>
+    <div class="s4m-nav-links" id="s4mNavLinks">
+      <a href="/" class="s4m-nav-link">Trang chủ</a>
+      <a href="/mrp-bom-lap-ke-hoach-san-xuat.html" class="s4m-nav-link is-current">MRP &amp; BOM</a>
+      <a href="/quan-ly-san-xuat-gia-thanh.html" class="s4m-nav-link">Sản xuất &amp; giá thành</a>
+      <a href="/chat-luong-bao-tri-ton-kho.html" class="s4m-nav-link">Chất lượng &amp; bảo trì</a>
+      <a href="/#tai-lieu" class="s4m-nav-link">Tài liệu</a>
+      <a href="/#faq" class="s4m-nav-link">FAQ</a>
+      <span class="s4m-nav-cta"><a href="https://s4.com.vn/lien-he/">Liên hệ tư vấn</a></span>
+    </div>
+  </div>
+</nav>
+<script>
+(function(){
+  var toggle = document.getElementById('s4mNavToggle');
+  var links = document.getElementById('s4mNavLinks');
+  if(!toggle || !links) return;
+  toggle.addEventListener('click', function(){
+    var isOpen = links.classList.toggle('is-open');
+    toggle.classList.toggle('is-active', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  var navLinkEls = links.querySelectorAll('a');
+  for (var i = 0; i < navLinkEls.length; i++) {
+    navLinkEls[i].addEventListener('click', function(){
+      links.classList.remove('is-open');
+      toggle.classList.remove('is-active');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+})();
+</script>
+
+<header class="s4m-art-hero">
+  <div class="s4m-wrap">
+    <p class="s4m-breadcrumb"><a href="/">Trang chủ</a> / MRP &amp; BOM trong ERP sản xuất</p>
+    <span class="s4m-eyebrow">Nghiệp vụ cốt lõi 01/03</span>
+    <h1>MRP &amp; BOM Trong ERP Sản Xuất: Lập Kế Hoạch Sản Xuất Chính Xác Hơn</h1>
+    <p class="s4m-art-lead">BOM và MRP là hai nghiệp vụ nền tảng quyết định một ERP sản xuất có thực sự giúp doanh nghiệp lập kế hoạch nguyên vật liệu chính xác, hay chỉ đang số hoá lại cách làm bằng Excel.</p>
+    <div class="s4m-art-meta">
+      <span>Cập nhật: <b>02/09/2026</b></span>
+      <span>Thời gian đọc: <b>~8 phút</b></span>
+      <span>Biên soạn: <b>S4 Consulting</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="s4m-art-body-wrap">
+  <div class="s4m-tldr">
+    <span class="s4m-tldr-tag">Tóm tắt nhanh</span>
+    <p><b>BOM (Bill of Materials)</b> là danh sách định mức nguyên vật liệu, bán thành phẩm và linh kiện cần để sản xuất một sản phẩm. <b>Routing</b> mô tả sản phẩm đó đi qua công đoạn nào, ở đâu, mất bao lâu. <b>MRP (Material Requirements Planning)</b> dùng BOM, tồn kho và đơn hàng để tính ra cần mua hoặc sản xuất gì, bao nhiêu, khi nào.</p>
+    <p>Một ERP sản xuất phù hợp phải hỗ trợ BOM/Routing đa cấp, kiểm soát phiên bản khi kỹ thuật thay đổi thiết kế, và chạy MRP tự động theo thời gian thực - thay vì để doanh nghiệp tự tính bằng Excel khi số lượng SKU và đơn hàng tăng lên.</p>
+  </div>
+
+  <nav class="s4m-toc" aria-label="Mục lục bài viết">
+    <span class="s4m-toc-tag">Mục lục</span>
+    <ol>
+      <li><a href="#bom-la-gi">BOM là gì và vì sao cần quản lý đa cấp</a></li>
+      <li><a href="#routing-la-gi">Routing là gì, khác BOM ở điểm nào</a></li>
+      <li><a href="#mrp-la-gi">MRP là gì và hoạt động ra sao trong ERP</a></li>
+      <li><a href="#excel-vs-mrp">Vì sao lập kế hoạch bằng Excel không còn đủ</a></li>
+      <li><a href="#kiem-soat-phien-ban">Kiểm soát phiên bản BOM khi kỹ thuật thay đổi thiết kế</a></li>
+      <li><a href="#checklist">Checklist đánh giá năng lực MRP/BOM khi chọn ERP</a></li>
+      <li><a href="#acumatica-mrp-bom">Acumatica xử lý MRP/BOM như thế nào</a></li>
+      <li><a href="#faq-mrp-bom">Câu hỏi thường gặp</a></li>
+    </ol>
+  </nav>
+
+  <article class="s4m-art-body">
+    <h2 id="bom-la-gi">BOM là gì và vì sao cần quản lý đa cấp?</h2>
+    <p>BOM (Bill of Materials) là danh sách định mức toàn bộ nguyên vật liệu, bán thành phẩm, linh kiện và bao bì cần thiết để sản xuất ra một đơn vị thành phẩm, kèm số lượng, đơn vị tính và tỷ lệ hao hụt cho phép. Đây là dữ liệu gốc mà mọi tính toán khác trong ERP sản xuất - từ MRP đến giá thành - đều dựa vào.</p>
+    <p>Với sản phẩm đơn giản, một BOM có thể chỉ gồm một cấp: thành phẩm và các nguyên vật liệu trực tiếp. Nhưng phần lớn doanh nghiệp sản xuất có sản phẩm gồm nhiều bán thành phẩm trung gian, mỗi bán thành phẩm lại có BOM riêng - gọi là <b>BOM đa cấp (multi-level BOM)</b>. Ví dụ: thành phẩm cần bán thành phẩm A, bán thành phẩm A lại cần nguyên vật liệu B và C theo một BOM khác.</p>
+    <p>Nếu ERP chỉ hỗ trợ BOM một cấp, doanh nghiệp buộc phải "phẳng hoá" cấu trúc sản phẩm thủ công ngoài hệ thống - vừa mất thời gian, vừa dễ sai khi có thay đổi định mức ở bất kỳ cấp nào.</p>
+
+    <h2 id="routing-la-gi">Routing là gì, khác BOM ở điểm nào?</h2>
+    <p>Nếu BOM trả lời câu hỏi "cần nguyên vật liệu gì", thì <b>Routing</b> trả lời câu hỏi "sản phẩm được làm ra như thế nào". Routing mô tả trình tự các công đoạn sản xuất, máy móc hoặc trạm làm việc thực hiện từng công đoạn, thời gian chuẩn (setup time, run time) và nguồn lực cần thiết.</p>
+    <p>BOM và Routing luôn đi cùng nhau trong một ERP sản xuất đúng nghĩa: BOM cho biết tiêu hao nguyên vật liệu, Routing cho biết tiêu hao thời gian máy và nhân công - cả hai cộng lại mới tạo thành giá thành sản xuất đầy đủ.</p>
+
+    <h2 id="mrp-la-gi">MRP là gì và hoạt động ra sao trong ERP?</h2>
+    <p>MRP (Material Requirements Planning) là thuật toán lập kế hoạch nguyên vật liệu. Với mỗi đơn hàng hoặc dự báo nhu cầu, MRP sẽ "nổ" (explode) BOM đa cấp để tính ra cần bao nhiêu nguyên vật liệu ở mỗi cấp, đối chiếu với tồn kho hiện có và các đơn mua/lệnh sản xuất đang mở, rồi đề xuất:</p>
+    <ul>
+      <li>Nên mua thêm nguyên vật liệu nào, số lượng bao nhiêu, và cần đặt hàng trước bao lâu (lead time).</li>
+      <li>Nên mở lệnh sản xuất bán thành phẩm nào để kịp cấp cho công đoạn sau.</li>
+      <li>Thời điểm cần có nguyên vật liệu để không làm chậm tiến độ giao hàng.</li>
+    </ul>
+    <p>Trong một ERP sản xuất tích hợp, MRP chạy dựa trên dữ liệu thời gian thực từ đơn hàng, tồn kho và tiến độ sản xuất - nghĩa là mỗi khi có đơn hàng mới hoặc tồn kho thay đổi, kế hoạch nguyên vật liệu được cập nhật lại mà không cần tính toán thủ công.</p>
+
+    <h2 id="excel-vs-mrp">Vì sao lập kế hoạch bằng Excel không còn đủ?</h2>
+    <p>Nhiều doanh nghiệp sản xuất giai đoạn đầu quản lý kế hoạch nguyên vật liệu bằng Excel - và điều này hoàn toàn hợp lý khi số lượng SKU và đơn hàng còn ít. Vấn đề xuất hiện khi doanh nghiệp tăng trưởng: số cấp BOM tăng, số lượng đơn hàng chạy song song tăng, và mỗi thay đổi định mức hoặc tồn kho đều cần cập nhật lại thủ công trên nhiều file - rủi ro sai lệch tăng theo cấp số nhân.</p>
+    <div class="s4m-table-wrap">
+      <table class="s4m-table">
+        <thead><tr><th>Tiêu chí</th><th>Lập kế hoạch bằng Excel</th><th>MRP trong ERP sản xuất</th></tr></thead>
+        <tbody>
+          <tr><td>Cập nhật khi BOM/tồn kho thay đổi</td><td>Thủ công, dễ bỏ sót</td><td class="good">Tự động, theo thời gian thực</td></tr>
+          <tr><td>Xử lý BOM đa cấp</td><td>Khó, dễ sai khi nhiều tầng</td><td class="good">Tự động "nổ" BOM qua tất cả các cấp</td></tr>
+          <tr><td>Đối chiếu với đơn hàng đang mở</td><td>Cần tổng hợp thủ công từ nhiều nguồn</td><td class="good">Tự động đối chiếu trong cùng hệ thống</td></tr>
+          <tr><td>Cảnh báo thiếu hụt sớm</td><td>Phát hiện khi đã gần đến hạn</td><td class="good">Cảnh báo ngay khi phát sinh chênh lệch</td></tr>
+          <tr><td>Khả năng mở rộng khi SKU tăng</td><td>Giảm dần theo số lượng SKU</td><td class="good">Không phụ thuộc số lượng SKU</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="kiem-soat-phien-ban">Kiểm soát phiên bản BOM khi kỹ thuật thay đổi thiết kế</h2>
+    <p>Trong thực tế sản xuất, BOM không cố định mãi mãi. Bộ phận kỹ thuật có thể thay đổi thiết kế, thay thế nguyên vật liệu, hoặc điều chỉnh định mức - quy trình này thường được gọi là <b>ECN (Engineering Change Notice)</b> hoặc <b>ECO (Engineering Change Order)</b>. Nếu ERP không quản lý được phiên bản BOM và thời điểm áp dụng thay đổi, xưởng sản xuất có thể vẫn dùng định mức cũ sau khi thiết kế đã được duyệt thay đổi - dẫn đến sai lệch chất lượng hoặc giá thành.</p>
+    <p>Một ERP sản xuất trưởng thành cần cho phép: lưu lịch sử các phiên bản BOM, xác định ngày hiệu lực của từng phiên bản, và đảm bảo lệnh sản xuất mới luôn áp dụng đúng phiên bản đang hiệu lực.</p>
+
+    <h2 id="checklist">Checklist đánh giá năng lực MRP/BOM khi chọn ERP</h2>
+    <ul>
+      <li>ERP có hỗ trợ BOM đa cấp không giới hạn số tầng không?</li>
+      <li>Routing có được quản lý tách biệt và liên kết với BOM để tính đủ chi phí nhân công/máy móc không?</li>
+      <li>MRP có chạy tự động theo lịch hoặc theo thời gian thực khi có thay đổi đơn hàng/tồn kho không?</li>
+      <li>Hệ thống có quản lý phiên bản BOM và ngày hiệu lực khi có ECN/ECO không?</li>
+      <li>Kết quả MRP có tự động sinh đề xuất mua hàng hoặc lệnh sản xuất, hay chỉ dừng ở báo cáo tham khảo?</li>
+      <li>Có thể mô phỏng ("what-if") khi thay đổi BOM để xem tác động đến giá thành trước khi áp dụng chính thức không?</li>
+    </ul>
+
+    <div class="s4m-art-cta">
+      <div>
+        <b>Checklist MRP/BOM dạng điền sẵn</b>
+        <span>Bộ câu hỏi trên ở dạng file có thể gửi trực tiếp cho vendor để đánh giá.</span>
+      </div>
+      <!-- Anchor #checklist-mrp-bom-erp-san-xuat cần được tạo tương ứng trên trang tài liệu S4 khi upload file -->
+      <a href="https://s4.com.vn/tai-lieu-erp-white-paper-guideline-brochure-s4-consulting/#checklist-mrp-bom-erp-san-xuat" class="s4m-btn">Tải checklist (PDF)</a>
+    </div>
+
+    <h2 id="acumatica-mrp-bom">Acumatica xử lý MRP/BOM như thế nào?</h2>
+    <p>Acumatica Manufacturing Edition có sẵn phân hệ <b>BOM and Routing</b> hỗ trợ cấu trúc đa cấp, quản lý phiên bản và ngày hiệu lực khi có thay đổi kỹ thuật. Phân hệ <b>Material Requirements Planning (MRP)</b> chạy trên toàn bộ dữ liệu đơn hàng, tồn kho và kế hoạch sản xuất hiện có, tự động sinh đề xuất mua hàng (Purchase Order) hoặc lệnh sản xuất (Production Order) theo đúng lead time đã thiết lập cho từng nguyên vật liệu.</p>
+    <p>Vì Acumatica là nền tảng ERP tích hợp, kết quả MRP liên kết trực tiếp với module mua hàng, kho và tài chính - nghĩa là khi một đề xuất MRP được chấp nhận, đơn mua hàng hoặc lệnh sản xuất được tạo ngay trong cùng hệ thống, không cần nhập liệu lại.</p>
+
+    <div class="s4m-quote"><p>Một ERP sản xuất tốt không chỉ lưu trữ BOM - nó phải dùng chính dữ liệu đó để tự động tính ra kế hoạch nguyên vật liệu, và cập nhật lại kế hoạch đó ngay khi có bất kỳ thay đổi nào từ đơn hàng, tồn kho hoặc thiết kế sản phẩm.</p></div>
+
+    <div class="s4m-art-faq" id="faq-mrp-bom">
+      <span class="s4m-eyebrow s4m-eyebrow-teal">Câu hỏi thường gặp</span>
+      <h2>Câu hỏi thường gặp về MRP &amp; BOM</h2>
+      <div class="s4m-faq-item">
+        <h3>BOM là gì?</h3>
+        <p>BOM (Bill of Materials) là danh sách định mức nguyên vật liệu, bán thành phẩm và linh kiện cần thiết để sản xuất ra một sản phẩm, kèm số lượng và đơn vị tính cho từng thành phần. Trong ERP sản xuất, BOM là dữ liệu gốc để tính nhu cầu nguyên vật liệu và giá thành.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>MRP là gì và khác gì với ERP?</h3>
+        <p>MRP là thuật toán lập kế hoạch nguyên vật liệu dựa trên BOM, tồn kho và đơn hàng, tính ra cần mua hoặc sản xuất những gì, số lượng bao nhiêu, vào thời điểm nào. MRP là một phân hệ nghiệp vụ; ERP là nền tảng quản trị toàn doanh nghiệp trong đó MRP là một trong các phân hệ, kết nối với tài chính, kho, mua hàng.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>BOM và Routing khác nhau thế nào?</h3>
+        <p>BOM mô tả cần những nguyên vật liệu gì và số lượng bao nhiêu. Routing mô tả sản phẩm được sản xuất qua những công đoạn nào, ở máy/trạm nào, và mất bao lâu. BOM trả lời "cần gì", Routing trả lời "làm thế nào".</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>Vì sao lập kế hoạch nguyên vật liệu bằng Excel không còn đủ khi doanh nghiệp tăng trưởng?</h3>
+        <p>Excel không tự động cập nhật khi BOM, tồn kho hoặc đơn hàng thay đổi, dễ sai sót khi số lượng SKU và cấp BOM tăng, và không có khả năng tính MRP hàng loạt theo thời gian thực - dẫn đến thiếu hụt hoặc tồn kho dư thừa khi quy mô tăng.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>ECN/ECO trong quản lý BOM là gì?</h3>
+        <p>ECN (Engineering Change Notice) và ECO (Engineering Change Order) là quy trình kiểm soát khi kỹ thuật thay đổi thiết kế, dẫn đến thay đổi BOM. ERP sản xuất cần quản lý phiên bản BOM và thời điểm áp dụng, tránh sản xuất nhầm theo định mức cũ.</p>
+      </div>
+      <div class="s4m-faq-item">
+        <h3>Acumatica có hỗ trợ MRP và BOM đa cấp không?</h3>
+        <p>Acumatica Manufacturing Edition có sẵn phân hệ BOM/Routing đa cấp và MRP trong bản lõi, chạy theo lịch hoặc theo yêu cầu, tự động sinh đề xuất mua hàng hoặc lệnh sản xuất dựa trên đơn hàng, tồn kho và kế hoạch sản xuất hiện tại.</p>
+      </div>
+    </div>
+
+    <div class="s4m-author-box">
+      <div class="s4m-author-avatar">S4</div>
+      <p><b>Biên soạn bởi đội ngũ tư vấn S4 Consulting</b> - đối tác triển khai Acumatica Cloud ERP &amp; Oracle NetSuite tại Việt Nam. Cập nhật lần cuối: 02/09/2026.</p>
+    </div>
+  </article>
+</div>
+
+<!-- ============ BÀI VIẾT LIÊN QUAN ============ -->
+<section class="s4m-section s4m-related">
+  <div class="s4m-wrap">
+    <span class="s4m-eyebrow">Đọc tiếp</span>
+    <h2>Bài viết liên quan</h2>
+    <div class="s4m-related-grid">
+      <a class="s4m-related-card is-current" aria-disabled="true">
+        <span class="s4m-related-tag">Bài 01 - Đang xem</span>
+        <h3>MRP &amp; BOM Trong ERP Sản Xuất</h3>
+      </a>
+      <a class="s4m-related-card" href="/quan-ly-san-xuat-gia-thanh.html">
+        <span class="s4m-related-tag">Bài 02</span>
+        <h3>Quản Lý Sản Xuất Thời Gian Thực &amp; Tính Giá Thành Chính Xác Với ERP</h3>
+      </a>
+      <a class="s4m-related-card" href="/chat-luong-bao-tri-ton-kho.html">
+        <span class="s4m-related-tag">Bài 03</span>
+        <h3>Quản Lý Chất Lượng, Bảo Trì Thiết Bị &amp; Tồn Kho Nguyên Vật Liệu</h3>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="s4m-section s4m-about" id="lien-he">
+  <div class="s4m-cta-stripes"></div>
+  <div class="s4m-wrap">
+    <div class="s4m-about-cta">
+      <h3>Cần <span class="s4m-hl">tư vấn ERP</span> phù hợp với quy trình sản xuất của doanh nghiệp?</h3>
+      <p>Đội ngũ S4 Consulting có thể trao đổi cụ thể về yêu cầu MRP/BOM hiện tại và mức độ phù hợp của Acumatica với doanh nghiệp của bạn.</p>
+      <a href="https://s4.com.vn/lien-he/" class="s4m-btn">Trao đổi với chuyên gia S4</a>
+    </div>
+  </div>
+  <div class="s4m-cta-bar"></div>
+</section>
+
+<footer class="s4m-foot">
+  <div class="s4m-wrap">
+    <div class="s4m-foot-top">
+      <div class="s4m-foot-logo">
+        <img src="https://s4.com.vn/wp-content/uploads/2024/10/cropped-logo-main.png" alt="Logo S4 Consulting - đối tác triển khai Acumatica và Oracle NetSuite">
+        <p>S4 Consulting là đối tác triển khai Acumatica Cloud ERP và Oracle NetSuite tại Việt Nam. Nội dung trên erpsanxuat.com được biên soạn bởi đội ngũ tư vấn của S4.</p>
+      </div>
+      <nav class="s4m-foot-nav" aria-label="Điều hướng bài viết ở footer">
+        <a href="/">Trang chủ</a>
+        <a href="/mrp-bom-lap-ke-hoach-san-xuat.html">MRP &amp; BOM trong ERP sản xuất</a>
+        <a href="/quan-ly-san-xuat-gia-thanh.html">Quản lý sản xuất &amp; giá thành</a>
+        <a href="/chat-luong-bao-tri-ton-kho.html">Chất lượng, bảo trì &amp; tồn kho NVL</a>
+      </nav>
+      <div class="s4m-foot-contact">
+        <span>Công ty TNHH S4 Consulting</span>
+        <span>Tòa Nhà Sabay, 99 Cộng Hòa, Phường Tân Sơn Nhất, TP. Hồ Chí Minh, Việt Nam</span>
+        <span><a href="tel:+84932724396">(+84) 93 2724 396</a></span>
+        <span><a href="mailto:ERP@s4.com.vn">ERP@s4.com.vn</a></span>
+        <span>Mã số thuế: 0318679030</span>
+      </div>
+    </div>
+    <p class="s4m-foot-copy">&copy; 2026 erpsanxuat.com - Nội dung được biên soạn bởi S4 Consulting, đối tác triển khai Acumatica &amp; Oracle NetSuite.</p>
+  </div>
+</footer>
+
+</body>
+</html>
