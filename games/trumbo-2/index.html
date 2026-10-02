@@ -32,7 +32,7 @@ body{
 // ============================================================
 //  CUỘC PHIÊU LƯU ANH EM NHÀ TRUMBO - PHẦN 2
 //  THÀNH PHỐ BỊ LÃNG QUÊN
-//  Trump + Poly (2 người chung bàn phím) + Boogie (chú chó do máy điều khiển)
+//  Trump + Poly (2 người chung bàn phím) + Pugi (chú chó do máy điều khiển)
 // ============================================================
 const W = 320, H = 180, TS = 16;
 const FONT = "'VT323', ui-monospace, monospace";
@@ -258,31 +258,35 @@ function drawKid(c, cx, by, who, dir, fr, o = {}) {
     }
   }
 }
-// Boogie: black dog, sturdy, small tail, red collar
+// Pugi: black hunting dog - slim, long legs, deep chest, long snout, pointed ears
 function drawDog(c, cx, by, d, o = {}) {
   const L = d.face < 0, f = d.flash > 0;
   const q = (dx, dy, w, h, col) => { c.fillStyle = f ? '#fff' : col; c.fillRect(L ? cx - dx - w : cx + dx, by + dy, w, h); };
-  const K = '#1e1b24', KH = '#3d3848', ED = '#615a72';
+  const K = '#1e1b24', KH = '#46405a', ED = '#615a72', TAN = '#8a5a33';
   if (!o.noShadow) shadow(c, cx, by, 16);
   const run = d.moving ? Math.floor(d.anim) % 2 : 0;
-  // outline glow so the black dog reads on dark floors
-  q(-8, -11, 16, 8, ED); q(3, -16, 9, 9, ED);
-  // legs
-  q(-6, -4 + (run ? -1 : 0), 2, 4, K); q(-3, -4 + (run ? 0 : -1), 2, 4, K); q(3, -4 + (run ? -1 : 0), 2, 4, K); q(6, -4 + (run ? 0 : -1), 2, 4, K);
-  // body
-  q(-7, -10, 14, 7, K); q(-6, -10, 10, 1, KH); q(4, -8, 3, 4, '#2a2632');
-  // tail (small, wagging)
+  // soft outline so the black dog reads on dark floors
+  q(-9, -13, 12, 5, ED); q(2, -14, 7, 7, ED); q(6, -20, 7, 8, ED); q(11, -18, 5, 4, ED);
+  // long thin legs (gallop: front and back pairs alternate)
+  const fa = run ? 1 : 0, fb = run ? 0 : 1;
+  q(-7 - fa, -8, 1, 8, K); q(-5 + fa, -8, 1, 8, K); q(3 + fb, -8, 1, 8, K); q(5 - fb, -8, 1, 8, K);
+  q(-7 - fa, -1, 2, 1, K); q(-5 + fa, -1, 2, 1, K); q(3 + fb, -1, 2, 1, K); q(5 - fb, -1, 2, 1, K);
+  // rump, tucked waist, deep chest
+  q(-8, -12, 4, 4, K); q(-5, -12, 8, 2, K); q(-1, -11, 4, 1, K); q(2, -13, 6, 5, K);
+  q(-7, -12, 10, 1, KH); q(3, -9, 4, 1, TAN);
+  // thin tail, small, wagging
   const wag = Math.floor(time * 10) % 2;
-  q(-9, -12 + wag, 2, 3, K);
-  // head
-  q(4, -15, 7, 7, K); q(9, -12, 3, 3, '#2a2632'); q(11, -12, 1, 1, '#000');
-  q(4, -16, 2, 4, '#141118'); q(5, -14, 1, 1, KH);
-  q(8, -14, 1, 1, '#fff');
+  q(-10, -13 - wag, 2, 1, K); q(-11, -14 - wag, 1, 1, K);
+  // neck, head, long narrow snout, pointed ears
+  q(6, -16, 3, 4, K); q(7, -19, 5, 4, K); q(11, -18, 4, 2, K); q(15, -18, 1, 1, '#000');
+  q(11, -16, 3, 1, TAN);
+  q(7, -21, 1, 2, K); q(8, -22, 1, 1, K); q(9, -21, 1, 2, '#141118');
+  q(10, -18, 1, 1, '#fff'); q(7, -19, 4, 1, KH);
   // collar
-  q(4, -9, 3, 1, upg.collar > 0 ? '#c8cedc' : '#e63946'); q(5, -8, 1, 1, '#ffd23f');
-  if (d.barkT > 0) { q(10, -10, 2, 2, '#ff7a9a'); }
-  else if (d.moving) q(10, -9, 1, 2, '#ff7a9a');
-  if (d.biteT > 0) { q(12, -13, 2, 1, '#fff'); q(12, -10, 2, 1, '#fff'); }
+  q(6, -14, 3, 1, upg.collar > 0 ? '#c8cedc' : '#e63946'); q(7, -13, 1, 1, '#ffd23f');
+  if (d.barkT > 0) { q(12, -16, 3, 2, '#ff7a9a'); }
+  else if (d.moving) q(13, -16, 1, 2, '#ff7a9a');
+  if (d.biteT > 0) { q(15, -19, 2, 1, '#fff'); q(15, -16, 2, 1, '#fff'); }
 }
 
 // ---------------- enemies
@@ -588,18 +592,18 @@ const DLG = {
     { who: 'narr', text: 'Lần này hai anh em có thêm vũ khí, và có thể nâng cấp vũ khí bằng xu nhặt được trên đường.' },
     { who: 'narr', text: 'Bỗng từ trong đống đổ nát, một chú chó đen lao ra, sủa vang làm lũ chuột chạy tán loạn!' },
     { who: 'boogie', text: 'GÂU! GÂU!' },
-    { who: 'poly', text: 'Ơ, một bạn chó! To ghê, mà cái đuôi nhỏ xíu à!' },
-    { who: 'trump', text: 'Nó gan lì ghê. Cái vòng cổ ghi chữ BOOGIE. Boogie, đi cùng tụi anh nhé?' },
+    { who: 'poly', text: 'Ơ, một bạn chó! Thon gọn, chân dài như chó săn luôn!' },
+    { who: 'trump', text: 'Nó gan lì ghê. Cái vòng cổ ghi chữ PUGI. Pugi, đi cùng tụi anh nhé?' },
     { who: 'boogie', text: 'Gâu! (vẫy cái đuôi nhỏ)' },
-    { who: 'narr', text: 'Boogie quyết định đi cùng Trump và Poly. Boogie không biết chữa thương, nhưng rất giỏi CẮN, SỦA và NHỬ kẻ địch.' },
+    { who: 'narr', text: 'Pugi quyết định đi cùng Trump và Poly. Pugi không biết chữa thương, nhưng rất giỏi CẮN, SỦA và NHỬ kẻ địch.' },
     { who: 'trump', text: 'Cánh cổng ra khỏi thành phố có 5 cái lỗ hình viên ngọc. Mình phải tìm đủ 5 viên ngọc!' }
   ],
   gorilla: [
-    { who: 'narr', text: 'Đủ 5 viên ngọc! Hai anh em và Boogie tiến vào khu vực trung tâm thành phố.' },
+    { who: 'narr', text: 'Đủ 5 viên ngọc! Hai anh em và Pugi tiến vào khu vực trung tâm thành phố.' },
     { who: 'narr', text: 'Mặt đất rung chuyển...' },
     { who: 'poly', text: 'Anh ơi... cái gì to quá vậy?!' },
     { who: 'narr', text: 'Một con KHỈ ĐỘT KHỔNG LỒ nhảy xuống từ tòa nhà cao nhất!' },
-    { who: 'trump', text: 'Boogie, giữ chân nó! Poly bắn từ xa, anh xông vào!' },
+    { who: 'trump', text: 'Pugi, giữ chân nó! Poly bắn từ xa, anh xông vào!' },
     { who: 'boogie', text: 'GRRR... GÂU!' }
   ],
   gorillaEnd: [
@@ -624,11 +628,11 @@ const DLG = {
     { who: 'narr', text: 'Nó để lại một CHIẾC CHÌA KHÓA BÍ ẨN.' },
     { who: 'narr', text: 'Chiếc chìa khóa mở ra một cầu thang dẫn xuống lòng đất. Trên đó có dòng chữ: 18 TẦNG ĐỊA NGỤC.' },
     { who: 'poly', text: 'Anh ơi... em hơi sợ.' },
-    { who: 'trump', text: 'Có anh với Boogie đây rồi. Mình đi cùng nhau!' },
+    { who: 'trump', text: 'Có anh với Pugi đây rồi. Mình đi cùng nhau!' },
     { who: 'boogie', text: 'Gâu!' }
   ],
   hell: [
-    { who: 'narr', text: 'Hai anh em và Boogie lần lượt bước xuống 18 tầng địa ngục.' },
+    { who: 'narr', text: 'Hai anh em và Pugi lần lượt bước xuống 18 tầng địa ngục.' },
     { who: 'narr', text: 'Mỗi tầng có thử thách và kẻ địch khác nhau. Hạ hết kẻ địch thì cầu thang xuống tầng dưới sẽ hiện ra.' }
   ],
   forge: [
@@ -649,7 +653,7 @@ const DLG = {
     { who: 'narr', text: 'Sau cánh cửa cuối cùng là một lâu đài khổng lồ. Trên ngai vàng là ÁC QUỶ.' },
     { who: 'demon', text: 'Các ngươi đã vượt qua thành phố, sa mạc và 18 tầng địa ngục.' },
     { who: 'demon', text: 'Nhưng muốn đi tiếp, các ngươi phải đánh bại ta.' },
-    { who: 'trump', text: 'Boogie nhử nó! Poly bắn từ xa! Anh đánh gần!' },
+    { who: 'trump', text: 'Pugi nhử nó! Poly bắn từ xa! Anh đánh gần!' },
     { who: 'boogie', text: 'GÂU GÂU!' }
   ],
   ending: [
@@ -775,7 +779,7 @@ function mkPlayer(id) {
     down: false, reviveT: 0, hzT: 0.3, hw: 4, hh: 4, ai: false, path: null, pathT: 0 };
 }
 function mkDog() {
-  return { isDog: true, name: 'BOOGIE', x: 0, y: 0, hp: 14, maxhp: 14, face: 1, anim: 0, moving: false, inv: 0, flash: 0, kx: 0, ky: 0,
+  return { isDog: true, name: 'PUGI', x: 0, y: 0, hp: 14, maxhp: 14, face: 1, anim: 0, moving: false, inv: 0, flash: 0, kx: 0, ky: 0,
     down: false, downT: 0, pathT: 0, st: 'follow', tgt: null, barkCd: 3, biteCd: 0, lureT: 0, lureA: 0, barkT: 0, biteT: 0, stuck: 0, hw: 4, hh: 3, fly: false };
 }
 const EDEF = {
@@ -968,7 +972,7 @@ function hurtDog(dg, d, fx, fy) {
   if (l > 0.1) { dg.kx = dx / l * 140; dg.ky = dy / l * 140; }
   tone(700, 0.1, 'square', 0.06, 400);
   addFloat(dg.x, dg.y - 20, '-' + d, '#ff9aa2');
-  if (dg.hp <= 0) { dg.hp = 0; dg.down = true; dg.downT = 6; say('Boogie bị thương, nằm nghỉ một chút! Poly có thể thổi bong bóng cứu Boogie.', 3.2); }
+  if (dg.hp <= 0) { dg.hp = 0; dg.down = true; dg.downT = 6; say('Pugi bị thương, nằm nghỉ một chút! Poly có thể thổi bong bóng cứu Pugi.', 3.2); }
 }
 function dropLoot(x, y, big) {
   const n = big ? 20 : 1 + Math.floor(Math.random() * 2.2);
@@ -1044,7 +1048,7 @@ function doSpecial(p) {
       if (q.down) { if (dist(q, p) < 70) revive(q); }
       else { q.hp = Math.min(q.maxhp, q.hp + 4); addFloat(q.x, q.y - 26, '+4', '#8fe36b'); }
     }
-    if (boogie.down && dist(boogie, p) < 70) { boogie.down = false; boogie.hp = Math.ceil(boogie.maxhp / 2); boogie.inv = 1.5; say('Boogie đứng dậy rồi! Gâu!'); }
+    if (boogie.down && dist(boogie, p) < 70) { boogie.down = false; boogie.hp = Math.ceil(boogie.maxhp / 2); boogie.inv = 1.5; say('Pugi đứng dậy rồi! Gâu!'); }
     else if (!boogie.down) boogie.hp = Math.min(boogie.maxhp, boogie.hp + 4);
     addParts(p.x, p.y - 10, 16, ['#ff9ec7', '#ffd1dc', '#fff'], 70, 0.7, -30);
   }
@@ -1225,13 +1229,13 @@ function updEnemy(e, dt) {
     if (Math.hypot(a.x - e.x, a.y - ey) < e.r + 4) hurt(a, e.dash > 0 ? e.dmg + 1 : e.dmg, e.x, e.y);
   }
 }
-// Boogie AI: bite to taunt, bark to stun, circle to lure
-function updBoogie(dg, dt) {
+// Pugi AI: bite to taunt, bark to stun, circle to lure
+function updPugi(dg, dt) {
   dg.inv = Math.max(0, dg.inv - dt); dg.flash = Math.max(0, dg.flash - dt); dg.barkT -= dt; dg.biteT -= dt;
   if (Math.abs(dg.kx) + Math.abs(dg.ky) > 2) { moveEnt(dg, dg.kx * dt, dg.ky * dt); const kd = Math.pow(0.002, dt); dg.kx *= kd; dg.ky *= kd; }
   if (dg.down) {
     dg.downT -= dt;
-    if (dg.downT <= 0) { dg.down = false; dg.hp = Math.ceil(dg.maxhp / 2); dg.inv = 1.5; say('Boogie đứng dậy rồi! Gâu!'); SFX.bark(); }
+    if (dg.downT <= 0) { dg.down = false; dg.hp = Math.ceil(dg.maxhp / 2); dg.inv = 1.5; say('Pugi đứng dậy rồi! Gâu!'); SFX.bark(); }
     return;
   }
   dg.barkCd -= dt; dg.biteCd -= dt;
@@ -1247,7 +1251,7 @@ function updBoogie(dg, dt) {
     addFloat(dg.x, dg.y - 22, 'GÂU!!', '#ffe066');
     for (let i = 0; i < 18; i++) { const a = i / 18 * Math.PI * 2; parts.push({ x: dg.x + Math.cos(a) * 10, y: dg.y - 8 + Math.sin(a) * 6, vx: Math.cos(a) * 90, vy: Math.sin(a) * 50, life: 0.4, max: 0.4, col: '#fff4c0', g: 0, sz: 2 }); }
     for (const e of near) { e.stun = 1.6 + upg.collar * 0.4; e.taunt = Math.max(e.taunt, 2); }
-    if (bossNear) { boss.stun = 1 + upg.collar * 0.3; boss.stunImm = 8; say('Boogie sủa làm boss bị choáng! Tấn công đi!'); }
+    if (bossNear) { boss.stun = 1 + upg.collar * 0.3; boss.stunImm = 8; say('Pugi sủa làm boss bị choáng! Tấn công đi!'); }
   }
   // choose a target: the foe closest to the kids
   if (!dg.tgt || dg.tgt.dead || (dg.tgt.isBoss && (!boss || boss.dead || !bossPts.length))) {
@@ -1520,7 +1524,7 @@ function updPlay(dt) {
     if (helper) { p.reviveT += dt; if (p.reviveT >= 1.5) revive(p); } else p.reviveT = Math.max(0, p.reviveT - dt);
   }
   if (players.every(q => q.down)) { state = 'over'; overT = 0; SFX.down(); return; }
-  updBoogie(boogie, dt);
+  updPugi(boogie, dt);
   for (const e of enemies) updEnemy(e, dt);
   enemies = enemies.filter(e => !e.dead);
   if (boss) updBoss(boss, dt);
@@ -1582,7 +1586,7 @@ function shopItems() {
   if (!upg.bow) it.push({ who: 'poly', name: 'Mở khóa Cung Ba Tên (Poly)', desc: 'Bắn 3 mũi tên tỏa ra, trúng nhiều địch. Phím J để đổi.', cost: 20, buy: () => { upg.bow = 1; players[1].w = 'bow'; } });
   else it.push({ who: 'poly', name: `Cung Ba Tên: cấp ${upg.bow} → ${upg.bow + 1}`, desc: 'Mỗi mũi tên mạnh hơn (+1).', cost: 15 * upg.bow + 5, max: upg.bow >= 3, buy: () => upg.bow++ });
   it.push({ who: 'both', name: `Áo Giáp (${upg.armor}/2)`, desc: 'Thêm 1 trái tim máu cho cả hai anh em.', cost: 25 * (upg.armor + 1), max: upg.armor >= 2, buy: () => upg.armor++ });
-  it.push({ who: 'dog', name: `Boogie Khỏe Hơn (${Math.min(upg.collar, 2)}/2)`, desc: 'Boogie nhiều máu hơn, cắn đau hơn, sủa thường xuyên hơn.', cost: 20 * (upg.collar + 1), max: upg.collar >= 2, buy: () => upg.collar++ });
+  it.push({ who: 'dog', name: `Pugi Khỏe Hơn (${Math.min(upg.collar, 2)}/2)`, desc: 'Pugi nhiều máu hơn, cắn đau hơn, sủa thường xuyên hơn.', cost: 20 * (upg.collar + 1), max: upg.collar >= 2, buy: () => upg.collar++ });
   it.push({ who: 'go', name: 'Tiếp tục hành trình ▶', desc: 'Xu chưa dùng sẽ được giữ lại cho lần sau.', cost: 0, go: true });
   return it;
 }
@@ -1695,7 +1699,7 @@ function drawPlayer(p) {
     }
   }
 }
-function drawBoogie() {
+function drawPugi() {
   const dg = boogie, cx = Math.round(dg.x - cam.x), by = Math.round(dg.y - cam.y);
   if (dg.down) {
     drawDog(b, cx, by + 3, Object.assign({}, dg, { moving: false, barkT: 0, biteT: 0 }));
@@ -1773,7 +1777,7 @@ function drawWorld() {
   for (const it of pickups) { const bob = Math.round(Math.sin((time + it.t) * 4) * 1.5); drawItem(b, it.kind, Math.round(it.x - cam.x), Math.round(it.y - cam.y) + bob, it.extra); }
   const list = [];
   for (const p of players) list.push({ y: p.y, f: () => drawPlayer(p) });
-  if (boogie) list.push({ y: boogie.y, f: drawBoogie });
+  if (boogie) list.push({ y: boogie.y, f: drawPugi });
   for (const e of enemies) list.push({ y: e.y, f: () => drawEnemy(e) });
   for (const o of objs) if (['obelisk', 'smith', 'anvil', 'forgefire'].includes(o.type)) list.push({ y: o.y, f: () => drawObj(o) });
   if (boss) {
@@ -1846,12 +1850,12 @@ function drawHUD() {
   if (st.type === 'boss') obj = 'BOSS';
   panel(W / 2 - 42, 3, 84, 14, 0.88);
   T(obj, W / 2, 3, 11, '#ffe066', 'center');
-  // coins + Boogie
+  // coins + Pugi
   panel(W / 2 - 42, 18, 84, 15, 0.88);
   R(b, W / 2 - 38, 22, 5, 6, '#ffd23f'); R(b, W / 2 - 37, 23, 1, 3, '#fff4b0');
   T('' + coins, W / 2 - 31, 19, 10, '#ffe066');
   const dg = boogie;
-  b.save(); b.beginPath(); b.rect(W / 2 - 14, 19, 16, 13); b.clip(); drawDog(b, W / 2 - 14, 32, { face: 1, flash: 0, moving: false, barkT: 0, biteT: 0, anim: 0 }, { noShadow: true }); b.restore();
+  b.save(); b.beginPath(); b.rect(W / 2 - 16, 19, 19, 13); b.clip(); drawDog(b, W / 2 - 23, 39, { face: 1, flash: 0, moving: false, barkT: 0, biteT: 0, anim: 0 }, { noShadow: true }); b.restore();
   R(b, W / 2 + 4, 22, 32, 3, '#2a1f3a'); R(b, W / 2 + 4, 22, Math.round(32 * dg.hp / dg.maxhp), 3, dg.down ? '#8a7fa0' : '#8fd6ff');
   const bc = clamp(dg.barkCd / (7 - upg.collar), 0, 1);
   R(b, W / 2 + 4, 27, 32, 2, '#2a1f3a'); R(b, W / 2 + 4, 27, Math.round(32 * (1 - bc)), 2, bc <= 0 ? '#ffe066' : '#8a7f50');
@@ -1879,7 +1883,7 @@ function drawPortrait(who, x, y) {
   const bg = { trump: ['#2c5fa8', '#3a7bd5'], poly: ['#3e9a44', '#5cc15c'], boogie: ['#5a3a20', '#8a5a33'], smith: ['#5a2a1a', '#8a3a1a'], demon: ['#3a0a2a', '#6a0a2a'] }[who];
   R(b, x, y, 36, 36, '#f4e3c1'); R(b, x + 1, y + 1, 34, 34, bg[0]); R(b, x + 1, y + 24, 34, 11, bg[1]);
   if (who === 'trump' || who === 'poly') { drawKid(pc, 12, 26, who, 'down', 0, { noShadow: true }); b.drawImage(portraitCan, 3, who === 'trump' ? 1 : 4, 18, 18, x, y, 36, 36); }
-  if (who === 'boogie') { drawDog(pc, 20, 30, { face: 1, flash: 0, moving: false, barkT: Math.floor(time * 4) % 2 ? 0.2 : 0, biteT: 0, anim: 0 }, { noShadow: true }); b.drawImage(portraitCan, 14, 12, 18, 18, x, y, 36, 36); }
+  if (who === 'boogie') { drawDog(pc, 20, 30, { face: 1, flash: 0, moving: false, barkT: Math.floor(time * 4) % 2 ? 0.2 : 0, biteT: 0, anim: 0 }, { noShadow: true }); b.drawImage(portraitCan, 20, 6, 18, 18, x, y, 36, 36); }
   if (who === 'smith') { drawSmith(pc, 20, 30); b.drawImage(portraitCan, 11, 6, 18, 18, x, y, 36, 36); }
   if (who === 'demon') { drawDemon(pc, 48, 60, { t: time, flash: 0, mouth: Math.floor(time * 4) % 2 ? 0.2 : 0, phase: 1 }); b.drawImage(portraitCan, 34, 24, 28, 28, x + 4, y + 5, 28, 28); }
 }
@@ -1889,7 +1893,7 @@ function drawDialog() {
   const hasP = L.who !== 'narr';
   if (hasP) drawPortrait(L.who, x + 6, y + 6);
   const tx = hasP ? x + 48 : x + 10, mw = w - (tx - x) - 10;
-  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boogie: ['BOOGIE', '#8fd6ff'], smith: ['ÔNG THỢ RÈN', '#ffb13b'], demon: ['ÁC QUỶ', '#c77dff'], narr: ['', '#fff'] }[L.who];
+  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boogie: ['PUGI', '#8fd6ff'], smith: ['ÔNG THỢ RÈN', '#ffb13b'], demon: ['ÁC QUỶ', '#c77dff'], narr: ['', '#fff'] }[L.who];
   if (NAME[0]) T(NAME[0], tx, y + 2, 10, NAME[1]);
   const lines = wrap(L.text, mw, 11);
   let left = Math.floor(dialog.ch);
@@ -1953,15 +1957,15 @@ function drawHowto() {
   T('CÁCH CHƠI', W / 2, 2, 16, '#ffd23f', 'center', '#b5179e');
   const card = (x, who, title, sub, rows, col) => {
     panel(x, 20, 102, 112, 0.95, '#2a1f45');
-    if (who === 'boogie') drawDog(b, x + 14, 46, { face: 1, flash: 0, moving: Math.floor(time * 2) % 2 === 0, barkT: 0, biteT: 0, anim: time * 8 });
+    if (who === 'boogie') drawDog(b, x + 11, 46, { face: 1, flash: 0, moving: Math.floor(time * 2) % 2 === 0, barkT: 0, biteT: 0, anim: time * 8 });
     else drawKid(b, x + 13, 46, who, 'down', Math.floor(time * 4) % 4 === 1 ? 1 : 0);
-    T(title, x + 28, 22, 11, col); T(sub, x + 28, 32, 8, '#c9b8e8');
+    const tx = who === 'boogie' ? x + 32 : x + 28; T(title, tx, 22, 11, col); T(sub, tx, 32, 8, '#c9b8e8');
     rows.forEach(([k, d], i) => { const yy = 50 + i * 20; T(k, x + 5, yy, 8, '#ffe066', 'left', null); T(d, x + 5, yy + 8, 8, '#fff', 'left', null); });
   };
   card(4, 'trump', 'TRUMP', 'đánh gần', [['W A S D', 'di chuyển'], ['F hoặc Space', 'chém / đập'], ['G', 'lốc xoáy, đỡ đạn'], ['R', 'đổi Kiếm ↔ Búa']], '#ffd166');
   if (mode === 2) card(109, 'poly', 'POLY', 'đánh xa', [['Phím mũi tên', 'di chuyển'], ['Enter hoặc L', 'bắn'], ['Shift phải / K', 'bong bóng hồi máu'], ['J / Ctrl phải', 'đổi Ná ↔ Cung']], '#8fe36b');
   else card(109, 'poly', 'POLY', 'máy điều khiển', [['Tự đi theo anh', ''], ['Tự bắn', ''], ['Tự hồi máu', 'và cứu anh'], ['', '']], '#8fe36b');
-  card(214, 'boogie', 'BOOGIE', 'giữ chân địch', [['CẮN', 'kéo địch đuổi theo mình'], ['SỦA', 'làm địch bị choáng'], ['NHỬ', 'chạy vòng dụ địch'], ['Tự động', 'không cần bấm phím']], '#8fd6ff');
+  card(214, 'boogie', 'PUGI', 'giữ chân địch', [['CẮN', 'kéo địch đuổi theo'], ['SỦA', 'làm địch bị choáng'], ['NHỬ', 'chạy vòng dụ địch'], ['Tự động', 'không cần bấm phím']], '#8fd6ff');
   const tips = ['Nhặt xu vàng để nâng cấp vũ khí ở trạm nâng cấp.', 'Một người ngã thì người kia đứng sát bên để cứu dậy.', 'Esc: tạm dừng  ·  M: tắt nhạc  ·  Game tự lưu mỗi màn.'];
   tips.forEach((t, i) => T('- ' + t, 8, 135 + i * 10, 9, '#e8dcff'));
   if (Math.floor(time * 2) % 2) T('Nhấn ENTER để bắt đầu!', W / 2, 166, 12, '#ffd23f', 'center', '#b5179e');
@@ -1981,7 +1985,7 @@ function drawShop() {
     if (it.who === 'trump') weaponIcon(b, 13, yy + 1, i === 0 ? 'sword' : 'hammer');
     if (it.who === 'poly') weaponIcon(b, 13, yy + 1, i === 2 ? 'sling' : 'bow');
     if (it.who === 'both') drawHeart(b, 14, yy + 3, 1);
-    if (it.who === 'dog') { R(b, 14, yy + 3, 8, 5, '#1e1b24'); R(b, 19, yy + 1, 4, 4, '#1e1b24'); R(b, 18, yy + 5, 3, 1, '#e63946'); }
+    if (it.who === 'dog') { R(b, 13, yy + 4, 7, 2, '#5a5468'); R(b, 13, yy + 6, 1, 4, '#5a5468'); R(b, 19, yy + 6, 1, 4, '#5a5468'); R(b, 19, yy + 1, 3, 3, '#5a5468'); R(b, 22, yy + 2, 2, 1, '#5a5468'); R(b, 19, yy + 4, 2, 1, '#e63946'); }
     T(it.name, 28, yy, 10, sel ? '#ffd23f' : col, 'left', null);
     if (!it.go) T(it.max ? 'TỐI ĐA' : `${it.cost} xu`, W - 14, yy, 10, it.max ? '#6a6080' : coins >= it.cost ? '#ffe066' : '#ff8a8a', 'right', null);
   });
@@ -2026,7 +2030,7 @@ function render() {
       T('TẠM DỪNG', W / 2, 36, 18, '#ffd23f', 'center');
       T('Trump: WASD · F đánh · G lốc xoáy · R đổi vũ khí', W / 2, 60, 9, '#ffd166', 'center');
       T('Poly: mũi tên · Enter bắn · Shift phải hồi máu · J đổi', W / 2, 72, 9, '#8fe36b', 'center');
-      T('Boogie tự cắn, sủa và nhử kẻ địch', W / 2, 84, 9, '#8fd6ff', 'center');
+      T('Pugi tự cắn, sủa và nhử kẻ địch', W / 2, 84, 9, '#8fd6ff', 'center');
       T('M: tắt/bật nhạc', W / 2, 100, 10, '#fff', 'center');
       T('Esc: chơi tiếp  ·  Q: lưu và về màn hình chính', W / 2, 118, 10, '#fff', 'center');
     }
