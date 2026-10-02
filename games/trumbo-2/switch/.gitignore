@@ -1,1 +1,7 @@
 node_modules/
+# never commit console keys or NSPs built with them
+prod.keys
+keys.dat
+keys.txt
+keys.ini
+*.nsp

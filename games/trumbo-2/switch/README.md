@@ -37,6 +37,21 @@ File cài: **`trumbo-2.nro`** (khoảng 54 MB, đã kèm sẵn bộ chạy nx.js
 
 Pugi (chú chó) do máy điều khiển, không cần bấm nút.
 
+## Cài dạng .nsp (game hiện ngay trên màn hình chính)
+
+File `.nsp` phải được ký bằng **khóa riêng của chính máy Switch** (`prod.keys`). Khóa này không được phép chia sẻ, nên file `.nsp` phải tự build trên máy tính của anh. Chỉ cần làm một lần, mất khoảng 5 phút:
+
+1. **Lấy prod.keys từ máy Switch:** chép `Lockpick_RCM.bin` vào thẻ SD, khởi động vào payload này (qua Hekate: *Payloads > Lockpick_RCM*), chọn *Dump from SysNAND*. File được lưu ở `sd:/switch/prod.keys`.
+2. **Cài Node.js** (bản LTS) trên máy tính: https://nodejs.org
+3. **Tải mã nguồn:** https://github.com/lacphams4/erpsanxuat.com/archive/refs/heads/claude/kind-mccarthy-pzyart.zip rồi giải nén.
+4. Chép `prod.keys` vào thư mục `games/trumbo-2/switch/` (cùng chỗ với file này).
+5. **Windows:** bấm đúp `build-nsp.bat`. **macOS/Linux:** chạy `./build-nsp.sh`.
+6. Ra file `trumbo-2.nsp` (khoảng 31 MB). Cài bằng **DBI, Tinfoil hoặc Goldleaf** như các game .nsp khác. Máy cần có **sigpatches** (máy đã cài .nsp được thì thường đã có sẵn).
+
+Game sẽ hiện trên màn hình chính với tên *Trumbo 2 - Thanh Pho Bi Lang Quen*, Title ID `01005452554D4000`. Bản .nsp mở thẳng từ màn hình chính, không cần giữ nút R.
+
+`prod.keys` và `*.nsp` đã nằm trong `.gitignore` để không vô tình đưa khóa lên GitHub.
+
 ## Build lại từ mã nguồn
 
 Mã game nằm ở `../index.html` (cùng một file chạy được trên trình duyệt). Script trong file tự nhận biết khi đang chạy trên Switch.
