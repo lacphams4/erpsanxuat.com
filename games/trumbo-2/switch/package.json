@@ -1,0 +1,21 @@
+{
+  "name": "trumbo-2",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cuoc Phieu Luu Anh Em Nha Trumbo - Phan 2: Thanh Pho Bi Lang Quen (Nintendo Switch homebrew, nx.js)",
+  "author": "S4 Family",
+  "license": "UNLICENSED",
+  "type": "module",
+  "nacp": {
+    "id": "01005452554D4202",
+    "title": "Trumbo 2 - Thanh Pho Bi Lang Quen"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "nro": "nxjs-nro --fat",
+    "dist": "npm run build && npm run nro"
+  },
+  "devDependencies": {
+    "@nx.js/nro": "1.0.0-beta.6"
+  }
+}
