@@ -1283,7 +1283,8 @@ function aiPoly(p, dt) {
     if (td < 40 && want > 10) { mx = -ax / l; my = -ay / l; }
   }
   const d = Math.hypot(tx - p.x, ty - p.y);
-  if (d > 150 && !Tp.down) { p.x = Tp.x; p.y = Tp.y; }
+  // too far from Trump (not from its target): catch up with him
+  if (dist(Tp, p) > 150 && !Tp.down) { p.x = Tp.x; p.y = Tp.y; }
   else if (d > want && !(mx || my)) { const s = stepToward(p, tx, ty, dt); mx = s.x; my = s.y; }
   return { mx, my, atk, sp, aim };
 }

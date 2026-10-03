@@ -847,7 +847,17 @@ function aiPoly(p, dt) {
   else if (ZONES[zi].key === 'swamp' && !gateOpen) {
     const pl = objs.filter(o => o.type === 'plate');
     const on = pl.find(o => Math.hypot(o.x - Tp.x, o.y - Tp.y) < 16);
-    if (on) { const ot = pl.find(o => o !== on); tx = ot.x; ty = ot.y - 2; want = 3; }
+    if (on) {
+      const ot = pl.find(o => o !== on); tx = ot.x; ty = ot.y - 2; want = 3;
+      // the plates sit on opposite banks of the poison water: if Poly can't get there quickly, she hops across
+      p.plateT = (p.plateT || 0) + dt;
+      if (p.plateT > 1.5 && Math.hypot(ot.x - p.x, ot.y - p.y) > 12) {
+        addParts(p.x, p.y - 8, 12, ['#8fe36b', '#fff'], 60, 0.5);
+        p.x = ot.x; p.y = ot.y - 2; p.kx = p.ky = 0;
+        addParts(p.x, p.y - 8, 12, ['#8fe36b', '#fff'], 60, 0.5);
+        say('Poly nhảy sang nút đá bên kia!', 2);
+      }
+    } else p.plateT = 0;
   }
   let tgt = null, td = 1e9;
   for (const e of enemies) { if (e.dead) continue; const d = Math.hypot(e.x - p.x, e.y - p.y); if (d < td) { td = d; tgt = e; } }
@@ -859,7 +869,8 @@ function aiPoly(p, dt) {
     if (td < 38 && want > 10 && tgt.type !== 'cage') { mx = -ax / l; my = -ay / l; }
   }
   const d = Math.hypot(tx - p.x, ty - p.y);
-  if (d > 150 && !Tp.down) { p.x = Tp.x; p.y = Tp.y; }
+  // too far from Trump (not from its target): catch up with him
+  if (dist(Tp, p) > 150 && !Tp.down && !(p.plateT && !gateOpen)) { p.x = Tp.x; p.y = Tp.y; }
   else if (d > want && !(mx || my)) {
     p.pathT -= dt;
     const ttx = Math.floor(tx / TS), tty = Math.floor((ty - 2) / TS);
@@ -1584,7 +1595,7 @@ function render() {
   if (NX && lastErr && lastErrT > 0) T('Lỗi: ' + lastErr, 4, H - 10, 8, '#ff8a8a', 'left', '#000');
   if (NX && state === 'title') {
     let n = 0, bts = ''; try { for (const p of navigator.getGamepads()) if (p) { n++; if (!bts) bts = p.buttons.map((x, i) => x.pressed ? i : '').filter(String).join(','); } } catch (e) {}
-    T(`v1.0.0 · tay cầm: ${n} · nút: ${bts || '-'} · khung: ${frameCount} · âm thanh: ${AC ? (SYNTH ? 'buf' : 'osc') : audioOff ? 'tắt' : '-'}`, W - 3, H - 9, 7, '#c9b8e8', 'right', '#000');
+    T(`v1.0.1 · tay cầm: ${n} · nút: ${bts || '-'} · khung: ${frameCount} · âm thanh: ${AC ? (SYNTH ? 'buf' : 'osc') : audioOff ? 'tắt' : '-'}`, W - 3, H - 9, 7, '#c9b8e8', 'right', '#000');
   }
   flushText();
 }
