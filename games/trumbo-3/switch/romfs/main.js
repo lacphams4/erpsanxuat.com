@@ -277,10 +277,12 @@ const OL = '#2a1a2e', SK = '#ffd9b3', SKD = '#eeb489', BL = '#ff9aa2';
 // ---------------- render caches (keep draw calls per frame low: the Switch CPU pays per call)
 // memo(): draw a sprite once into its own small canvas, then reuse it with a single drawImage.
 const SPR = new Map();
+// Enemy sprites are drawn ahead of time (during dialogs, banners and spare frame time) so a big fight never has to build them.
+const warmQ = [], warmed = new Set();
 function memo(key, w, h, ax, ay, fn) {
   let c = SPR.get(key);
   if (!c) {
-    if (SPR.size > 2500) SPR.clear();
+    if (SPR.size > 2500) { SPR.clear(); warmed.clear(); }
     c = mkCanvas(w, h); const x = c.getContext('2d'); x.imageSmoothingEnabled = false; fn(x, ax, ay); SPR.set(key, c);
   }
   return c;
@@ -535,13 +537,31 @@ function drawGargoyle(c, cx, by, e) {
 function drawEnemy(e) {
   const cx = Math.round(e.x - cam.x), by = Math.round(e.y - cam.y);
   if (e.spawn > 0) { if (Math.floor(time * 20) % 2) return; ellipseStamp(cx, by - 2, 10 * (1 - e.spawn), 4 * (1 - e.spawn), '#ff7ab8'); }
-  const q = Math.floor(e.t * 16) % 32, blink = e.tel > 0 && Math.floor(time * 16) % 2 === 0;
-  const v = { type: e.type, t: q / 16, vx: (e.vx || 0) < 0 ? -1 : 1, flash: (e.flash > 0 || blink) ? 1 : 0, cd: e.cd < 0.5 ? 0.1 : 1, tel: 0, red: !!e.red, hop: 0, fade: 0, variant: e.variant || 0 };
-  const big = e.type === 'guardian' || e.type === 'gargoyle';
+  const blink = e.tel > 0 && Math.floor(time * 16) % 2 === 0, fl = (e.flash > 0 || blink) ? 1 : 0, f8 = Math.floor(e.t * 8), big = BIGE(e.type);
   if (e.fade > 0) b.globalAlpha = Math.max(0, 1 - e.fade);
-  stamp(`en|${e.type}|${q}|${v.vx}|${v.flash}|${v.cd}|${v.red}|${v.variant}`, big ? 84 : 44, big ? 84 : 52, big ? 42 : 22, big ? 74 : 44, cx, by, (c, x, y) => drawEnemyRaw(c, x, y, v));
+  b.drawImage(enemySpr(e.type, fl ? f8 & 12 : f8 & 15, (e.vx || 0) < 0 ? -1 : 1, fl, CDLOOK[e.type] && e.cd < 0.5 ? 0.1 : 1, !!e.red, e.variant || 0), cx - (big ? 42 : 22), by - (big ? 74 : 44));
   b.globalAlpha = 1;
   drawEnemyExtras(e, cx, by);
+}
+const CDLOOK = { robot: 1, skeleton: 1 }, MINIONS = { mega: ['piranha'], sdemon: ['imp', 'knight', 'gargoyle'] };
+const BIGE = type => type === 'guardian' || type === 'gargoyle';
+function enemySpr(type, q, vx, fl, cd, red, variant) {
+  const big = BIGE(type), v = { type, t: q / 8, vx, flash: fl, cd, tel: 0, red, hop: 0, fade: 0, variant };
+  return memo(`en|${type}|${q}|${vx}|${fl}|${cd}|${red}|${variant}`, big ? 84 : 44, big ? 84 : 52, big ? 42 : 22, big ? 74 : 44, (c, x, y) => drawEnemyRaw(c, x, y, v));
+}
+function warmEnemy(type, red = false, variant = 0) {
+  const id = `${type}|${red}|${variant}`;
+  if (warmed.has(id) || !EDEF[type]) return; warmed.add(id);
+  for (const cd of CDLOOK[type] ? [1, 0.1] : [1]) for (const vx of [1, -1]) {
+    for (let q = 0; q < 16; q++) warmQ.push(() => enemySpr(type, q, vx, 0, cd, red, variant));
+    for (let q = 0; q < 16; q += 4) warmQ.push(() => enemySpr(type, q, vx, 1, cd, red, variant));
+  }
+}
+function warmStep(ms) { const t0 = performance.now(); while (warmQ.length && performance.now() - t0 < ms) warmQ.shift()(); }
+// coins, hearts and meat dropped by enemies spin through 24 frames
+function warmItems() {
+  if (warmed.has('items')) return; warmed.add('items');
+  for (const kind of ['coin', 'heart', 'meat']) for (let ph = 0; ph < 24; ph++) warmQ.push(() => memo(`it|${kind}|0|${ph}`, 18, 18, 9, 14, (c, x, y) => drawItem(c, kind, x, y, undefined, ph)));
 }
 function drawEnemyRaw(b, cx, by, e) {
   switch (e.type) {
@@ -1041,6 +1061,7 @@ const EDEF = {
   warrior: { hp: 14, spd: 34, r: 7 }, shaman: { hp: 10, spd: 28, r: 6 }, gargoyle: { hp: 70, spd: 44, r: 12, fly: true }
 };
 function mkEnemy(type, x, y, extra = {}) {
+  warmEnemy(type, !!extra.red, extra.variant || 0);
   const d = EDEF[type], sc = extra.scale || 1;
   const hp = Math.round(d.hp * sc);
   return Object.assign({ type, x, y, hp, maxhp: hp, spd: d.spd, dmg: type === 'guardian' || type === 'gargoyle' ? 2 : 1, r: d.r, fly: !!d.fly, vx: 0, vy: 0, t: Math.random() * 3,
@@ -1113,6 +1134,9 @@ function resetWorld(zone) {
 }
 function npcAt(who, x, y, extra = {}) { objs.push(Object.assign({ type: 'npc', who, x, y, ph: objs.length }, extra)); }
 function buildStage(st) {
+  warmItems();
+  (MINIONS[st.key] || []).forEach(t => warmEnemy(t));
+  if (st.waves) for (const w of st.waves) for (const [t] of w) warmEnemy(t);
   resetWorld(st.zone);
   if (st.type === 'hub' || st.type === 'scene' || st.type === 'waves' || st.type === 'boss') {
     map = genArena(st.arena); gateOpen = true;
@@ -1202,10 +1226,10 @@ function spikeOn(x, y) { return ((time / 1.3) + (x % 2) * 0.5) % 2 < 1; }
 // ---------------- combat helpers
 function addParts(x, y, n, cols, spd = 60, life = 0.5, grav = 0, sz = 1) {
   if (NX) n = Math.ceil(n / 2);
-  if (parts.length > 220) n = Math.min(n, 2);
+  if (parts.length > (NX ? 110 : 220)) n = Math.min(n, 2);
   for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, s = Math.random() * spd; parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: life * (0.6 + Math.random() * 0.6), max: life, col: pick(cols), g: grav, sz }); }
 }
-function addFloat(x, y, str, col = '#fff') { floats.push({ x, y, str, col, t: 0.9 }); }
+function addFloat(x, y, str, col = '#fff') { if (NX && floats.length >= 10) floats.shift(); floats.push({ x, y, str, col, t: 0.9 }); }
 let actorsF = -1, actorsC = [];
 function actors() { if (actorsF === frameCount) return actorsC; actorsF = frameCount; actorsC = players.filter(p => !p.down); if (boogie && !boogie.down) actorsC.push(boogie); return actorsC; }
 function hurt(a, d, fx, fy) { if (a.isDog) hurtDog(a, d, fx, fy); else hurtPlayer(a, d, fx, fy); }
@@ -1872,7 +1896,7 @@ function updParts(dt) {
   if ((zoneKey === 'lair' || zoneKey === 'throne') && Math.random() < 0.25) ambient.push({ x: rnd(0, W), y: H + 4, vx: rnd(-6, 6), vy: rnd(-30, -14), col: pick(zoneKey === 'throne' ? ['#c77dff', '#6a1a3a'] : ['#ff7a2f', '#ffb13b']), life: 8 });
   if ((zoneKey === 'heaven' || zoneKey === 'palace') && Math.random() < 0.08) ambient.push({ x: rnd(0, W), y: -4, vx: rnd(-6, 6), vy: rnd(6, 14), col: '#ffe8a0', life: 16 });
   if (STAGES[stageIdx] && STAGES[stageIdx].key === 'finale' && Math.random() < (NX ? 0.04 : 0.08)) { const fx = rnd(40, W - 40) + cam.x, fy = rnd(30, 90) + cam.y; addParts(fx, fy, 22, pick([['#ff4d6d', '#ffe066'], ['#4dd2ff', '#fff'], ['#8fe36b', '#ffd23f'], ['#c77dff', '#ff9ec7']]), 80, 1.1, 40, 2); SFX.boom(); }
-  if (ambient.length > (NX ? 40 : 90)) ambient.splice(0, ambient.length - (NX ? 40 : 90));
+  if (ambient.length > (NX ? 20 : 90)) ambient.splice(0, ambient.length - (NX ? 20 : 90));
   for (const a of ambient) { a.x += a.vx * dt; a.y += a.vy * dt; a.life -= dt; }
   ambient = ambient.filter(a => a.life > 0 && a.y > -10 && a.y < H + 10 && a.x < W + 10);
 }
@@ -1950,7 +1974,7 @@ function update(dt) {
 
 // ---------------- rendering
 // The static part of the map is drawn once into a big canvas; only animated tiles are redrawn each frame.
-let mapLayer = null, mapDirty = true, animTiles = [];
+let mapLayer = null, mapLayers = [null, null], mapDirty = true, animTiles = [];
 function tileImg(k, v, f, x, y) {
   switch (k) {
     case G: return tiles.g[v];
@@ -1967,30 +1991,33 @@ function tileImg(k, v, f, x, y) {
   }
 }
 function buildMapLayer() {
-  mapLayer = mkCanvas(map.w * TS, map.h * TS); const c = mapLayer.getContext('2d'); animTiles = [];
-  for (let y = 0; y < map.h; y++) for (let x = 0; x < map.w; x++) {
-    const i = y * map.w + x, k = map.t[i];
-    if (k === HZ || k === GT || k === SP || k === ST || k === WA) animTiles.push(i);
-    if (k === HZ || k === GT || k === SP || k === WA) continue;
-    c.drawImage(tileImg(k, map.v[i], 0, x, y), x * TS, y * TS);
+  // Water, lava and gate tiles only have 2 animation frames, so the whole map is pre-drawn twice; per frame we copy one of them.
+  animTiles = [];
+  for (let f = 0; f < 2; f++) {
+    const L = mapLayers[f] = mkCanvas(map.w * TS, map.h * TS), c = L.getContext('2d');
+    for (let y = 0; y < map.h; y++) for (let x = 0; x < map.w; x++) {
+      const i = y * map.w + x, k = map.t[i], up = y > 0 ? map.t[i - map.w] : -1, dn = y + 1 < map.h ? map.t[i + map.w] : -1;
+      if (k === SP) { if (!f) animTiles.push(i); continue; }
+      c.drawImage(tileImg(k, map.v[i], f, x, y), x * TS, y * TS);
+      if (k === HZ && up >= 0 && up !== HZ && zoneKey === 'lair') R(c, x * TS, y * TS, 16, 1, '#7a2a10');
+      if (k === WA && dn >= 0 && dn !== WA) { R(c, x * TS, y * TS + 14, 16, 2, '#e8fbff'); if (!f) animTiles.push(i); }
+      if (k === WA && up >= 0 && up !== WA) R(c, x * TS, y * TS, 16, 2, '#e8fbff');
+      if (k === ST && !f) animTiles.push(i);
+    }
   }
-  mapDirty = false;
+  mapLayer = mapLayers[0]; mapDirty = false;
 }
 function drawTiles() {
   if (mapDirty || !mapLayer) buildMapLayer();
-  const camX = Math.round(cam.x), camY = Math.round(cam.y);
-  b.drawImage(mapLayer, camX, camY, W, H, 0, 0, W, H);
-  const f = Math.floor(time * 2) % 2, st = STAGES[stageIdx];
+  const camX = Math.round(cam.x), camY = Math.round(cam.y), f = Math.floor(time * 2) % 2, st = STAGES[stageIdx];
+  b.drawImage(mapLayers[f], camX, camY, W, H, 0, 0, W, H);
   for (const i of animTiles) {
     const x = i % map.w, y = (i / map.w) | 0, sx = x * TS - camX, sy = y * TS - camY;
     if (sx <= -TS || sy <= -TS || sx >= W || sy >= H) continue;
     const k = map.t[i];
-    if (k !== ST) b.drawImage(tileImg(k, map.v[i], f, x, y), sx, sy);
-    if (k === HZ && y > 0 && map.t[(y - 1) * map.w + x] !== HZ && zoneKey === 'lair') R(b, sx, sy, 16, 1, '#7a2a10');
-    if (k === WA && y + 1 < map.h && map.t[(y + 1) * map.w + x] !== WA) { R(b, sx, sy + 14, 16, 2, '#e8fbff'); R(b, sx + ((time * 8 + x * 5) % 13 | 0), sy + 12, 3, 1, '#e8fbff'); }
-    if (k === WA && y > 0 && map.t[(y - 1) * map.w + x] !== WA) R(b, sx, sy, 16, 2, '#e8fbff');
-    if (k === SP && !spikeOn(x, y) && ((time / 1.3) + (x % 2) * 0.5) % 2 > 1.7) for (let yy = 3; yy < 16; yy += 5) for (let xx = 3; xx < 16; xx += 5) R(b, sx + xx, sy + yy, 2, 1, '#8a8f9a');
-    if (k === ST && Math.floor(time * 3) % 2) R(b, sx + 6, sy - 6, 4, 3, '#ffe066');
+    if (k === SP) { b.drawImage(tileImg(k, map.v[i], f, x, y), sx, sy); if (!spikeOn(x, y) && ((time / 1.3) + (x % 2) * 0.5) % 2 > 1.7) for (let yy = 3; yy < 16; yy += 5) for (let xx = 3; xx < 16; xx += 5) R(b, sx + xx, sy + yy, 2, 1, '#8a8f9a'); }
+    else if (k === WA) R(b, sx + ((time * 8 + x * 5) % 13 | 0), sy + 12, 3, 1, '#e8fbff');
+    else if (k === ST && Math.floor(time * 3) % 2) R(b, sx + 6, sy - 6, 4, 3, '#ffe066');
   }
 }
 function drawPlayer(p) {
@@ -2186,19 +2213,23 @@ function weaponIcon(c, x, y, w) {
   if (w === 'bow') { R(c, x + 1, y + 2, 8, 3, '#5a5f6a'); R(c, x + 1, y + 2, 8, 1, '#9aa0b0'); R(c, x + 2, y + 5, 3, 4, '#6b4226'); R(c, x + 5, y + 5, 1, 2, '#3a3a44'); }
 }
 function drawPlayerPanel(p, x) {
-  panel(x, 3, 114, 29, 0.88);
-  b.drawImage(memo(`pk|${p.id}|${upg.armor > 0}|${upg.legend}`, 20, 27, 0, 0, c => drawKid(c, 10, 26, p.id, 'down', 0, { noShadow: true })), x + 2, 4);
+  // the pixel part of the panel (frame, face, hearts, weapon, special button) is cached as one image and only redrawn when it changes
+  const cd = p.spCd / (p.id === 'trump' ? 4 : 9), cq = cd <= 0 ? 0 : Math.ceil(cd * 10);
+  b.drawImage(memo(`pp|${p.id}|${p.hp}|${p.maxhp}|${p.w}|${upg.armor > 0}|${upg.legend}|${cq}`, 114, 29, 0, 0, c => playerPanelRaw(c, p, cq)), x, 3);
   T(p.name, x + 25, 2, 10, PDEF[p.id].col);
-  const hearts = p.maxhp / 2;
-  for (let i = 0; i < hearts; i++) drawHeart(b, x + 25 + i * 8, 14, clamp(p.hp / 2 - i, 0, 1));
-  weaponIcon(b, x + 25, 21, p.w);
   const alt = p.id === 'trump' ? (upg.hammer ? (p.w === 'sword' ? 'hammer' : 'sword') : null) : (upg.bow ? (p.w === 'sling' ? 'bow' : 'sling') : null);
   T(`${weaponName(p)} ${'★'.repeat(weaponLv(p))}${alt && !p.ai ? (NX ? ' (L/R)' : p.id === 'trump' ? ' (R)' : ' (J)') : ''}`, x + 37, 20, 8, upg.legend ? '#ffb13b' : '#c9b8e8', 'left', null);
-  const sx = x + 100, cd = p.spCd / (p.id === 'trump' ? 4 : 9);
-  R(b, sx - 1, 7, 12, 12, '#2a1f3a'); R(b, sx, 8, 10, 10, cd <= 0 ? (p.id === 'trump' ? '#4dd2ff' : '#ff9ec7') : '#4a3f5a');
-  if (p.id === 'trump') { R(b, sx + 2, 12, 6, 2, '#fff'); R(b, sx + 4, 10, 2, 6, '#fff'); } else drawHeart(b, sx + 1, 10, 1, '#ffffff');
-  if (cd > 0) { b.globalAlpha = 0.65; R(b, sx, 8, 10, Math.round(10 * cd), '#140d22'); b.globalAlpha = 1; }
-  T(p.ai ? 'MÁY' : NX ? 'X/Y' : (p.id === 'trump' ? 'G' : 'Shift'), sx + 5, 19, 7, cd <= 0 ? '#fff' : '#8a7fa0', 'center');
+  T(p.ai ? 'MÁY' : NX ? 'X/Y' : (p.id === 'trump' ? 'G' : 'Shift'), x + 105, 19, 7, cd <= 0 ? '#fff' : '#8a7fa0', 'center');
+}
+function playerPanelRaw(c, p, cq) {
+  panelRaw(c, 114, 29, 0.88, '#1d1430');
+  c.drawImage(memo(`pk|${p.id}|${upg.armor > 0}|${upg.legend}`, 20, 27, 0, 0, k => drawKid(k, 10, 26, p.id, 'down', 0, { noShadow: true })), 2, 1);
+  for (let i = 0; i < p.maxhp / 2; i++) { const fl = clamp(p.hp / 2 - i, 0, 1); drawHeartRaw(c, 25 + i * 8, 11, fl >= 1 ? 1 : fl > 0 ? 0.5 : 0); }
+  weaponIcon(c, 25, 18, p.w);
+  const sx = 100;
+  R(c, sx - 1, 4, 12, 12, '#2a1f3a'); R(c, sx, 5, 10, 10, cq <= 0 ? (p.id === 'trump' ? '#4dd2ff' : '#ff9ec7') : '#4a3f5a');
+  if (p.id === 'trump') { R(c, sx + 2, 9, 6, 2, '#fff'); R(c, sx + 4, 7, 2, 6, '#fff'); } else drawHeartRaw(c, sx + 1, 7, 1, '#ffffff');
+  if (cq > 0) { c.globalAlpha = 0.65; R(c, sx, 5, 10, cq, '#140d22'); c.globalAlpha = 1; }
 }
 function drawHUD() {
   drawPlayerPanel(players[0], 2);
@@ -2404,7 +2435,7 @@ function render() {
   if (NX && lastErr && lastErrT > 0) T('Lỗi: ' + lastErr, 4, H - 10, 8, '#ff8a8a', 'left', '#000');
   if (NX && state === 'title') {
     let n = 0, bts = ''; try { for (const p of navigator.getGamepads()) if (p) { n++; if (!bts) bts = p.buttons.map((x, i) => x.pressed ? i : '').filter(String).join(','); } } catch (e) {}
-    T(`v1.0.0 · tay cầm: ${n} · nút: ${bts || '-'} · khung: ${frameCount} · âm thanh: ${AC ? (SYNTH ? 'buf' : 'osc') : audioOff ? 'tắt' : '-'}`, W - 3, H - 9, 7, '#c9b8e8', 'right', '#000');
+    T(`v1.0.1 · tay cầm: ${n} · nút: ${bts || '-'} · khung: ${frameCount} · âm thanh: ${AC ? (SYNTH ? 'buf' : 'osc') : audioOff ? 'tắt' : '-'}`, W - 3, H - 9, 7, '#c9b8e8', 'right', '#000');
   }
   flushText();
 }
@@ -2422,6 +2453,7 @@ function frame(now) {
   try { update(dt); } catch (err) { reportError(err); }
   const skip = NX && halfRate && (frameCount & 1);
   if (!skip) { try { render(); } catch (err) { reportError(err); } }
+  if (warmQ.length) { try { warmStep(state === 'play' ? 1.5 : 6); } catch (err) { reportError(err); } }
   const work = performance.now() - t0;
   if (!skip) { workAvg = workAvg * 0.92 + work * 0.08; if (NX) { if (workAvg > 13) halfRate = true; else if (workAvg < 6) halfRate = false; } }
   pressed = {};
