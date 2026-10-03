@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.erpsanxuat.trumbo'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.erpsanxuat.trumbo'
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    signingConfigs {
+        // Test builds only (sideloading on your own phone). The Play Store bundle is signed separately with the private upload key.
+        testDebug {
+            storeFile file('debug-test.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.testDebug
+            applicationIdSuffix '.test'
+            versionNameSuffix '-test'
+        }
+        release {
+            minifyEnabled false
+            // The release bundle is built unsigned here and signed afterwards with the upload key (see ../README.md).
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // the game files are plain web assets: never compress them so the WebView can stream them
+    androidResources {
+        noCompress 'html', 'js', 'ttf', 'png'
+    }
+}

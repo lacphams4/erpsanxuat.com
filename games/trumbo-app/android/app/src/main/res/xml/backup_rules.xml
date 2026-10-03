@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Game progress lives in the WebView's local storage (app_webview); back it up so a new phone keeps the unlocked chapters. -->
+<full-backup-content>
+    <include domain="root" path="app_webview/" />
+</full-backup-content>

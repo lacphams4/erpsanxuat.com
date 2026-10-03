@@ -1,0 +1,41 @@
+name: Build Android app (Anh Em Nhà Trumbo)
+on:
+  push:
+    branches: [claude/kind-mccarthy-pzyart]
+    paths:
+      - 'games/trumbo-app/android/**'
+      - '.github/workflows/trumbo-android.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: trumbo-android
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Build release bundle (unsigned) and test APK
+        working-directory: games/trumbo-app/android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon --stacktrace bundleRelease assembleDebug > ../ci-build.log 2>&1 || (tail -80 ../ci-build.log; exit 1)
+          tail -20 ../ci-build.log
+      - name: Commit build outputs
+        if: always()
+        run: |
+          mkdir -p games/trumbo-app/dist/ci
+          cp games/trumbo-app/ci-build.log games/trumbo-app/dist/ci/build.log || true
+          cp games/trumbo-app/android/app/build/outputs/bundle/release/app-release.aab games/trumbo-app/dist/ci/app-release-unsigned.aab || true
+          cp games/trumbo-app/android/app/build/outputs/apk/debug/app-debug.apk games/trumbo-app/dist/ci/app-test.apk || true
+          echo "${GITHUB_SHA} $(date -u +%FT%TZ) ${{ job.status }}" > games/trumbo-app/dist/ci/BUILD.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f games/trumbo-app/dist/ci
+          git commit -m "CI: Android build outputs for ${GITHUB_SHA::7}" || exit 0
+          for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 5; done

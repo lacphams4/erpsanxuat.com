@@ -1,0 +1,8 @@
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+ci-build.log
+# the private Play upload key never goes into the repository
+*.jks
+upload-key*

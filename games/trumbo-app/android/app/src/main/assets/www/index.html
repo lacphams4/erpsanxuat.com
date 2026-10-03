@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="vi" data-chapter="0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Anh Em Nhà Trumbo</title>
+<style>
+@font-face{font-family:'VT323';src:url(fonts/VT323.ttf) format('truetype');font-display:block}
+/* Home screen: pixel-art backdrop from Chapter 1, menu on a dark panel. Single dark look like the game itself. */
+:root{
+  --ink:#120c1c;--panel:#1d1430;--line:#f4e3c1;--gold:#ffd23f;--pink:#b5179e;--lilac:#c9b8e8;--violet:#4a2f7a;
+  --u:min(1vh,0.6vw);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--ink);color:#fff;font-family:'VT323',ui-monospace,monospace;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#bg{position:fixed;inset:0;background:#2a1a4a url(art/title.png) center/cover no-repeat;image-rendering:pixelated}
+#bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,12,28,.92) 0%,rgba(18,12,28,.75) 38%,rgba(18,12,28,0) 62%)}
+main{position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;padding:calc(4*var(--u)) calc(5*var(--u)) calc(4*var(--u)) max(calc(6*var(--u)),env(safe-area-inset-left));max-width:62vw}
+h1{margin:0;font-weight:normal;line-height:.85;color:var(--gold);font-size:calc(13*var(--u));white-space:nowrap;text-shadow:0 calc(.8*var(--u)) 0 #7a1f5a}
+h1 small{display:block;font-size:.42em;color:#fff;text-shadow:0 calc(.5*var(--u)) 0 #4a1f6a;letter-spacing:.06em}
+.sub{margin:calc(1*var(--u)) 0 calc(2.5*var(--u));font-size:calc(5*var(--u));color:var(--lilac)}
+nav{display:flex;flex-direction:column;gap:calc(1.3*var(--u));align-items:flex-start}
+button{font:inherit;color:#fff;cursor:pointer}
+.m{font-size:calc(6.2*var(--u));white-space:nowrap;padding:calc(.4*var(--u)) calc(3*var(--u));background:var(--panel);border:calc(.5*var(--u)) solid var(--line);border-radius:calc(1*var(--u));min-width:calc(62*var(--u));text-align:left;box-shadow:0 calc(.8*var(--u)) 0 #000}
+.m.main{background:var(--pink);font-size:calc(7.5*var(--u))}
+.m small{color:var(--lilac);font-size:.7em;margin-left:calc(2*var(--u))}
+.m.main small{color:#ffe1f3}
+.m:focus-visible,.m.focus{outline:calc(.6*var(--u)) solid var(--gold);outline-offset:calc(.4*var(--u))}
+.m:active{transform:translateY(calc(.5*var(--u)))}
+.mode{display:flex;align-items:center;gap:calc(1.5*var(--u));font-size:calc(6*var(--u));margin-top:calc(1*var(--u))}
+.seg{display:flex;border:calc(.5*var(--u)) solid var(--line);border-radius:calc(1*var(--u));overflow:hidden}
+.seg button{font-size:calc(6*var(--u));padding:calc(.3*var(--u)) calc(2.5*var(--u));background:var(--panel);border:0}
+.seg button.on{background:var(--gold);color:var(--ink)}
+.status{margin-top:calc(2.5*var(--u));font-size:calc(4.5*var(--u));color:var(--lilac)}
+.status b{color:var(--gold);font-weight:normal}
+/* modal panels */
+.panel{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(10,6,20,.78);z-index:5}
+.panel.open{display:flex}
+.box{background:var(--panel);border:calc(.6*var(--u)) solid var(--line);border-radius:calc(1*var(--u));padding:calc(3*var(--u)) calc(4*var(--u));width:min(92vw,calc(170*var(--u)));max-height:92vh;overflow:auto;touch-action:pan-y}
+.box h2{margin:0 0 calc(2*var(--u));font-weight:normal;color:var(--gold);font-size:calc(9*var(--u))}
+.box p,.box li{font-size:calc(5.2*var(--u));line-height:1.15;margin:0 0 calc(1.2*var(--u))}
+.box ul{margin:0;padding-left:1.2em}
+.box .k{color:var(--gold)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(2*var(--u))}
+.card{white-space:normal;align-self:stretch;background:#2a1f45;border:calc(.5*var(--u)) solid var(--line);border-radius:calc(1*var(--u));padding:calc(2*var(--u));text-align:left;font-size:calc(5*var(--u))}
+.card b{display:block;color:var(--gold);font-weight:normal;font-size:1.1em}
+.card span{display:block;font-size:1.35em;line-height:1}
+.card i{display:block;font-style:normal;color:var(--lilac);margin-top:calc(1*var(--u))}
+.card[disabled]{opacity:.4}
+.row{display:flex;gap:calc(2*var(--u));justify-content:flex-end;margin-top:calc(2.5*var(--u))}
+.row button{font-size:calc(6*var(--u));padding:calc(.5*var(--u)) calc(3*var(--u));background:var(--violet);border:calc(.5*var(--u)) solid var(--line);border-radius:calc(1*var(--u))}
+.row button.go{background:var(--pink)}
+.done{position:fixed;right:calc(4*var(--u));bottom:calc(4*var(--u));font-size:calc(6*var(--u));color:var(--gold);background:rgba(18,12,28,.8);border:calc(.5*var(--u)) solid var(--gold);padding:calc(.5*var(--u)) calc(2.5*var(--u));border-radius:calc(1*var(--u));display:none}
+.done.show{display:block}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<main>
+  <h1><small>CUỘC PHIÊU LƯU</small>ANH EM NHÀ TRUMBO</h1>
+  <div class="sub">Trump, Poly và chú chó Pugi - 3 chương phiêu lưu</div>
+  <nav id="menu">
+    <button class="m main" id="bContinue">▶ Chơi tiếp <small id="contLbl"></small></button>
+    <button class="m" id="bNew">Chơi mới</button>
+    <button class="m" id="bChapters">Chọn chương</button>
+    <button class="m" id="bHelp">Cách chơi</button>
+    <button class="m" id="bAbout">Giới thiệu</button>
+  </nav>
+  <div class="mode">Số người chơi:
+    <div class="seg" id="seg"><button data-m="1">1 người</button><button data-m="2">2 người</button></div>
+  </div>
+  <div class="status" id="status"></div>
+</main>
+<div class="done" id="done">★ ĐÃ HOÀN THÀNH CẢ 3 CHƯƠNG ★</div>
+
+<div class="panel" id="pChapters"><div class="box">
+  <h2>Chọn chương</h2>
+  <div class="cards" id="cards"></div>
+  <div class="row"><button data-close>Đóng</button></div>
+</div></div>
+
+<div class="panel" id="pNew"><div class="box">
+  <h2>Chơi mới?</h2>
+  <p>Bắt đầu lại từ <span class="k">Chương 1</span>. Các chương đã mở vẫn được giữ, có thể chọn lại bất cứ lúc nào.</p>
+  <div class="row"><button data-close>Thôi</button><button class="go" id="bNewGo">Bắt đầu</button></div>
+</div></div>
+
+<div class="panel" id="pHelp"><div class="box">
+  <h2>Cách chơi</h2>
+  <p><span class="k">Trump</span> đánh gần bằng kiếm. <span class="k">Poly</span> bắn từ xa và thổi bong bóng hồi máu. Từ Chương 2 có thêm chú chó <span class="k">Pugi</span> do máy điều khiển: cắn, sủa, nhử quái, đánh hơi và cứu chủ.</p>
+  <ul>
+    <li><span class="k">Màn hình cảm ứng:</span> kéo ngón tay ở nửa trái để di chuyển. <span class="k">A</span> đánh / xác nhận, <span class="k">X</span> chiêu đặc biệt, <span class="k">L/R</span> đổi vũ khí, <span class="k">+</span> tạm dừng, <span class="k">−</span> tắt nhạc (khi tạm dừng: lưu và về màn hình chính).</li>
+    <li><span class="k">2 người trên 1 máy:</span> nửa trái màn hình là Trump, nửa phải là Poly. Máy tính bảng sẽ dễ chơi hơn.</li>
+    <li><span class="k">Tay cầm Bluetooth:</span> tay cầm 1 là Trump, tay cầm 2 là Poly. Nút cảm ứng tự ẩn khi có tay cầm.</li>
+    <li><span class="k">Bàn phím:</span> Trump dùng W A S D, F đánh, G chiêu, R đổi vũ khí. Poly dùng mũi tên, Enter, Shift phải, J. P tạm dừng.</li>
+    <li>Một người ngã thì người kia đứng sát bên để cứu dậy. Chơi 1 người thì máy điều khiển Poly.</li>
+  </ul>
+  <div class="row"><button data-close>Đóng</button></div>
+</div></div>
+
+<div class="panel" id="pAbout"><div class="box">
+  <h2>Giới thiệu</h2>
+  <p>Hai anh em <span class="k">Trump</span> (11 tuổi) và <span class="k">Poly</span> (6 tuổi) bị bão cuốn tới xứ sở rồng. Hỏa Long Vương tặng hai bạn Ngọc La Bàn để tìm đường về nhà, nhưng lời nguyền của Ác Quỷ đã làm la bàn chỉ sai đường...</p>
+  <p>Ý tưởng và kịch bản: <span class="k">Trump</span>. Thực hiện: S4 Family.</p>
+  <p>Miễn phí, không quảng cáo, không thu thập dữ liệu, chơi không cần mạng.</p>
+  <p>Phông chữ VT323 (SIL Open Font License).</p>
+  <div class="row"><button data-close>Đóng</button></div>
+</div></div>
+
+<script src="app.js"></script>
+<script>
+(() => {
+'use strict';
+const APP = window.TRUMBO_APP, CH = APP.CHAPTERS;
+let mode = APP.mode;
+const $ = id => document.getElementById(id);
+function refresh() {
+  const p = APP.progress();
+  $('contLbl').textContent = CH[p.current].label;
+  $('status').innerHTML = `Đã mở: <b>${p.unlocked}/3 chương</b>` + (p.done ? '' : `  ·  Đang chơi: <b>${CH[p.current].label}</b>`);
+  $('done').classList.toggle('show', !!p.done);
+  for (const b of $('seg').children) b.classList.toggle('on', +b.dataset.m === mode);
+  const cards = $('cards'); cards.innerHTML = '';
+  for (const n of [1, 2, 3]) {
+    const c = document.createElement('button'); c.className = 'card m'; c.style.minWidth = '0';
+    c.innerHTML = `<b>${CH[n].label}</b><span>${CH[n].name}</span><i>${n <= p.unlocked ? (n < p.unlocked || p.done ? '✓ Đã qua' : 'Đang chơi') : '🔒 Chưa mở'}</i>`;
+    if (n > p.unlocked) c.setAttribute('disabled', ''); else c.onclick = () => APP.play(n, 'new');
+    cards.appendChild(c);
+  }
+}
+function setMode(m) { mode = m; APP.mode = m; APP.setProgress({ mode: m }); refresh(); }
+// APP.play builds the URL from APP.mode captured at load; keep it in sync
+const play = (n, start) => { APP.setProgress({ mode }); location.href = `${CH[n].file}?mode=${mode}&start=${start}`; };
+APP.play = (n, start) => { APP.setProgress({ current: n }); play(n, start); };
+for (const b of $('seg').children) b.onclick = () => setMode(+b.dataset.m);
+$('bContinue').onclick = () => { const p = APP.progress(); APP.play(p.current, 'continue'); };
+$('bNew').onclick = () => { const p = APP.progress(); if (p.unlocked > 1 || p.current > 1) open('pNew'); else APP.play(1, 'new'); };
+$('bNewGo').onclick = () => APP.play(1, 'new');
+$('bChapters').onclick = () => open('pChapters');
+$('bHelp').onclick = () => open('pHelp');
+$('bAbout').onclick = () => open('pAbout');
+let openId = null;
+function open(id) { close(); openId = id; $(id).classList.add('open'); focusFirst(); }
+function close() { if (openId) $(openId).classList.remove('open'); openId = null; focusFirst(); }
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = close);
+document.querySelectorAll('.panel').forEach(p => p.addEventListener('click', e => { if (e.target === p) close(); }));
+window.TRUMBO_HOME = { back() { if (openId) { close(); return true; } return false; } };
+
+// keyboard / gamepad navigation between buttons
+function focusables() { const scope = openId ? $(openId) : document; return Array.from(scope.querySelectorAll('button:not([disabled])')).filter(b => b.offsetParent !== null); }
+function focusFirst() { const f = focusables(); if (f.length && usingPad) f[0].focus(); }
+let usingPad = false;
+function move(d) { const f = focusables(); if (!f.length) return; usingPad = true; let i = f.indexOf(document.activeElement); i = i < 0 ? 0 : (i + d + f.length) % f.length; f[i].focus(); }
+addEventListener('keydown', e => {
+  if (['ArrowDown', 'ArrowRight', 'KeyS', 'KeyD'].includes(e.code)) { move(1); e.preventDefault(); }
+  if (['ArrowUp', 'ArrowLeft', 'KeyW', 'KeyA'].includes(e.code)) { move(-1); e.preventDefault(); }
+  if (e.code === 'Escape' && openId) close();
+  if ((e.code === 'Enter' || e.code === 'KeyF' || e.code === 'Space') && document.activeElement && document.activeElement.tagName === 'BUTTON') { document.activeElement.click(); e.preventDefault(); }
+});
+const prev = {};
+(function poll() {
+  requestAnimationFrame(poll);
+  let pads = []; try { pads = Array.from(navigator.getGamepads ? navigator.getGamepads() : []).filter(Boolean); } catch (e) {}
+  const now = {};
+  for (const p of pads) {
+    const bt = k => !!(p.buttons[k] && p.buttons[k].pressed);
+    now.down = now.down || bt(13) || bt(15) || (p.axes[1] || 0) > 0.5 || (p.axes[0] || 0) > 0.5;
+    now.up = now.up || bt(12) || bt(14) || (p.axes[1] || 0) < -0.5 || (p.axes[0] || 0) < -0.5;
+    now.a = now.a || bt(0); now.b = now.b || bt(1);
+  }
+  if (now.down && !prev.down) move(1);
+  if (now.up && !prev.up) move(-1);
+  if (now.a && !prev.a && document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.click();
+  if (now.b && !prev.b && openId) close();
+  Object.assign(prev, now);
+})();
+refresh();
+if (new URLSearchParams(location.search).get('done')) $('done').classList.add('show');
+})();
+</script>
+</body>
+</html>
