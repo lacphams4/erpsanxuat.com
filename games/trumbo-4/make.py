@@ -26,7 +26,7 @@ rep('<title>Anh Em Nhà Trumbo 3</title>', '<title>Anh Em Nhà Trumbo 4</title>'
 s = s.replace('CUỘC PHIÊU LƯU ANH EM NHÀ TRUMBO - PHẦN 3', 'CUỘC PHIÊU LƯU ANH EM NHÀ TRUMBO - PHẦN 4')
 rep("const SAVE_KEY = 'trumbo3-save-v1';", "const SAVE_KEY = 'trumbo4-save-v1';")
 rep("T('PHẦN 3 - THÀNH PHỐ THIÊN ĐƯỜNG', W / 2, 40, 12, '#ffffff', 'center', '#3a2a6a');", "T('PHẦN 4 - CỖ MÁY THỜI GIAN', W / 2, 40, 12, '#ffffff', 'center', '#3a2a6a');")
-# the kids still carry the mace, the pistol and their armor from Part 3
+# the kids still carry the mace, the boomerang and their armor from Part 3
 rep("const UPG0 = () => ({ sword: 1, hammer: 0, sling: 1, bow: 0, armor: 0, collar: 0, dogArmor: 0, legend: false });",
     "const UPG0 = () => ({ sword: 2, hammer: 1, sling: 2, bow: 1, armor: 1, collar: 1, dogArmor: 1, legend: false });")
 

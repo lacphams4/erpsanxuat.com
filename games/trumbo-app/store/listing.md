@@ -33,7 +33,7 @@ TRUMBO is a pixel-art action adventure for 1 or 2 players on the same device. Th
 
 ★ THREE HEROES, THREE STRENGTHS
 • The big brother fights up close with a sword and a mace and has a whirlwind attack.
-• The little one shoots a slingshot and a pistol and blows healing bubbles.
+• The little one shoots a slingshot, throws a boomerang and blows healing bubbles.
 • Pugi the dog bites, barks to stun monsters, lures enemies, sniffs out hidden things and rushes in to save the kids.
 
 ★ MAKE IT YOURS
@@ -74,7 +74,7 @@ TRUMBO là trò chơi phiêu lưu hành động đồ họa pixel, chơi 1 ngư�
 
 ★ BA NHÂN VẬT, BA SỨC MẠNH
 • Anh lớn đánh gần bằng kiếm và chùy, có chiêu lốc xoáy.
-• Em nhỏ bắn ná, bắn súng lục và thổi bong bóng hồi máu.
+• Em nhỏ bắn ná, ném boomerang và thổi bong bóng hồi máu.
 • Chú chó Pugi biết cắn, sủa làm quái choáng, nhử quái, đánh hơi đồ bị giấu và lao vào cứu chủ.
 
 ★ CỦA RIÊNG BẠN
@@ -115,7 +115,7 @@ TRUMBO 是一款像素风动作冒险游戏，支持单人或同一台设备双�
 
 ★ 三位主角，三种能力
 • 哥哥用剑和钉头锤近战，还有旋风剑。
-• 小家伙用弹弓和手枪远程射击，还会吹治疗泡泡。
+• 小家伙用弹弓射击、扔回旋镖，还会吹治疗泡泡。
 • 小狗Pugi会咬、会叫（震晕怪物）、引诱敌人、嗅出隐藏的东西，还会冲上去救主人。
 
 ★ 专属于你
