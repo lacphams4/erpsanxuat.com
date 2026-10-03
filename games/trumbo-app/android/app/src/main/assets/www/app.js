@@ -20,6 +20,9 @@ const chapter = +(document.documentElement.dataset.chapter || 0);
 const qs = new URLSearchParams(location.search);
 const prog = loadProgress();
 const mode = qs.get('mode') === '2' ? 2 : qs.get('mode') === '1' ? 1 : (prog.mode || (touch ? 1 : 2));
+// how the chapter should start (new / continue): from the link, or from progress when a host drops the query string
+const startMode = qs.get('start') || prog.pending || 'new';
+if (prog.pending) { prog.pending = null; saveProgress(prog); }
 
 // ---------------- virtual gamepads (touch) merged with real gamepads
 // held = finger is on the button; latch = pressed since the last poll (a quick tap still counts for one frame)
@@ -51,7 +54,7 @@ function chapterUrl(n, start) { return `${CHAPTERS[n].file}?mode=${mode}&start=$
 
 const APP = window.TRUMBO_APP = {
   chapter, mode, touch, CHAPTERS,
-  start: qs.get('start') || 'new',
+  start: startMode,
   pads,
   progress: loadProgress,
   setProgress(p) { saveProgress(Object.assign(loadProgress(), p)); },
@@ -63,7 +66,7 @@ const APP = window.TRUMBO_APP = {
     if (APP.leaving) return;
     const p = loadProgress();
     if (chapter >= 3) { p.done = true; p.unlocked = 3; p.current = 3; saveProgress(p); go('index.html?done=1'); return; }
-    p.unlocked = Math.max(p.unlocked, chapter + 1); p.current = chapter + 1; saveProgress(p);
+    p.unlocked = Math.max(p.unlocked, chapter + 1); p.current = chapter + 1; p.pending = 'new'; saveProgress(p);
     go(chapterUrl(chapter + 1, 'new'));
   },
   play(n, start) { const p = loadProgress(); p.current = n; p.mode = mode; saveProgress(p); go(chapterUrl(n, start)); },

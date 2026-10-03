@@ -132,7 +132,7 @@ function refresh() {
 }
 function setMode(m) { mode = m; APP.mode = m; APP.setProgress({ mode: m }); refresh(); }
 // APP.play builds the URL from APP.mode captured at load; keep it in sync
-const play = (n, start) => { APP.setProgress({ mode }); location.href = `${CH[n].file}?mode=${mode}&start=${start}`; };
+const play = (n, start) => { APP.setProgress({ mode, pending: start }); location.href = `${CH[n].file}?mode=${mode}&start=${start}`; };
 APP.play = (n, start) => { APP.setProgress({ current: n }); play(n, start); };
 for (const b of $('seg').children) b.onclick = () => setMode(+b.dataset.m);
 $('bContinue').onclick = () => { const p = APP.progress(); APP.play(p.current, 'continue'); };
