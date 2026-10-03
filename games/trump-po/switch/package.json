@@ -1,0 +1,24 @@
+{
+  "name": "trump-po",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cuoc Phieu Luu Anh Em Nha Trump-Po (Nintendo Switch homebrew, nx.js)",
+  "author": "S4 Family",
+  "license": "UNLICENSED",
+  "type": "module",
+  "nacp": {
+    "id": "01005452554D1000",
+    "title": "Trump-Po - Phieu Luu Dao Rong"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "nro": "nxjs-nro --fat",
+    "dist": "npm run build && npm run nro",
+    "nsp": "nxjs-nsp --fat",
+    "dist:nsp": "npm run build && npm run nsp"
+  },
+  "devDependencies": {
+    "@nx.js/nro": "1.0.0-beta.6",
+    "@nx.js/nsp": "1.0.0-beta.6"
+  }
+}

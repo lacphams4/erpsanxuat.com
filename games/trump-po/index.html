@@ -22,8 +22,8 @@ body{
   background-image:radial-gradient(ellipse at 50% 120%, #2a1f55 0%, var(--ink) 60%);
 }
 #game{display:block;image-rendering:pixelated;image-rendering:crisp-edges;outline:none;cursor:pointer;
-  box-shadow:0 0 0 2px #2a1f45, 0 12px 40px rgba(0,0,0,.6)}
-#game:focus-visible{box-shadow:0 0 0 2px var(--gold), 0 12px 40px rgba(0,0,0,.6)}
+  box-shadow:0 0 0 2px #2a1f45, 0 12px 40px rgba(0,0,0,0.6)}
+#game:focus-visible{box-shadow:0 0 0 2px var(--gold), 0 12px 40px rgba(0,0,0,0.6)}
 </style>
 <canvas id="game" tabindex="0" aria-label="Game Cuộc Phiêu Lưu Anh Em Nhà Trump-Po. Trump dùng W A S D, F, G. Poly dùng phím mũi tên, Enter, Shift phải."></canvas>
 <script>
@@ -34,14 +34,19 @@ body{
 //  Game co-op pixel: Trump (11 tuổi) & Poly (6 tuổi) trên đảo rồng
 // ============================================================
 const W = 320, H = 180, TS = 16;
-const FONT = "'VT323', ui-monospace, monospace";
-const cv = document.getElementById('game');
+// NX = running on Nintendo Switch homebrew (nx.js runtime) instead of a browser
+const NX = typeof Switch !== 'undefined' && typeof screen !== 'undefined' && typeof document === 'undefined';
+const FONT = NX ? 'VT323' : "'VT323', ui-monospace, monospace";
+function mkCanvas(w, h) { if (NX) return new OffscreenCanvas(w, h); const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
+const hasFocus = () => NX || document.hasFocus();
+const cv = NX ? screen : document.getElementById('game');
 const g = cv.getContext('2d');
-const buf = document.createElement('canvas'); buf.width = W; buf.height = H;
+const buf = mkCanvas(W, H);
 const b = buf.getContext('2d');
 let S = 1;
 
 function resize() {
+  if (NX) { S = Math.min(screen.width / W, screen.height / H); return; }
   const dpr = Math.min(window.devicePixelRatio || 1, 3);
   const ratio = Math.min(innerWidth / W, innerHeight / H);
   let ds = Math.floor(ratio * dpr);
@@ -50,7 +55,7 @@ function resize() {
   cv.width = Math.round(W * ds); cv.height = Math.round(H * ds);
   cv.style.width = (W * ds / dpr) + 'px'; cv.style.height = (H * ds / dpr) + 'px';
 }
-addEventListener('resize', resize); resize();
+if (!NX) addEventListener('resize', resize); resize();
 
 // ---------------- utils
 const clamp = (v, a, c) => v < a ? a : v > c ? c : v;
@@ -62,15 +67,48 @@ function makeRng(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1
 // ---------------- input
 const keys = {}; let pressed = {};
 const BLOCK = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space','Enter','Slash','ShiftRight','Tab'];
-addEventListener('keydown', e => {
+if (!NX) addEventListener('keydown', e => {
   if (!keys[e.code]) pressed[e.code] = true;
   keys[e.code] = true;
   if (BLOCK.includes(e.code)) e.preventDefault();
   initAudio();
 });
-addEventListener('keyup', e => { keys[e.code] = false; });
-addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
-cv.addEventListener('pointerdown', () => { cv.focus(); initAudio(); });
+if (!NX) {
+  addEventListener('keyup', e => { keys[e.code] = false; });
+  addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+  cv.addEventListener('pointerdown', () => { cv.focus(); initAudio(); });
+}
+// Switch controllers -> the same virtual key codes the keyboard uses.
+// Controller 1 = Trump, controller 2 = Poly. A/B attack, X/Y special, + pause, - mute (or quit from pause).
+const PADMAP = [
+  { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD', atk: 'KeyF', sp: 'KeyG' },
+  { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight', atk: 'Enter', sp: 'ShiftRight' }
+];
+const padPrev = {};
+function setVKey(code, on) { if (on && !padPrev[code]) pressed[code] = true; if (on !== !!padPrev[code]) keys[code] = on; padPrev[code] = on; }
+function pollPads() {
+  if (!NX || !navigator.getGamepads) return;
+  const pads = Array.from(navigator.getGamepads()).filter(Boolean);
+  const want = {};
+  pads.slice(0, 2).forEach((pad, i) => {
+    const m = PADMAP[i], bt = k => !!(pad.buttons[k] && pad.buttons[k].pressed), ax = k => pad.axes[k] || 0;
+    const or = (code, v) => { want[code] = want[code] || v; };
+    or(m.up, bt(12) || ax(1) < -0.45); or(m.down, bt(13) || ax(1) > 0.45);
+    or(m.left, bt(14) || ax(0) < -0.45); or(m.right, bt(15) || ax(0) > 0.45);
+    or(m.atk, bt(0) || bt(1)); or(m.sp, bt(2) || bt(3));
+    or('Escape', bt(9));
+    or(state === 'paused' ? 'KeyQ' : 'KeyM', bt(8));
+  });
+  for (const code of ['KeyW', 'KeyS', 'KeyA', 'KeyD', 'KeyF', 'KeyG', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'ShiftRight', 'Escape', 'KeyM', 'KeyQ']) setVKey(code, !!want[code]);
+  if (pads.length) initAudio();
+}
+if (NX) {
+  // On nx.js any uncaught error or rejected promise stops the frame loop for good. Catch them all and keep running.
+  addEventListener('error', e => { e.preventDefault(); reportError(e.error || e.message || e); });
+  addEventListener('unhandledrejection', e => { e.preventDefault(); reportError(e.reason); });
+  // + on controller 1 normally closes a homebrew app: keep it as pause while playing, allow exit from the title screen.
+  addEventListener('beforeunload', e => { if (state !== 'title') e.preventDefault(); });
+}
 const held = a => a.some(k => keys[k]);
 const tap = a => a.some(k => pressed[k]);
 const CTRL = {
@@ -80,17 +118,38 @@ const CTRL = {
 const CONFIRM = ['Enter','Space','KeyF','KeyL','NumpadEnter'];
 
 // ---------------- audio (chiptune)
-let AC = null, master = null, muted = false;
+let AC = null, master = null, muted = false, audioOff = false, SYNTH = false;
+function audioFail(e) { console.error('audio disabled:', e); AC = null; audioOff = true; }
 function initAudio() {
-  if (AC) { if (AC.state === 'suspended') AC.resume(); return; }
+  if (audioOff) return;
+  if (AC) { try { if (AC.state === 'suspended' && AC.resume) AC.resume(); } catch (e) {} return; }
   try {
-    AC = new (window.AudioContext || window.webkitAudioContext)();
+    AC = new (globalThis.AudioContext || globalThis.webkitAudioContext)();
     master = AC.createGain(); master.gain.value = 0.5; master.connect(AC.destination);
     nextNoteT = AC.currentTime + 0.1;
-  } catch (e) { AC = null; }
+    // nx.js (Switch) has no OscillatorNode: synthesize every sound into AudioBuffers instead
+    try { AC.createOscillator(); } catch (e) { SYNTH = true; }
+  } catch (e) { audioFail(e); }
 }
+const synthCache = new Map();
+function synthBuf(f, d, type, v, f2) {
+  const key = `${Math.round(f)}|${d.toFixed(3)}|${type}|${v.toFixed(3)}|${f2 ? Math.round(f2) : 0}`;
+  let bf = synthCache.get(key); if (bf) return bf;
+  const sr = AC.sampleRate, n = Math.max(1, Math.floor(sr * d)), k = Math.log(0.001) / n;
+  bf = AC.createBuffer(1, n, sr); const da = bf.getChannelData(0); let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const fr = f2 ? f * Math.pow(f2 / f, i / n) : f; ph += 2 * Math.PI * fr / sr;
+    const sn = Math.sin(ph);
+    const w = type === 'square' ? (sn >= 0 ? 1 : -1) : type === 'sawtooth' ? ((ph / Math.PI) % 2) - 1 : type === 'triangle' ? 2 / Math.PI * Math.asin(sn) : sn;
+    da[i] = w * v * Math.exp(k * i);
+  }
+  if (synthCache.size > 500) synthCache.clear();
+  synthCache.set(key, bf); return bf;
+}
+function playBuf(bf, t) { const s = AC.createBufferSource(); s.buffer = bf; s.connect(master); s.start(t); }
 function tone(f, d = 0.1, type = 'square', v = 0.12, f2 = null, delay = 0) {
   if (!AC || muted) return;
+  if (SYNTH) { try { playBuf(synthBuf(f, d, type, v, f2), AC.currentTime + delay); } catch (e) { audioFail(e); } return; }
   const t = AC.currentTime + delay;
   const o = AC.createOscillator(), gn = AC.createGain();
   o.type = type; o.frequency.setValueAtTime(f, t);
@@ -100,6 +159,9 @@ function tone(f, d = 0.1, type = 'square', v = 0.12, f2 = null, delay = 0) {
 }
 function noise(d = 0.1, v = 0.15) {
   if (!AC || muted) return;
+  try { noiseRaw(d, v); } catch (e) { audioFail(e); }
+}
+function noiseRaw(d, v) {
   const n = Math.floor(AC.sampleRate * d), bf = AC.createBuffer(1, n, AC.sampleRate), da = bf.getChannelData(0);
   for (let i = 0; i < n; i++) da[i] = (Math.random() * 2 - 1) * (1 - i / n);
   const s = AC.createBufferSource(), gn = AC.createGain(); s.buffer = bf; gn.gain.value = v;
@@ -137,6 +199,7 @@ let song = null, songName = '', songStep = 0, nextNoteT = 0;
 function playSong(n) { if (songName === n) return; songName = n; song = SONGS[n]; songStep = 0; if (AC) nextNoteT = AC.currentTime + 0.05; }
 function note(m, d, type, v, t) {
   const f = 440 * Math.pow(2, (m - 69) / 12);
+  if (SYNTH) { playBuf(synthBuf(f, d, type, v, null), t); return; }
   const o = AC.createOscillator(), gn = AC.createGain();
   o.type = type; o.frequency.value = f;
   gn.gain.setValueAtTime(v, t); gn.gain.exponentialRampToValueAtTime(0.001, t + d);
@@ -202,7 +265,7 @@ function drawKid(c, cx, by, who, dir, fr, o = {}) {
   const L = dir === 'left', side = dir === 'left' || dir === 'right';
   const tint = o.flash ? '#ffffff' : null;
   const r = (dx, dy, w, h, col) => { c.fillStyle = tint || col; c.fillRect(L ? cx - dx - w : cx + dx, by + dy, w, h); };
-  if (!o.noShadow) { c.fillStyle = 'rgba(20,10,40,.3)'; c.fillRect(cx - 5, by - 1, 10, 2); c.fillRect(cx - 4, by + 1, 8, 1); }
+  if (!o.noShadow) { c.fillStyle = 'rgba(20,10,40,0.3)'; c.fillRect(cx - 5, by - 1, 10, 2); c.fillRect(cx - 4, by + 1, 8, 1); }
   const lA = fr === 1 ? -1 : 0, lB = fr === 2 ? -1 : 0, sw = fr === 1 ? -1 : fr === 2 ? 1 : 0;
   if (who === 'trump') {
     const HR = '#3a2622', BD = '#e63946', SH = '#3a7bd5', SHD = '#2c5fa8', PA = '#6b4a2e', PAD = '#503620', SO = '#2a1a2e';
@@ -260,7 +323,7 @@ function drawKid(c, cx, by, who, dir, fr, o = {}) {
 
 // ---------------- enemies drawing
 function mir(c, cx, flip) { return (dx, dy, w, h, col, by) => { c.fillStyle = col; c.fillRect(flip ? cx - dx - w : cx + dx, by + dy, w, h); }; }
-function shadow(c, cx, by, w = 10) { c.fillStyle = 'rgba(20,10,40,.3)'; c.fillRect(cx - w / 2, by - 1, w, 2); }
+function shadow(c, cx, by, w = 10) { c.fillStyle = 'rgba(20,10,40,0.3)'; c.fillRect(cx - w / 2, by - 1, w, 2); }
 function drawCrab(c, cx, by, e) {
   const f = e.flash > 0, C = f ? '#fff' : '#e8483f', D = f ? '#fff' : '#9a2230';
   shadow(c, cx, by, 14);
@@ -282,7 +345,7 @@ function drawSlime(c, cx, by, e) {
   const sq = e.hop > 0 ? -1 : Math.round(Math.sin(e.t * 6));
   const w = 12 + sq, h = 9 - sq, top = by - h - up;
   R(c, cx - w / 2 | 0, top + 2, w, h - 2, D); R(c, (cx - w / 2 | 0) + 1, top + 1, w - 2, h - 3, C); R(c, cx - 3, top, 6, 2, C);
-  R(c, cx - 3, top + 2, 2, 2, '#ffffffaa');
+  R(c, cx - 3, top + 2, 2, 2, 'rgba(255,255,255,0.67)');
   R(c, cx - 3, top + 4, 1, 2, OL); R(c, cx + 2, top + 4, 1, 2, OL); R(c, cx - 1, top + 6, 2, 1, D);
 }
 function drawDrake(c, cx, by, e, pal) {
@@ -329,7 +392,7 @@ function drawBoss(c, cx, cy, B) {
   const RD = f ? '#fff' : tame ? '#ff6b7a' : '#d8343f', RDD = f ? '#fff' : tame ? '#c23a55' : '#9c1c35';
   const BE = '#ffcf5a', BED = '#e0a53a', WG = tame ? '#b0305a' : '#7e1d44', WGL = tame ? '#e0607a' : '#b0305a', HN = '#fff2d0';
   const fl = Math.round(Math.sin(t * 5) * 3);
-  c.fillStyle = 'rgba(20,10,40,.35)'; c.fillRect(cx - 18, cy + 19, 36, 4); c.fillRect(cx - 14, cy + 23, 28, 1);
+  c.fillStyle = 'rgba(20,10,40,0.35)'; c.fillRect(cx - 18, cy + 19, 36, 4); c.fillRect(cx - 14, cy + 23, 28, 1);
   for (const s of [-1, 1]) {
     const q = (dx, dy, w, h, col) => { c.fillStyle = col; c.fillRect(s < 0 ? cx - dx - w : cx + dx, cy + dy, w, h); };
     q(10, -14 + fl, 6, 12, WG); q(16, -18 + fl, 6, 12, WG); q(22, -22 + fl, 5, 11, WG);
@@ -394,7 +457,7 @@ const PAL = {
   volcano: { g: '#4d3b40', g2: '#3e2f34', g3: '#65505a' },
   summit:  { g: '#a3a8c3', g2: '#8e93b0', g3: '#e9eeff' }
 };
-function mkTile(fn) { const c = document.createElement('canvas'); c.width = c.height = 16; fn(c.getContext('2d')); return c; }
+function mkTile(fn) { const c = mkCanvas(16, 16); fn(c.getContext('2d')); return c; }
 function groundBase(c, P, Rn, n = 14) {
   R(c, 0, 0, 16, 16, P.g);
   for (let i = 0; i < n; i++) { R(c, Math.floor(Rn() * 16), Math.floor(Rn() * 16), Rn() < 0.5 ? 1 : 2, 1, Rn() < 0.6 ? P.g2 : P.g3); }
@@ -415,7 +478,7 @@ function buildTiles(key) {
   // obstacles
   for (let i = 0; i < 2; i++) TL.o.push(mkTile(c => {
     groundBase(c, P, Rn, 8);
-    const rock = (base, hi, lo) => { R(c, 2, 5, 12, 10, lo); R(c, 2, 5, 11, 9, base); R(c, 4, 4, 8, 1, base); R(c, 4, 5, 6, 2, hi); R(c, 3, 7, 2, 2, hi); R(c, 3, 14, 11, 1, 'rgba(0,0,0,.25)'); };
+    const rock = (base, hi, lo) => { R(c, 2, 5, 12, 10, lo); R(c, 2, 5, 11, 9, base); R(c, 4, 4, 8, 1, base); R(c, 4, 5, 6, 2, hi); R(c, 3, 7, 2, 2, hi); R(c, 3, 14, 11, 1, 'rgba(0,0,0,0.25)'); };
     if (key === 'beach') {
       if (i === 0) { R(c, 7, 6, 3, 10, '#9b6a3c'); for (let y = 7; y < 16; y += 2) R(c, 7, y, 3, 1, '#7a5230'); R(c, 2, 2, 12, 3, '#3fae4a'); R(c, 0, 4, 5, 2, '#2c8a3a'); R(c, 11, 4, 5, 2, '#2c8a3a'); R(c, 5, 0, 6, 2, '#56c65a'); R(c, 1, 3, 3, 1, '#56c65a'); R(c, 6, 5, 2, 2, '#6b3f1f'); R(c, 9, 5, 2, 2, '#6b3f1f'); }
       else rock('#b8a58a', '#dccbb0', '#8a7a62');
@@ -430,7 +493,7 @@ function buildTiles(key) {
       else rock('#3a2d31', '#6a5358', '#241a1d');
     } else {
       if (i === 0) { rock('#6d7390', '#9aa0bd', '#4d526a'); R(c, 3, 4, 9, 2, '#f4f7ff'); R(c, 2, 6, 3, 1, '#f4f7ff'); }
-      else { R(c, 6, 3, 4, 12, '#6ad0ff'); R(c, 7, 1, 2, 2, '#6ad0ff'); R(c, 3, 8, 3, 7, '#4aa8e0'); R(c, 11, 7, 3, 8, '#4aa8e0'); R(c, 7, 4, 1, 8, '#d9f6ff'); R(c, 2, 15, 13, 1, 'rgba(0,0,0,.2)'); }
+      else { R(c, 6, 3, 4, 12, '#6ad0ff'); R(c, 7, 1, 2, 2, '#6ad0ff'); R(c, 3, 8, 3, 7, '#4aa8e0'); R(c, 11, 7, 3, 8, '#4aa8e0'); R(c, 7, 4, 1, 8, '#d9f6ff'); R(c, 2, 15, 13, 1, 'rgba(0,0,0,0.2)'); }
     }
   }));
   // water / hazard frames
@@ -447,7 +510,7 @@ function buildTiles(key) {
       else { R(c, 0, 0, 16, 16, '#6d6275'); R(c, 0, 5, 16, 1, '#4d4455'); R(c, 0, 11, 16, 1, '#4d4455'); R(c, 7, 0, 1, 5, '#4d4455'); R(c, 3, 6, 1, 5, '#4d4455'); R(c, 12, 6, 1, 5, '#4d4455'); R(c, 0, 0, 16, 1, '#8d8298'); }
     }));
   }
-  TL.ex = mkTile(c => { groundBase(c, P, Rn, 6); R(c, 3, 0, 10, 16, key === 'volcano' ? '#6a5358' : key === 'beach' ? '#c89a5a' : '#a67c52'); for (let y = 2; y < 16; y += 5) { R(c, 7, y, 2, 1, '#fff4'); R(c, 6, y + 1, 1, 1, '#fff4'); R(c, 9, y + 1, 1, 1, '#fff4'); } });
+  TL.ex = mkTile(c => { groundBase(c, P, Rn, 6); R(c, 3, 0, 10, 16, key === 'volcano' ? '#6a5358' : key === 'beach' ? '#c89a5a' : '#a67c52'); for (let y = 2; y < 16; y += 5) { R(c, 7, y, 2, 1, 'rgba(255,255,255,0.27)'); R(c, 6, y + 1, 1, 1, 'rgba(255,255,255,0.27)'); R(c, 9, y + 1, 1, 1, 'rgba(255,255,255,0.27)'); } });
   TL.br = mkTile(c => { R(c, 0, 0, 16, 16, '#3e6b22'); R(c, 1, 0, 14, 16, '#a0703f'); for (let y = 0; y < 16; y += 4) R(c, 1, y, 14, 1, '#6f4a28'); R(c, 1, 0, 1, 16, '#5a3a20'); R(c, 14, 0, 1, 16, '#5a3a20'); });
   return TL;
 }
@@ -1077,7 +1140,7 @@ function updParts(dt) {
   const k = ZONES[zi] ? ZONES[zi].key : '';
   if (k === 'summit' && Math.random() < 0.5) ambient.push({ x: rnd(0, W + 40), y: -4, vx: rnd(-18, -6), vy: rnd(18, 34), col: '#fff', life: 12 });
   if (k === 'volcano' && Math.random() < 0.25) ambient.push({ x: rnd(0, W), y: H + 4, vx: rnd(-6, 6), vy: rnd(-30, -14), col: pick(['#ff7a2f', '#ffb13b']), life: 8 });
-  if (k === 'swamp' && Math.random() < 0.08) ambient.push({ x: rnd(0, W), y: H + 4, vx: rnd(-4, 4), vy: rnd(-10, -5), col: '#c6f06b55', life: 20, big: true });
+  if (k === 'swamp' && Math.random() < 0.08) ambient.push({ x: rnd(0, W), y: H + 4, vx: rnd(-4, 4), vy: rnd(-10, -5), col: 'rgba(198,240,107,0.33)', life: 20, big: true });
   for (const a of ambient) { a.x += a.vx * dt; a.y += a.vy * dt; a.life -= dt; }
   ambient = ambient.filter(a => a.life > 0 && a.y > -10 && a.y < H + 10);
 }
@@ -1115,7 +1178,7 @@ function update(dt) {
       if (tap(['KeyP', 'Escape'])) { state = 'paused'; break; }
       updPlay(dt); break;
     case 'paused':
-      if (tap(['KeyP', 'Escape', 'Enter'])) state = 'play';
+      if (tap(['KeyP', 'Escape', 'Enter', 'KeyF'])) state = 'play';
       if (tap(['KeyQ'])) { state = 'title'; }
       break;
     case 'clear':
@@ -1184,12 +1247,12 @@ function drawPlayer(p) {
   if (p.id === 'trump') {
     if (p.swingT > 0) {
       const k = 1 - p.swingT / 0.18, base = p.swAng ?? Math.atan2(p.fy, p.fx), a0 = base - 1.2, a1 = a0 + 2.4 * k, oy = by - 8;
-      for (let a = a0; a <= a1; a += 0.18) R(b, Math.round(cx + Math.cos(a) * 12), Math.round(oy + Math.sin(a) * 12), 2, 2, '#ffffffcc');
+      for (let a = a0; a <= a1; a += 0.18) R(b, Math.round(cx + Math.cos(a) * 12), Math.round(oy + Math.sin(a) * 12), 2, 2, 'rgba(255,255,255,0.80)');
       for (let d = 3; d <= 13; d++) R(b, Math.round(cx + Math.cos(a1) * d), Math.round(oy + Math.sin(a1) * d), 2, 2, d < 5 ? '#8a5a33' : '#e8e8f0');
     }
     if (p.spinT > 0) {
       const oy = by - 8;
-      for (let i = 0; i < 14; i++) { const a = time * 22 + i * 0.45; R(b, Math.round(cx + Math.cos(a) * (18 + (i % 3) * 3)), Math.round(oy + Math.sin(a) * (12 + (i % 3) * 2)), 2, 2, i % 2 ? '#ffffffdd' : '#8fd6ff'); }
+      for (let i = 0; i < 14; i++) { const a = time * 22 + i * 0.45; R(b, Math.round(cx + Math.cos(a) * (18 + (i % 3) * 3)), Math.round(oy + Math.sin(a) * (12 + (i % 3) * 2)), 2, 2, i % 2 ? 'rgba(255,255,255,0.87)' : '#8fd6ff'); }
       const a = time * 22; for (let d = 3; d <= 15; d++) R(b, Math.round(cx + Math.cos(a) * d), Math.round(oy + Math.sin(a) * d * 0.7), 2, 2, d < 5 ? '#8a5a33' : '#e8e8f0');
     }
   }
@@ -1337,7 +1400,7 @@ function drawPlayerPanel(p, x) {
   if (p.id === 'trump') { R(b, sx + 2, 12, 6, 2, '#fff'); R(b, sx + 4, 10, 2, 6, '#fff'); }
   else drawHeart(b, sx + 1, 10, 1, '#ffffff');
   if (cd > 0) { b.globalAlpha = 0.65; R(b, sx, 8, 10, Math.round(10 * cd), '#140d22'); b.globalAlpha = 1; }
-  T(p.ai ? 'MÁY' : (p.id === 'trump' ? 'G' : 'Shift'), sx + 5, 19, 7, cd <= 0 ? '#fff' : '#8a7fa0', 'center');
+  T(p.ai ? 'MÁY' : NX ? 'X/Y' : (p.id === 'trump' ? 'G' : 'Shift'), sx + 5, 19, 7, cd <= 0 ? '#fff' : '#8a7fa0', 'center');
 }
 function drawHUD() {
   drawPlayerPanel(players[0], 3);
@@ -1370,9 +1433,9 @@ function drawHUD() {
     R(b, 0, H / 2 - 22, W, 1, '#ffd23f'); R(b, 0, H / 2 + 17, W, 1, '#ffd23f'); b.globalAlpha = 1;
     if (a > 0.3) { T(banner.text, W / 2, H / 2 - 21, 18, '#ffd23f', 'center', '#7a1f5a'); T(banner.sub, W / 2, H / 2 + 1, 11, '#fff', 'center'); }
   }
-  if (document.activeElement !== cv && !document.hasFocus()) { panel(W / 2 - 80, H - 30, 160, 16, 0.95, '#5a1f3a'); T('Bấm chuột vào game để điều khiển', W / 2, H - 29, 10, '#fff', 'center'); }
+  if (!hasFocus()) { panel(W / 2 - 80, H - 30, 160, 16, 0.95, '#5a1f3a'); T('Bấm chuột vào game để điều khiển', W / 2, H - 29, 10, '#fff', 'center'); }
 }
-const portraitCan = document.createElement('canvas'); portraitCan.width = 64; portraitCan.height = 64;
+const portraitCan = mkCanvas(64, 64);
 const pc = portraitCan.getContext('2d');
 function drawPortrait(who, x, y) {
   pc.clearRect(0, 0, 64, 64);
@@ -1400,7 +1463,7 @@ function drawDialog() {
   let left = Math.floor(dialog.ch);
   lines.forEach((ln, i) => { if (left <= 0) return; const s = ln.slice(0, left); left -= ln.length + 1; T(s, tx, y + (NAME[0] ? 12 : 6) + i * 10, 11, L.who === 'narr' ? '#e8dcff' : '#fff'); });
   if (dialog.ch >= L.text.length && Math.floor(time * 3) % 2) { R(b, x + w - 12, y + h - 8, 5, 2, '#ffd23f'); R(b, x + w - 11, y + h - 6, 3, 1, '#ffd23f'); }
-  T(`${dialog.i + 1}/${dialog.lines.length}  Enter ▸`, x + w - 16, y + h - 11, 8, '#9a8fb8', 'right', null);
+  T(`${dialog.i + 1}/${dialog.lines.length}  ${NX ? 'A' : 'Enter'} ▸`, x + w - 16, y + h - 11, 8, '#9a8fb8', 'right', null);
 }
 
 // title & screens
@@ -1449,8 +1512,8 @@ function drawTitle() {
     if (sel) { R(b, W / 2 - 74, 96 + i * 16, 148, 14, '#5a3f7a'); const bx = W / 2 - 70 + (Math.floor(time * 4) % 2); R(b, bx, 100 + i * 16, 2, 6, '#ffd23f'); R(b, bx + 2, 101 + i * 16, 1, 4, '#ffd23f'); R(b, bx + 3, 102 + i * 16, 1, 2, '#ffd23f'); }
     T(o, W / 2 + 4, 96 + i * 16, 11, sel ? '#ffd23f' : '#c9b8e8', 'center');
   });
-  T('W/S hoặc ↑/↓ để chọn  ·  ENTER để bắt đầu', W / 2, 135, 9, '#fff', 'center', '#4a1f6a');
-  if (!document.hasFocus()) T('Bấm chuột vào màn hình trước nhé!', W / 2, 166, 10, '#ffe066', 'center', '#4a1f6a');
+  T(NX ? 'Lên/xuống để chọn  ·  A để bắt đầu  ·  + để thoát' : 'W/S hoặc ↑/↓ để chọn  ·  ENTER để bắt đầu', W / 2, 135, 9, '#fff', 'center', '#4a1f6a');
+  if (!hasFocus()) T('Bấm chuột vào màn hình trước nhé!', W / 2, 166, 10, '#ffe066', 'center', '#4a1f6a');
 }
 function drawHowto() {
   R(b, 0, 0, W, H, '#1d1430');
@@ -1462,14 +1525,14 @@ function drawHowto() {
     T(title, x + 30, 26, 12, col); T(who === 'trump' ? '11 tuổi · kiếm gỗ' : '6 tuổi · ná cao su', x + 30, 37, 9, '#c9b8e8');
     rows.forEach(([k, d], i) => { const yy = 58 + i * 14; R(b, x + 6, yy + 1, measure(k, 9) + 6, 11, '#4a3f6a'); T(k, x + 9, yy, 9, '#ffe066', 'left', null); T(d, x + 148, yy, 9, '#fff', 'right'); });
   };
-  card(6, 'trump', 'TRUMP', [['W A S D', 'di chuyển'], ['F hoặc Space', 'chém kiếm'], ['G', 'lốc xoáy kiếm']], '#ffd166');
-  if (mode === 2) card(164, 'poly', 'POLY', [['Phím mũi tên', 'di chuyển'], ['Enter hoặc L', 'bắn ná'], ['Shift phải / K', 'bong bóng hồi máu']], '#8fe36b');
+  card(6, 'trump', 'TRUMP', NX ? [['Cần / D-pad', 'di chuyển'], ['A hoặc B', 'chém kiếm'], ['X hoặc Y', 'lốc xoáy kiếm']] : [['W A S D', 'di chuyển'], ['F hoặc Space', 'chém kiếm'], ['G', 'lốc xoáy kiếm']], '#ffd166');
+  if (mode === 2) card(164, 'poly', 'POLY', NX ? [['Cần / D-pad', 'di chuyển'], ['A hoặc B', 'bắn ná'], ['X hoặc Y', 'bong bóng hồi máu']] : [['Phím mũi tên', 'di chuyển'], ['Enter hoặc L', 'bắn ná'], ['Shift phải / K', 'bong bóng hồi máu']], '#8fe36b');
   else card(164, 'poly', 'POLY', [['Máy điều khiển', 'đi theo anh'], ['Tự động', 'bắn ná'], ['Tự động', 'hồi máu, cứu anh']], '#8fe36b');
   const tips = ['Thanh vàng là cái bụng: ăn dừa, chuối, cá, thịt để không bị đói.',
     'Nếu một người bị ngã, người kia đứng sát bên để cứu dậy.',
-    'Mũi tên vàng chỉ đường tới nhiệm vụ.  P: tạm dừng  ·  M: tắt nhạc'];
+    NX ? 'Mũi tên vàng chỉ đường.  +: tạm dừng  ·  -: tắt nhạc  ·  Tay cầm 1 là Trump' : 'Mũi tên vàng chỉ đường tới nhiệm vụ.  P: tạm dừng  ·  M: tắt nhạc'];
   tips.forEach((t, i) => T('- ' + t, 10, 112 + i * 11, 10, '#e8dcff'));
-  if (Math.floor(time * 2) % 2) T('Nhấn ENTER để bắt đầu phiêu lưu!', W / 2, 150, 13, '#ffd23f', 'center', '#b5179e');
+  if (Math.floor(time * 2) % 2) T(NX ? 'Nhấn A để bắt đầu phiêu lưu!' : 'Nhấn ENTER để bắt đầu phiêu lưu!', W / 2, 150, 13, '#ffd23f', 'center', '#b5179e');
   T('Esc: quay lại', W - 6, 168, 8, '#8a7fa0', 'right', null);
 }
 function drawWin() {
@@ -1487,7 +1550,7 @@ function drawWin() {
   const m = Math.floor(totalT / 60), s = Math.floor(totalT % 60);
   panel(W / 2 - 60, 140, 120, 30, 0.9);
   T(`Thời gian: ${m} phút ${s} giây`, W / 2, 141, 10, '#ffe066', 'center');
-  if (winT > 2) T('Nhấn ENTER để chơi lại', W / 2, 153, 10, '#fff', 'center');
+  if (winT > 2) T(NX ? 'Nhấn A để chơi lại' : 'Nhấn ENTER để chơi lại', W / 2, 153, 10, '#fff', 'center');
 }
 function render() {
   b.imageSmoothingEnabled = false;
@@ -1501,42 +1564,74 @@ function render() {
       b.globalAlpha = 0.7; R(b, 0, 0, W, H, '#140d22'); b.globalAlpha = 1;
       panel(W / 2 - 90, 40, 180, 96, 0.95);
       T('TẠM DỪNG', W / 2, 42, 18, '#ffd23f', 'center');
-      T('Trump: W A S D · F chém · G lốc xoáy', W / 2, 66, 10, '#ffd166', 'center');
-      T('Poly: mũi tên · Enter bắn · Shift phải hồi máu', W / 2, 78, 10, '#8fe36b', 'center');
-      T('M: tắt/bật nhạc', W / 2, 94, 10, '#fff', 'center');
-      T('P: chơi tiếp   ·   Q: về màn hình chính', W / 2, 114, 10, '#fff', 'center');
+      T(NX ? 'A/B: đánh  ·  X/Y: chiêu đặc biệt' : 'Trump: W A S D · F chém · G lốc xoáy', W / 2, 66, 10, '#ffd166', 'center');
+      T(NX ? 'Tay cầm 1 là Trump, tay cầm 2 là Poly' : 'Poly: mũi tên · Enter bắn · Shift phải hồi máu', W / 2, 78, 10, '#8fe36b', 'center');
+      T(NX ? '-: về màn hình chính' : 'M: tắt/bật nhạc', W / 2, 94, 10, '#fff', 'center');
+      T(NX ? '+ hoặc A: chơi tiếp' : 'P: chơi tiếp   ·   Q: về màn hình chính', W / 2, 114, 10, '#fff', 'center');
     }
     if (state === 'over') {
       b.globalAlpha = Math.min(0.75, overT); R(b, 0, 0, W, H, '#2a0a1a'); b.globalAlpha = 1;
       T('HAI ANH EM MỆT QUÁ RỒI...', W / 2, 60, 18, '#ff9aa2', 'center');
       T('Đừng bỏ cuộc! Nghỉ một chút rồi thử lại nhé.', W / 2, 84, 11, '#fff', 'center');
-      if (overT > 1 && Math.floor(time * 2) % 2) T('Nhấn ENTER để chơi lại màn này', W / 2, 104, 11, '#ffd23f', 'center');
+      if (overT > 1 && Math.floor(time * 2) % 2) T(NX ? 'Nhấn A để chơi lại màn này' : 'Nhấn ENTER để chơi lại màn này', W / 2, 104, 11, '#ffd23f', 'center');
     }
   }
   g.imageSmoothingEnabled = false;
   g.drawImage(buf, 0, 0, W * S, H * S);
+  if (NX && lastErr && lastErrT > 0) T('Lỗi: ' + lastErr, 4, H - 10, 8, '#ff8a8a', 'left', '#000');
+  if (NX && state === 'title') {
+    let n = 0, bts = ''; try { for (const p of navigator.getGamepads()) if (p) { n++; if (!bts) bts = p.buttons.map((x, i) => x.pressed ? i : '').filter(String).join(','); } } catch (e) {}
+    T(`v1.0.0 · tay cầm: ${n} · nút: ${bts || '-'} · khung: ${frameCount} · âm thanh: ${AC ? (SYNTH ? 'buf' : 'osc') : audioOff ? 'tắt' : '-'}`, W - 3, H - 9, 7, '#c9b8e8', 'right', '#000');
+  }
   flushText();
 }
 
 // ---------------- loop
 let last = performance.now();
+let lastErr = null, lastErrT = 0, frameCount = 0;
+function reportError(err) { try { console.error(err); } catch (e) {} lastErr = String((err && err.message) || err).slice(0, 80); lastErrT = NX ? 1e9 : 8; }
 function frame(now) {
-  const dt = Math.min(0.05, (now - last) / 1000); last = now; time += dt;
-  try { update(dt); render(); } catch (err) { console.error(err); }
-  pressed = {};
-  musicTick();
   requestAnimationFrame(frame);
+  const dt = Math.min(0.05, (now - last) / 1000); last = now; time += dt;
+  lastErrT -= dt; frameCount++;
+  try { pollPads(); } catch (err) { reportError(err); }
+  try { update(dt); render(); } catch (err) { reportError(err); }
+  pressed = {};
+  try { musicTick(); } catch (err) { audioFail(err); }
 }
 function start(data) {
   if (data && typeof data.zi === 'number' && data.mode) {
     mode = data.mode; players = [mkPlayer('trump'), mkPlayer('poly')]; players[1].ai = mode === 1; totalT = data.totalT || 0;
     startZone(data.zi); showZoneBanner();
   }
-  cv.focus();
+  if (!NX) cv.focus();
   requestAnimationFrame(frame);
 }
+globalThis.__trumppo = {
+  st: () => ({ state, zi }),
+  icon: () => {
+    const ic = mkCanvas(64, 64), c = ic.getContext('2d'), big = mkCanvas(256, 256), x = big.getContext('2d');
+    ['#6a3fa0', '#c76ab8', '#ffb08f'].forEach((col, i) => R(c, 0, i * 10, 64, 10, col));
+    R(c, 0, 30, 64, 14, '#2f7fc8'); R(c, 0, 33, 64, 1, '#7fc8f0'); R(c, 0, 38, 64, 1, '#7fc8f0');
+    for (let y = 0; y < 22; y++) { const hw = y < 8 ? y + 3 : 11 + (y - 8) * 1.4; R(c, 46 - hw, 12 + y, hw * 2, 1, y < 4 ? '#e9eeff' : y < 9 ? '#6d7390' : '#3f8f4a'); }
+    R(c, 0, 44, 64, 20, '#f2d98d'); R(c, 0, 44, 64, 1, '#e8fbff');
+    drawKid(c, 20, 60, 'trump', 'down', 0); drawKid(c, 36, 60, 'poly', 'down', 0);
+    drawDrake(c, 50, 22, { t: 1, vx: -1, flash: 0, red: true });
+    x.imageSmoothingEnabled = false; x.drawImage(ic, 0, 0, 256, 256);
+    x.font = `60px ${FONT}`; x.textAlign = 'center'; x.textBaseline = 'top';
+    x.fillStyle = '#b5179e'; x.fillText('TRUMP-PO', 131, 9); x.fillStyle = '#ffd23f'; x.fillText('TRUMP-PO', 128, 6);
+    return big.toDataURL ? big.toDataURL('image/jpeg', 0.92) : null;
+  }
+};
 window.claude?.hot?.snapshot?.(() => (players.length && !['title', 'howto', 'win'].includes(state) ? { zi, mode, totalT } : {}));
-(document.fonts ? document.fonts.load("16px 'VT323'").catch(() => {}) : Promise.resolve()).finally(() => {
+async function loadFonts() {
+  if (NX) {
+    try { const data = await Switch.readFile('romfs:/VT323.ttf'); if (data) { const ff = new FontFace('VT323', data); if (ff.loaded && ff.loaded.catch) ff.loaded.catch(reportError); fonts.add(ff); } } catch (e) { reportError(e); }
+    return;
+  }
+  if (document.fonts) await document.fonts.load("16px 'VT323'").catch(() => {});
+}
+loadFonts().finally(() => {
   window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
 });
 })();
