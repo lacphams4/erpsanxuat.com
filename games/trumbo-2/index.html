@@ -115,13 +115,36 @@ const CONFIRM = ['Enter','Space','KeyF','KeyL','NumpadEnter'];
 const UPK = ['KeyW','ArrowUp'], DOWNK = ['KeyS','ArrowDown'];
 
 // ---------------- audio
-let AC = null, master = null, muted = false;
+let AC = null, master = null, muted = false, audioOff = false, SYNTH = false;
+function audioFail(e) { console.error('audio disabled:', e); AC = null; audioOff = true; }
 function initAudio() {
-  if (AC) { if (AC.state === 'suspended') AC.resume(); return; }
-  try { AC = new (globalThis.AudioContext || globalThis.webkitAudioContext)(); master = AC.createGain(); master.gain.value = 0.5; master.connect(AC.destination); nextNoteT = AC.currentTime + 0.1; } catch (e) { AC = null; }
+  if (audioOff) return;
+  if (AC) { try { if (AC.state === 'suspended' && AC.resume) AC.resume(); } catch (e) {} return; }
+  try {
+    AC = new (globalThis.AudioContext || globalThis.webkitAudioContext)(); master = AC.createGain(); master.gain.value = 0.5; master.connect(AC.destination); nextNoteT = AC.currentTime + 0.1;
+    // nx.js (Switch) has no OscillatorNode: synthesize every sound into AudioBuffers instead
+    try { AC.createOscillator(); } catch (e) { SYNTH = true; }
+  } catch (e) { audioFail(e); }
 }
+const synthCache = new Map();
+function synthBuf(f, d, type, v, f2) {
+  const key = `${Math.round(f)}|${d.toFixed(3)}|${type}|${v.toFixed(3)}|${f2 ? Math.round(f2) : 0}`;
+  let bf = synthCache.get(key); if (bf) return bf;
+  const sr = AC.sampleRate, n = Math.max(1, Math.floor(sr * d)), k = Math.log(0.001) / n;
+  bf = AC.createBuffer(1, n, sr); const da = bf.getChannelData(0); let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const fr = f2 ? f * Math.pow(f2 / f, i / n) : f; ph += 2 * Math.PI * fr / sr;
+    const sn = Math.sin(ph);
+    const w = type === 'square' ? (sn >= 0 ? 1 : -1) : type === 'sawtooth' ? ((ph / Math.PI) % 2) - 1 : type === 'triangle' ? 2 / Math.PI * Math.asin(sn) : sn;
+    da[i] = w * v * Math.exp(k * i);
+  }
+  if (synthCache.size > 500) synthCache.clear();
+  synthCache.set(key, bf); return bf;
+}
+function playBuf(bf, t) { const s = AC.createBufferSource(); s.buffer = bf; s.connect(master); s.start(t); }
 function tone(f, d = 0.1, type = 'square', v = 0.12, f2 = null, delay = 0) {
   if (!AC || muted) return;
+  if (SYNTH) { try { playBuf(synthBuf(f, d, type, v, f2), AC.currentTime + delay); } catch (e) { audioFail(e); } return; }
   const t = AC.currentTime + delay, o = AC.createOscillator(), gn = AC.createGain();
   o.type = type; o.frequency.setValueAtTime(f, t);
   if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d);
@@ -130,6 +153,9 @@ function tone(f, d = 0.1, type = 'square', v = 0.12, f2 = null, delay = 0) {
 }
 function noise(d = 0.1, v = 0.15) {
   if (!AC || muted) return;
+  try { noiseRaw(d, v); } catch (e) { audioFail(e); }
+}
+function noiseRaw(d, v) {
   const n = Math.floor(AC.sampleRate * d), bf = AC.createBuffer(1, n, AC.sampleRate), da = bf.getChannelData(0);
   for (let i = 0; i < n; i++) da[i] = (Math.random() * 2 - 1) * (1 - i / n);
   const s = AC.createBufferSource(), gn = AC.createGain(); s.buffer = bf; gn.gain.value = v; s.connect(gn); gn.connect(master); s.start();
@@ -179,6 +205,7 @@ const SONGS = {
 let song = null, songName = '', songStep = 0, nextNoteT = 0;
 function playSong(n) { if (songName === n) return; songName = n; song = SONGS[n]; songStep = 0; if (AC) nextNoteT = AC.currentTime + 0.05; }
 function note(m, d, type, v, t) {
+  if (SYNTH) { playBuf(synthBuf(440 * Math.pow(2, (m - 69) / 12), d, type, v, null), t); return; }
   const o = AC.createOscillator(), gn = AC.createGain();
   o.type = type; o.frequency.value = 440 * Math.pow(2, (m - 69) / 12);
   gn.gain.setValueAtTime(v, t); gn.gain.exponentialRampToValueAtTime(0.001, t + d);
@@ -2079,16 +2106,20 @@ function render() {
   }
   g.imageSmoothingEnabled = false;
   g.drawImage(buf, 0, 0, W * S, H * S);
+  if (NX && lastErr && lastErrT > 0) T('Lỗi: ' + lastErr, 4, H - 10, 8, '#ff8a8a', 'left', '#000');
   flushText();
 }
 let last = performance.now();
+let lastErr = null, lastErrT = 0;
+function reportError(err) { console.error(err); lastErr = String((err && err.message) || err).slice(0, 80); lastErrT = 8; }
 function frame(now) {
-  const dt = Math.min(0.05, (now - last) / 1000); last = now; time += dt;
-  pollPads();
-  try { update(dt); render(); } catch (err) { console.error(err); }
-  pressed = {};
-  musicTick();
   requestAnimationFrame(frame);
+  const dt = Math.min(0.05, (now - last) / 1000); last = now; time += dt;
+  lastErrT -= dt;
+  try { pollPads(); } catch (err) { reportError(err); }
+  try { update(dt); render(); } catch (err) { reportError(err); }
+  pressed = {};
+  try { musicTick(); } catch (err) { audioFail(err); }
 }
 async function loadFonts() {
   if (NX) {
