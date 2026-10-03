@@ -29,13 +29,13 @@ Daemon will be stopped at the end of the build
 > Task :app:parseReleaseLocalResources
 > Task :app:extractReleaseVersionControlInfo
 > Task :app:checkReleaseDuplicateClasses
-> Task :app:processReleaseManifestForPackage
 > Task :app:javaPreCompileRelease
 > Task :app:desugarReleaseFileDependencies
 > Task :app:mergeReleaseStartupProfile
 > Task :app:mergeReleaseShaders
-> Task :app:mergeExtDexRelease
 > Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:processReleaseManifestForPackage
+> Task :app:mergeExtDexRelease
 > Task :app:generateReleaseAssets UP-TO-DATE
 > Task :app:mergeReleaseAssets
 > Task :app:processReleaseJavaRes NO-SOURCE
@@ -47,17 +47,11 @@ Daemon will be stopped at the end of the build
 > Task :app:collectReleaseDependencies
 > Task :app:configureReleaseDependencies
 > Task :app:extractReleaseNativeSymbolTables NO-SOURCE
-> Task :app:extractProguardFiles
-> Task :app:preDebugBuild UP-TO-DATE
-> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
-> Task :app:parseReleaseIntegrityConfig
-> Task :app:javaPreCompileDebug
-> Task :app:generateDebugResValues
-> Task :app:checkDebugAarMetadata
-> Task :app:mapDebugSourceSetPaths
-> Task :app:processReleaseResources
-> Task :app:generateDebugResources
 > Task :app:mergeReleaseJavaResource
+> Task :app:extractProguardFiles
+> Task :app:processReleaseResources
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:parseReleaseIntegrityConfig
 > Task :app:bundleReleaseResources
 > Task :app:compileReleaseJavaWithJavac
 > Task :app:dexBuilderRelease
@@ -66,15 +60,21 @@ Daemon will be stopped at the end of the build
 > Task :app:generateReleaseLintVitalReportModel
 > Task :app:buildReleasePreBundle
 > Task :app:compileReleaseArtProfile
-> Task :app:packageDebugResources
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:javaPreCompileDebug
+> Task :app:checkDebugAarMetadata
+> Task :app:generateDebugResValues
+> Task :app:mapDebugSourceSetPaths
+> Task :app:generateDebugResources
 > Task :app:mergeDebugResources
+> Task :app:packageDebugResources
 > Task :app:createDebugCompatibleScreenManifests
 > Task :app:extractDeepLinksDebug
+> Task :app:parseDebugLocalResources
 > Task :app:processDebugMainManifest
 > Task :app:processDebugManifest
-> Task :app:parseDebugLocalResources
-> Task :app:mergeDebugShaders
 > Task :app:processDebugManifestForPackage
+> Task :app:mergeDebugShaders
 > Task :app:compileDebugShaders NO-SOURCE
 > Task :app:generateDebugAssets UP-TO-DATE
 > Task :app:mergeDebugAssets
@@ -84,8 +84,8 @@ Daemon will be stopped at the end of the build
 > Task :app:checkDebugDuplicateClasses
 > Task :app:desugarDebugFileDependencies
 > Task :app:mergeExtDexDebug
-> Task :app:mergeDebugJniLibFolders
 > Task :app:mergeLibDexDebug
+> Task :app:mergeDebugJniLibFolders
 > Task :app:mergeDebugNativeLibs NO-SOURCE
 > Task :app:stripDebugDebugSymbols NO-SOURCE
 > Task :app:validateSigningDebug
