@@ -180,15 +180,18 @@ html,body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-to
 #tc{position:fixed;inset:0;z-index:5;pointer-events:none;font-family:'VT323',monospace}
 #tc .tc-zone{position:absolute;bottom:0;height:78%;pointer-events:auto;touch-action:none}
 #tc.one .tc-zone.l{left:0;width:46%}
-#tc.two .tc-zone.l{left:0;width:24%}
-#tc.two .tc-zone.r{right:0;width:24%}
+#tc.two .tc-zone{height:40%}
+#tc.two .tc-zone.l{left:0;width:26%}
+#tc.two .tc-zone.r{right:0;width:26%}
 .tc-base{position:absolute;width:min(26vh,22vw);height:min(26vh,22vw);transform:translate(-50%,-50%);border-radius:50%;background:rgba(20,12,40,.28);border:2px solid rgba(255,255,255,.28);opacity:.55;pointer-events:none}
 .tc-base.live{opacity:.95}
 .tc-knob{position:absolute;left:50%;top:50%;width:44%;height:44%;margin:-22% 0 0 -22%;border-radius:50%;background:rgba(255,255,255,.45);border:2px solid rgba(255,255,255,.7)}
 .tc-btns{position:absolute;bottom:0;width:min(48vh,34vw);height:min(48vh,34vw);pointer-events:none}
 .tc-btns.r1{right:1vw}
-.tc-btns.l2{left:25%}
-.tc-btns.r2{right:25%}
+/* two players: each side has its stick in the bottom corner and its buttons just above it, along the screen edge */
+.tc-btns.l2,.tc-btns.r2{bottom:34%;width:min(40vh,24vw);height:min(40vh,24vw)}
+.tc-btns.l2{left:.5vw}
+.tc-btns.r2{right:.5vw}
 .tc-btn{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:50%;pointer-events:auto;touch-action:none;color:#fff;background:rgba(20,12,40,.42);border:2px solid rgba(255,255,255,.55);text-shadow:0 2px 0 #000;line-height:1}
 .tc-btn.on{background:rgba(255,210,63,.55);border-color:#ffd23f}
 .tc-btn.a{width:44%;height:44%;right:6%;bottom:8%;font-size:min(9vh,6vw);background:rgba(181,23,94,.45)}
