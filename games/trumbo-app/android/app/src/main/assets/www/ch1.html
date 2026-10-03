@@ -530,12 +530,13 @@ const ZONES = [
   { key: 'summit', name: 'Đỉnh Núi Rồng', boss: true }
 ];
 const INTRO = [
-  { who: 'narr', text: 'Một buổi chiều, hai anh em Trump (11 tuổi) và Poly (6 tuổi) chèo thuyền ra biển chơi...' },
-  { who: 'narr', text: 'Bỗng một cơn bão ập tới! Chiếc thuyền nhỏ bị sóng cuốn trôi, dạt vào một hòn đảo hoang.' },
-  { who: 'poly', text: 'Anh Trump ơi... mình đang ở đâu vậy? Em hơi sợ...' },
-  { who: 'trump', text: 'Đừng sợ Poly, có anh ở đây! Ơ... nhìn kìa, trên đỉnh núi có một con RỒNG khổng lồ!' },
-  { who: 'poly', text: 'Rồng thật hả anh?! Đây là xứ sở rồng luôn!' },
-  { who: 'narr', text: 'Truyền thuyết kể rằng: Hỏa Long Vương trên đỉnh núi đang giữ viên Ngọc La Bàn - thứ duy nhất chỉ được đường về nhà.' },
+    { who: 'narr', text: 'Một buổi chiều, cả nhà Trumbo - Ba, Mẹ, Chị Gái, Trump (11 tuổi) và Poly (6 tuổi) - cùng đi thuyền ra biển chơi...' },
+    { who: 'narr', text: 'Bỗng một cơn bão ập tới! Sóng lớn đánh tan chiếc thuyền. Cả nhà bị cuốn đi mỗi người một ngả.' },
+    { who: 'narr', text: 'Khi tỉnh dậy, chỉ còn hai anh em nằm trên bãi cát của một hòn đảo hoang.' },
+    { who: 'poly', text: 'Anh Trump ơi... Ba, Mẹ với Chị đâu rồi? Em sợ quá...' },
+    { who: 'trump', text: 'Đừng sợ Poly, có anh ở đây! Mình nhất định sẽ tìm lại cả nhà. Ơ... nhìn kìa, trên đỉnh núi có một con RỒNG khổng lồ!' },
+    { who: 'poly', text: 'Rồng thật hả anh?! Đây là xứ sở rồng luôn!' },
+    { who: 'narr', text: 'Truyền thuyết kể rằng: Hỏa Long Vương trên đỉnh núi đang giữ viên Ngọc La Bàn - thứ chỉ được đường tới những người thân yêu.' },
   { who: 'trump', text: 'Mình cùng leo lên đỉnh núi nhé! Anh cầm kiếm gỗ, em cầm ná cao su.' },
   { who: 'poly', text: 'Dạ! Em còn biết thổi bong bóng chữa thương cho anh nữa đó!' }
 ];
@@ -557,10 +558,18 @@ const ZDLG = [
     { who: 'boss', text: 'Muốn lấy Ngọc La Bàn thì hãy chứng tỏ hai anh em đủ dũng cảm!' } ]
 ];
 const ENDING = [
-  { who: 'boss', text: 'Hừm... hai anh em thật dũng cảm, và biết thương nhau, bảo vệ nhau. Ta chịu thua!' },
-  { who: 'boss', text: 'Cầm lấy Ngọc La Bàn này. Ta sẽ chở các cháu bay về nhà!' },
-  { who: 'poly', text: 'Yeee! Được cưỡi rồng luôn! Anh Trump giỏi quá!' },
-  { who: 'trump', text: 'Em cũng giỏi lắm Poly! Nhờ bong bóng của em mà anh mới đứng dậy được đó.' }
+    { who: 'boss', text: 'Hừm... hai anh em thật dũng cảm, và biết thương nhau, bảo vệ nhau. Ta chịu thua!' },
+    { who: 'boss', text: 'Cầm lấy Ngọc La Bàn này. Nó sẽ chỉ đường tới gia đình các cháu.' },
+    { who: 'narr', text: 'Bỗng có tiếng rên ư ử sau một tảng đá. Một chú chó đen gầy nhom bị kẹt dưới đống đá vụn sau trận chiến!' },
+    { who: 'poly', text: 'Anh ơi, có bạn chó bị kẹt kìa! Tội nghiệp quá!' },
+    { who: 'trump', text: 'Poly, phụ anh đẩy tảng đá ra! Một, hai, ba... HÂY!' },
+    { who: 'narr', text: 'Chú chó được cứu. Nó không có nhà, cũng không có chủ. Trên chiếc vòng cổ cũ chỉ có một chữ: PUGI.' },
+    { who: 'poly', text: 'Bạn ấy cũng lạc mất gia đình giống tụi mình... Cho bạn ấy đi cùng nha anh!' },
+    { who: 'trump', text: 'Pugi, từ giờ mày đi với tụi anh nhé!' },
+    { who: 'boogie', text: 'Gâu! Gâu! (Pugi vẫy chiếc đuôi nhỏ)' },
+    { who: 'boss', text: 'Lên lưng ta nào, cả ba đứa! Ta sẽ chở các cháu đi tìm gia đình.' },
+    { who: 'poly', text: 'Yeee! Được cưỡi rồng luôn! Anh Trump giỏi quá!' },
+    { who: 'trump', text: 'Em cũng giỏi lắm Poly! Nhờ bong bóng của em mà anh mới đứng dậy được đó.' }
 ];
 const OBJ_TEXT = ['Nhặt 6 khúc gỗ, mang tới đống lửa', 'Phá 3 lồng cứu rồng con', 'Cùng đứng lên 2 nút đá', 'Tìm 4 viên Ngọc Rồng', 'Thuần hóa Hỏa Long Vương!'];
 
@@ -1456,11 +1465,41 @@ function drawHUD() {
 }
 const portraitCan = mkCanvas(64, 64);
 const pc = portraitCan.getContext('2d');
+function drawDog(c, cx, by, d, o = {}, wagF = null) {
+  const L = d.face < 0, f = d.flash > 0;
+  const q = (dx, dy, w, h, col) => { c.fillStyle = f ? '#fff' : col; c.fillRect(L ? cx - dx - w : cx + dx, by + dy, w, h); };
+  const K = '#1e1b24', KH = '#46405a', ED = '#615a72', TAN = '#8a5a33';
+  if (!o.noShadow) shadow(c, cx, by, 16);
+  const run = d.moving ? Math.floor(d.anim) % 2 : 0;
+  // soft outline so the black dog reads on dark floors
+  q(-9, -13, 12, 5, ED); q(2, -14, 7, 7, ED); q(6, -20, 7, 8, ED); q(11, -18, 5, 4, ED);
+  // long thin legs (gallop: front and back pairs alternate)
+  const fa = run ? 1 : 0, fb = run ? 0 : 1;
+  q(-7 - fa, -8, 1, 8, K); q(-5 + fa, -8, 1, 8, K); q(3 + fb, -8, 1, 8, K); q(5 - fb, -8, 1, 8, K);
+  q(-7 - fa, -1, 2, 1, K); q(-5 + fa, -1, 2, 1, K); q(3 + fb, -1, 2, 1, K); q(5 - fb, -1, 2, 1, K);
+  // rump, tucked waist, deep chest
+  q(-8, -12, 4, 4, K); q(-5, -12, 8, 2, K); q(-1, -11, 4, 1, K); q(2, -13, 6, 5, K);
+  q(-7, -12, 10, 1, KH); q(3, -9, 4, 1, TAN);
+  // thin tail, small, wagging
+  const wag = wagF ?? Math.floor(time * 10) % 2;
+  q(-10, -13 - wag, 2, 1, K); q(-11, -14 - wag, 1, 1, K);
+  // neck, head, long narrow snout, pointed ears
+  q(6, -16, 3, 4, K); q(7, -19, 5, 4, K); q(11, -18, 4, 2, K); q(15, -18, 1, 1, '#000');
+  q(11, -16, 3, 1, TAN);
+  q(7, -21, 1, 2, K); q(8, -22, 1, 1, K); q(9, -21, 1, 2, '#141118');
+  q(10, -18, 1, 1, '#fff'); q(7, -19, 4, 1, KH);
+  // collar
+  q(6, -14, 3, 1, '#e63946'); q(7, -13, 1, 1, '#ffd23f');
+  if (d.barkT > 0) { q(12, -16, 3, 2, '#ff7a9a'); }
+  else if (d.moving) q(13, -16, 1, 2, '#ff7a9a');
+  if (d.biteT > 0) { q(15, -19, 2, 1, '#fff'); q(15, -16, 2, 1, '#fff'); }
+}
 function drawPortrait(who, x, y) {
   pc.clearRect(0, 0, 64, 64);
   R(b, x, y, 36, 36, '#f4e3c1'); R(b, x + 1, y + 1, 34, 34, who === 'boss' ? '#5a1f3a' : who === 'trump' ? '#2c5fa8' : '#3e9a44');
   R(b, x + 1, y + 24, 34, 11, who === 'boss' ? '#7a2a4a' : who === 'trump' ? '#3a7bd5' : '#5cc15c');
-  if (who === 'boss') {
+  if (who === 'boogie') { R(b, x + 1, y + 1, 34, 34, '#5a3a20'); R(b, x + 1, y + 24, 34, 11, '#8a5a33'); drawDog(pc, 20, 30, { face: 1, flash: 0, moving: false, barkT: Math.floor(time * 4) % 2 ? 0.2 : 0, biteT: 0, anim: 0 }, { noShadow: true }); b.drawImage(portraitCan, 20, 6, 18, 18, x, y, 36, 36); }
+  else if (who === 'boss') {
     drawBoss(pc, 32, 44, { t: time, flash: 0, mouth: Math.floor(time * 4) % 2 ? 0.2 : 0, dead: boss && boss.dead });
     b.drawImage(portraitCan, 18, 8, 28, 28, x + 4, y + 5, 28, 28);
   } else {
@@ -1476,7 +1515,7 @@ function drawDialog() {
   const hasP = L.who !== 'narr';
   if (hasP) drawPortrait(L.who, x + 6, y + 6);
   const tx = hasP ? x + 48 : x + 10, mw = w - (tx - x) - 10;
-  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boss: ['HỎA LONG VƯƠNG', '#ff9aa2'], narr: ['', '#fff'] }[L.who];
+  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boss: ['HỎA LONG VƯƠNG', '#ff9aa2'], boogie: ['PUGI', '#8fd6ff'], narr: ['', '#fff'] }[L.who];
   if (NAME[0]) T(NAME[0], tx, y + 2, 10, NAME[1]);
   const lines = wrap(L.text, mw, 11);
   let left = Math.floor(dialog.ch);
@@ -1563,9 +1602,10 @@ function drawWin() {
   drawBoss(b, x, y, { t: time, flash: 0, mouth: 0, dead: true });
   drawKid(b, x - 4, y - 24, 'trump', 'left', 0, { noShadow: true });
   drawKid(b, x + 8, y - 24, 'poly', 'left', 0, { noShadow: true });
+  if (APP) drawDog(b, x + 22, y - 22, { face: -1, flash: 0, moving: false, barkT: 0, biteT: 0, anim: 0 }, { noShadow: true });
   for (let i = 0; i < 16; i++) { const a = time * 2 + i; R(b, Math.round((i * 41 + time * 20) % W), Math.round((i * 23 + time * 30) % H), 2, 2, ['#ffd23f', '#ff9ec7', '#8fe36b', '#4dd2ff'][i % 4]); }
   T('CHIẾN THẮNG!', W / 2, 8, 30, '#ffd23f', 'center', '#b5179e');
-  T(APP ? 'HẾT PHẦN 1 - Hỏa Long Vương chở hai anh em bay về nhà...' : 'Hai anh em Trump & Poly cưỡi rồng bay về nhà!', W / 2, 38, 11, '#fff', 'center', '#4a1f6a');
+  T(APP ? 'HẾT PHẦN 1 - Hỏa Long Vương chở hai anh em và Pugi đi tìm gia đình...' : 'Hai anh em Trump & Poly cưỡi rồng bay về nhà!', W / 2, 38, 11, '#fff', 'center', '#4a1f6a');
   const m = Math.floor(totalT / 60), s = Math.floor(totalT % 60);
   panel(W / 2 - 60, 140, 120, 30, 0.9);
   T(`Thời gian: ${m} phút ${s} giây`, W / 2, 141, 10, '#ffe066', 'center');

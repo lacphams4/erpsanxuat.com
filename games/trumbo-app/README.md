@@ -7,7 +7,7 @@ TRUMBO - Part 1: Dragon Island, Part 2: The Lost City, Part 3: Heavenly City, Pa
 - Người chơi đặt tên riêng cho hai nhân vật (mặc định Trump và Poly)
 
 - Tên gói (application ID): `com.erpsanxuat.trumbo` (không đổi được sau khi đã đăng lên Play)
-- Phiên bản: 1.2.0 (versionCode 4)
+- Phiên bản: 1.3.0 (versionCode 5)
 - Android 7.0 trở lên, target API 36
 - Không xin quyền nào, không quảng cáo, không thu thập dữ liệu, chơi không cần mạng
 
@@ -15,8 +15,8 @@ TRUMBO - Part 1: Dragon Island, Part 2: The Lost City, Part 3: Heavenly City, Pa
 
 | Thư mục / file | Nội dung |
 |---|---|
-| `dist/TRUMBO-1.2.0.aab` | **File để tải lên Google Play** (đã ký bằng khóa upload) |
-| `dist/TRUMBO-1.2.0-test.apk` | Bản chạy thử, cài thẳng vào điện thoại (tên gói có đuôi `.test`, cài song song được với bản từ Play) |
+| `dist/TRUMBO-1.3.0.aab` | **File để tải lên Google Play** (đã ký bằng khóa upload) |
+| `dist/TRUMBO-1.3.0-test.apk` | Bản chạy thử, cài thẳng vào điện thoại (tên gói có đuôi `.test`, cài song song được với bản từ Play) |
 | `store/` | Icon 512, ảnh bìa 1024x500 và ảnh chụp màn hình cho từng ngôn ngữ, nội dung trang Play 3 thứ tiếng (`listing.md`) |
 | `web/i18n/` | Bản dịch (`translations.py` sinh ra `en.json`, `zh.json`), script cắt phông chữ Trung |
 | `web/` | Màn hình chính, `app.js` (điều khiển cảm ứng, tay cầm, chuyển chương) và `build-web.mjs` |
@@ -25,7 +25,7 @@ TRUMBO - Part 1: Dragon Island, Part 2: The Lost City, Part 3: Heavenly City, Pa
 
 ## Chạy thử trên điện thoại
 
-1. Tải `dist/TRUMBO-1.2.0-test.apk` về điện thoại Android.
+1. Tải `dist/TRUMBO-1.3.0-test.apk` về điện thoại Android.
 2. Mở file, cho phép "Cài ứng dụng không rõ nguồn gốc" khi được hỏi.
 3. Xoay ngang điện thoại để chơi. Nút Back: tạm dừng / chơi tiếp / về màn hình chính.
 
@@ -39,7 +39,7 @@ TRUMBO - Part 1: Dragon Island, Part 2: The Lost City, Part 3: Heavenly City, Pa
 4. **Store listing**: dán chữ và tải ảnh trong thư mục `store/`.
 5. **Release**: Testing > Internal testing (nên làm trước) hoặc Production > Create new release.
    - Bật **Play App Signing** (mặc định).
-   - Tải lên file `dist/TRUMBO-1.2.0.aab`.
+   - Tải lên file `dist/TRUMBO-1.3.0.aab`.
 6. Gửi duyệt. Google thường duyệt trong vài ngày; ứng dụng cho trẻ em có thể lâu hơn.
 
 ## Khóa upload (quan trọng)
@@ -57,7 +57,7 @@ File `.aab` được ký bằng **khóa upload riêng** (`trumbo-upload.jks`). K
 
 ## Cập nhật phiên bản mới
 
-1. Sửa game ở các thư mục `games/trump-po`, `games/trumbo-2`, `games/trumbo-3` (hoặc `web/`). Phần 4 (`games/trumbo-4/index.html`) được sinh từ Phần 3: sửa `games/trumbo-4/make.py` rồi chạy `python3 make.py`.
+1. Sửa game ở các thư mục `games/trump-po`, `games/trumbo-2`, `games/trumbo-3` (hoặc `web/`). Phần 4 (`games/trumbo-4/index.html`) được sinh từ Phần 3: sửa `games/trumbo-4/make.py` rồi chạy `python3 make.py`. Hình vẽ và lồng giam của Chị Gái, Ba, Mẹ nằm trong `games/trumbo-4/family.js` (dùng chung cho Phần 2, 3, 4).
 2. `cd games/trumbo-app/web && node build-web.mjs` để tạo lại `android/app/src/main/assets/www`.
 3. Tăng `versionCode` (bắt buộc) và `versionName` trong `android/app/build.gradle`.
 4. Đẩy lên GitHub. GitHub Actions sẽ build và ghi kết quả vào `dist/ci/` (`app-release-unsigned.aab`, `app-test.apk`).

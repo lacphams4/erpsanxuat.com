@@ -46,26 +46,31 @@ rep_block('const STAGES = [', '\n];', """const STAGES = [
 # ---------------------------------------------------------------- story
 rep_block('const DLG = {', '\n};', r"""const DLG = {
   intro: [
-    { who: 'narr', text: 'Ác Quỷ đã bị đánh bại. Nữ Hoàng Thiên Thần dẫn Trump, Poly và Pugi xuống một căn phòng bí mật dưới cung điện.' },
+    { who: 'narr', text: 'Ác Quỷ đã bị đánh bại. Nữ Hoàng Thiên Thần dẫn Trump, Poly, Pugi cùng Ba và Chị Gái xuống một căn phòng bí mật dưới cung điện.' },
     { who: 'queen', text: 'Ta biết một con đường có thể đưa các ngươi trở về.' },
     { who: 'narr', text: 'Giữa căn phòng là một cỗ máy khổng lồ: CỖ MÁY THỜI GIAN.' },
     { who: 'explorer', text: 'Cỗ máy này có thể mở một cánh cửa xuyên qua thời gian.' },
+    { who: 'poly', text: 'Nó có tìm được Mẹ không ạ? Mẹ bị cơn bão cuốn đi mất rồi...' },
+    { who: 'explorer', text: 'Mẹ các cháu đang lạc ở một thời đại khác. Cỗ máy sẽ đưa các cháu tới đó.' },
     { who: 'trump', text: 'Nó có đưa tụi cháu về nhà được không ạ?' },
     { who: 'explorer', text: 'Được. Nhưng cỗ máy đã rất lâu không hoạt động.' },
+    { who: 'dad', text: 'Cả nhà mình đi cùng nhau. Lần này không ai bị lạc nữa.' },
+    { who: 'sister', text: 'Chị sẽ nắm tay Poly thật chặt!' },
     { who: 'queen', text: 'Chúc may mắn, ba vị anh hùng nhỏ tuổi.' },
     { who: 'narr', text: 'Họ khởi động cỗ máy. ẦM! Một cánh cổng thời gian mở ra.' },
     { who: 'narr', text: 'Nhưng ngay khi cả nhóm bước vào... cỗ máy bị trục trặc!' },
-    { who: 'narr', text: 'Ánh sáng bao quanh họ. VÙÙÙÙ! Trump, Poly và Pugi biến mất.' }
+    { who: 'narr', text: 'Ánh sáng bao quanh họ. VÙÙÙÙ! Cả nhà biến mất.' }
   ],
   dino: [
-    { who: 'narr', text: 'Khi mở mắt ra, hai anh em đang đứng giữa một khu rừng khổng lồ. Những cây cao chưa từng thấy.' },
+    { who: 'narr', text: 'Khi mở mắt ra, cả nhà đang đứng giữa một khu rừng khổng lồ. Những cây cao chưa từng thấy.' },
     { who: 'narr', text: 'Mặt đất rung chuyển. Một đàn khủng long chạy ngang qua!' },
     { who: 'poly', text: 'Anh... đây là đâu vậy?' },
     { who: 'trump', text: '(nhìn một con khủng long khổng lồ) Anh nghĩ chúng ta vừa về quá khứ.' },
     { who: 'boogie', text: 'Gâu!' },
     { who: 'narr', text: 'Cỗ máy thời gian rơi theo họ về thời tiền sử, nhưng đã bị hỏng và không thể hoạt động trở lại.' },
-    { who: 'narr', text: 'Muốn đi tiếp, ba người phải tìm 5 mảnh năng lượng thời gian. Có mảnh bị chôn dưới đất, chỉ cái mũi của Pugi mới tìm ra.' },
-    { who: 'trump', text: 'Đường bị cây đổ chắn rồi. Để anh phá mở lối!' }
+    { who: 'dad', text: 'Ba sẽ ở lại sửa cỗ máy, Chị trông chừng giúp Ba. Hai con đi tìm 5 mảnh năng lượng thời gian nhé.' },
+    { who: 'sister', text: 'Có mảnh bị chôn dưới đất đó. Nhờ cái mũi của Pugi nha!' },
+    { who: 'trump', text: 'Đường bị cây đổ chắn rồi. Để con phá mở lối!' }
   ],
   trex: [
     { who: 'narr', text: 'Cả nhóm tìm đủ năng lượng và mở đường tới khu vực cuối cùng của thời đại này.' },
@@ -76,52 +81,64 @@ rep_block('const DLG = {', '\n};', r"""const DLG = {
   ],
   trexEnd: [
     { who: 'narr', text: 'Khủng long bạo chúa gầm lên lần cuối rồi bỏ chạy vào rừng sâu.' },
-    { who: 'narr', text: 'Phía sau nó là một TINH THỂ THỜI GIAN sáng lấp lánh. Hai anh em lắp tinh thể vào cỗ máy.' },
-    { who: 'poly', text: 'Về nhà thôi!' },
-    { who: 'narr', text: 'Cỗ máy bắt đầu hoạt động. Nhưng thay vì đưa họ về nhà... VÙÙÙÙ! Nó đưa cả nhóm đến một thời đại khác.' }
+    { who: 'narr', text: 'Phía sau nó là một TINH THỂ THỜI GIAN sáng lấp lánh. Hai anh em mang về cho Ba lắp vào cỗ máy.' },
+    { who: 'poly', text: 'Đi tìm Mẹ thôi!' },
+    { who: 'narr', text: 'Cỗ máy bắt đầu hoạt động. VÙÙÙÙ! Nó đưa cả nhà đến một thời đại khác.' }
   ],
   ice: [
-    { who: 'narr', text: 'Trump, Poly và Pugi rơi xuống một vùng đất phủ đầy tuyết. Gió lạnh thổi dữ dội. Mọi thứ đều đóng băng.' },
+    { who: 'narr', text: 'Cả nhà rơi xuống một vùng đất phủ đầy tuyết. Gió lạnh thổi dữ dội. Mọi thứ đều đóng băng.' },
     { who: 'poly', text: 'Lạnh quá!' },
     { who: 'trump', text: 'Chúng ta lại đi nhầm thời đại rồi.' },
-    { who: 'narr', text: 'Đây là KỶ BĂNG HÀ. Cỗ máy thời gian lại bị hỏng.' },
-    { who: 'narr', text: 'Muốn trở về hiện tại, họ cần tinh thể thời gian cuối cùng. Trước hết phải tìm 4 mảnh năng lượng giữa bão tuyết.' },
+    { who: 'sister', text: 'Khoan đã... nhìn kìa! Chiếc khăn quàng màu hồng trên tuyết... là của Mẹ!' },
+    { who: 'narr', text: 'Đây là KỶ BĂNG HÀ. Mẹ đang ở đâu đó trong vùng đất băng giá này.' },
+    { who: 'dad', text: 'Cỗ máy lại hỏng rồi. Ba cần thêm 4 mảnh năng lượng. Các con đi tìm Mẹ và tìm năng lượng nhé, cẩn thận!' },
     { who: 'trump', text: 'Pugi, đánh hơi tìm đường nhé! Anh sẽ phá băng mở lối. Poly bắn mấy con thú từ xa!' },
     { who: 'boogie', text: 'Gâu!' }
   ],
   mammoth: [
-    { who: 'narr', text: 'Cuối cùng họ tìm thấy tinh thể thời gian. Nhưng nó đang được một sinh vật khổng lồ bảo vệ.' },
+    { who: 'narr', text: 'Cuối đường là tinh thể thời gian cuối cùng... và MẸ, bị đóng băng trong một khối băng lớn!' },
+    { who: 'poly', text: 'MẸ ƠI!!!' },
     { who: 'narr', text: 'Một con VOI MA MÚT khổng lồ dậm chân. Băng tuyết rung chuyển!' },
-    { who: 'trump', text: 'Poly, phối hợp với anh! Pugi, giúp tụi anh nhé!' },
+    { who: 'trump', text: 'Poly, phối hợp với anh! Pugi, giúp tụi anh nhé! Mình phải cứu Mẹ!' },
     { who: 'boogie', text: 'GÂU GÂU!' }
   ],
   mammothEnd: [
     { who: 'narr', text: 'Voi ma mút chịu thua. Nó lùi lại và nhường đường.' },
+    { who: 'narr', text: 'RẮC... Khối băng vỡ tan. Mẹ được tự do!' },
+    { who: 'mom', text: 'Trump! Poly! Các con của mẹ!' },
+    { who: 'poly', text: 'Mẹ ơi! Con nhớ mẹ lắm!' },
+    { who: 'mom', text: '(ôm chặt hai anh em) Mẹ biết thế nào các con cũng tới mà.' },
+    { who: 'trump', text: 'Pugi giúp tụi con nhiều lắm đó mẹ.' },
+    { who: 'mom', text: 'Cảm ơn con nhé, Pugi. Từ nay con là thành viên của nhà mình!' },
+    { who: 'boogie', text: 'Gâu! (Pugi vẫy chiếc đuôi nhỏ)' },
     { who: 'narr', text: 'Hai anh em lấy được TINH THỂ THỜI GIAN CUỐI CÙNG.' }
   ],
   portal: [
-    { who: 'narr', text: 'Trump, Poly và Pugi đưa tinh thể vào cỗ máy thời gian. Các tinh thể phát sáng.' },
+    { who: 'narr', text: 'Ba và Mẹ đưa tinh thể vào cỗ máy thời gian. Các tinh thể phát sáng.' },
     { who: 'narr', text: 'Cỗ máy bắt đầu hoạt động ổn định. Một cánh cổng xuất hiện.' },
     { who: 'narr', text: 'Lần này, màn hình của cỗ máy hiện rõ: THỜI ĐIỂM: HIỆN TẠI - ĐIỂM ĐẾN: NHÀ.' },
     { who: 'poly', text: 'Lần này chắc chắn về nhà chứ?' },
     { who: 'trump', text: 'Anh hy vọng vậy.' },
     { who: 'boogie', text: 'Gâu!' },
-    { who: 'narr', text: 'Ba người bước vào cánh cổng. VÙÙÙÙ!' }
+    { who: 'narr', text: 'Cả nhà nắm tay nhau bước vào cánh cổng. VÙÙÙÙ!' }
   ],
   ending: [
-    { who: 'narr', text: 'Một luồng sáng xuất hiện. Trump, Poly và Pugi rơi xuống ngay trước ngôi nhà của hai anh em.' },
+    { who: 'narr', text: 'Một luồng sáng xuất hiện. Cả nhà rơi xuống ngay trước ngôi nhà thân yêu của mình.' },
     { who: 'narr', text: 'Không còn đảo hoang. Không còn thành phố bỏ hoang. Không còn Ác Quỷ. Không còn khủng long. Không còn băng tuyết.' },
-    { who: 'narr', text: 'Cuối cùng... họ đã về nhà.' },
+    { who: 'narr', text: 'Cuối cùng... cả nhà đã về nhà.' },
     { who: 'poly', text: 'Con về rồi!' },
     { who: 'trump', text: '(nhìn Pugi) Cuối cùng chúng ta cũng về được.' },
     { who: 'boogie', text: 'Gâu! (Pugi vẫy chiếc đuôi nhỏ)' },
-    { who: 'narr', text: 'Cả ba nhìn lại cỗ máy thời gian. Nó từ từ biến mất.' },
-    { who: 'narr', text: 'Buổi tối, hai anh em ngồi bên cửa sổ kể lại tất cả những cuộc phiêu lưu.', dark: true },
+    { who: 'mom', text: 'Cả nhà mình đã sum họp rồi.' },
+    { who: 'dad', text: 'Năm người và một chú chó. Không thiếu một ai!' },
+    { who: 'narr', text: 'Cả nhà nhìn lại cỗ máy thời gian. Nó từ từ biến mất.', fade: true },
+    { who: 'narr', text: 'Buổi tối, cả nhà quây quần bên cửa sổ. Hai anh em kể lại tất cả những cuộc phiêu lưu.', dark: true },
     { who: 'narr', text: 'Đảo Rồng, Thành Phố Bỏ Hoang, Sa Mạc, 18 Tầng Địa Ngục, Thành Phố Thiên Đường, Thời Tiền Sử, Kỷ Băng Hà...', dark: true },
     { who: 'poly', text: 'Anh nghĩ chúng ta còn đi phiêu lưu nữa không?', dark: true },
     { who: 'trump', text: 'Không. Lần này anh chỉ muốn ở nhà.', dark: true },
+    { who: 'mom', text: 'Mẹ cũng vậy!', dark: true },
     { who: 'boogie', text: 'Gâu!', dark: true },
-    { who: 'narr', text: 'Hai anh em bật cười. Ngôi nhà nằm yên dưới bầu trời đầy sao.', dark: true }
+    { who: 'narr', text: 'Cả nhà bật cười. Ngôi nhà nằm yên dưới bầu trời đầy sao.', dark: true }
   ]
 };""")
 
@@ -587,6 +604,19 @@ s = replace_fn(s, 'drawEnd', r"""function drawEnd() {
 rep("  if (flashT > 0) { b.globalAlpha = Math.min(1, flashT);", "  if (flashT > 0 && state !== 'play') flashT = Math.max(0, flashT - 1 / 60);\n  if (flashT > 0) { b.globalAlpha = Math.min(1, flashT);")
 rep("  gateOpen = false; prog = 0; toast = null; banner = null;", "  gateOpen = false; prog = 0; toast = null; banner = null; blizzT = 0; iceT = 2;")
 
+# ---------------------------------------------------------------- the family (family.js, shared with the app's Part 2 and 3)
+FAMJS = open(os.path.join(here, 'family.js'), encoding='utf-8').read()
+rep('function npcStamp(', FAMJS + "const FAM_AT = { lab: ['dad', 'sister'], dino: ['dad', 'sister'], ice: ['dad', 'sister'], portal: ['dad', 'mom', 'sister'], home: ['dad', 'mom', 'sister'] };\nfunction npcStamp(")
+rep("function drawNpc(c, cx, by, who, ph = 0) {\n  shadow(c, cx, by, 12);", "function drawNpc(c, cx, by, who, ph = 0) {\n  if (FAM.includes(who)) return drawFam(c, cx, by, who);\n  shadow(c, cx, by, 12);")
+rep("b.drawImage(portraitCan, 11, who === 'shadow' ? 0 : 7,", "b.drawImage(portraitCan, 11, who === 'shadow' ? 0 : FAM.includes(who) ? 4 : 7,")
+rep("citizen: ['#e8f0ff', '#ffe8a0'] }[who]", "citizen: ['#e8f0ff', '#ffe8a0'], sister: ['#8a4ab0', '#c77dff'], dad: ['#2a6a5a', '#3aa892'], mom: ['#b0304a', '#ff9ec7'] }[who]")
+rep("shadow: ['???', '#ff4d4d'], narr: ['', '#fff'] }[L.who];", "shadow: ['???', '#ff4d4d'], sister: ['CHỊ GÁI', '#d9a0ff'], dad: ['BA', '#7ee0c8'], mom: ['MẸ', '#ff9ec7'], narr: ['', '#fff'] }[L.who];")
+rep("'machine', 'house', 'block'].includes(o.type)", "'machine', 'house', 'block', 'fam', 'famCage'].includes(o.type)")
+rep("    case 'house':", "    case 'fam': famStamp(o.who, o.x, o.y); break;\n    case 'famCage': drawFamObj(o); break;\n    case 'house':")
+rep("  if (B.dead) {\n    B.deadT += dt;\n", "  if (B.dead) {\n    B.deadT += dt;\n    if (B.deadT > 1.2) famOpen();\n")
+rep("  buildStage(st);\n  if (st.flashIn)", "  buildStage(st);\n  famPlace(st.key);\n  if (st.flashIn)")
+rep("if (st.key === 'mammoth') boss = {", "if (st.key === 'mammoth') objs.push({ type: 'famCage', who: 'mom', ice: true, x: 284, y: 140, open: false });\n    if (st.key === 'mammoth') boss = {")
+rep("state === 'dialog' && dialog && dialog.i >= 6)", "state === 'dialog' && dialog && dialog.i >= dialog.lines.findIndex(l => l.fade))")
 s = s.replace("  hp: () => players.map(", "  grab: (k) => { const t = pickups.find(q => q.kind === k); if (t) { players[0].x = t.x; players[0].y = t.y; } return !!t; },\n  hp: () => players.map(", 1)
 s = s.replace('globalThis.__trumbo3', 'globalThis.__trumbo4').replace("fillText('TRUMBO 3'", "fillText('TRUMBO 4'")
 open(os.path.join(here, 'index.html'), 'w', encoding='utf-8').write(s)

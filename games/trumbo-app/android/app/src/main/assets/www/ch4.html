@@ -708,6 +708,7 @@ function megaStamp(B) {
 }
 // ---------------- NPCs
 function drawNpc(c, cx, by, who, ph = 0) {
+  if (FAM.includes(who)) return drawFam(c, cx, by, who);
   shadow(c, cx, by, 12);
   if (who === 'fisher') {
     R(c, cx - 4, by - 4, 3, 4, '#3a2a2a'); R(c, cx + 1, by - 4, 3, 4, '#3a2a2a');
@@ -739,6 +740,64 @@ function drawNpc(c, cx, by, who, ph = 0) {
     R(c, cx - 4, by - 31, 2, 1, '#ff1a2a'); R(c, cx + 2, by - 31, 2, 1, '#ff1a2a');
   }
 }
+// ---------------- the Trumbo family: Chị Gái (Part 2), Ba (Part 3) and Mẹ (Part 4) are the ones the kids rescue.
+// They never fight. Shared by Part 2, 3 (inserted by the app's build-web.mjs) and Part 4 (make.py).
+const FAM = ['sister', 'dad', 'mom'];
+function drawFam(c, cx, by, who, f = 0) {
+  shadow(c, cx, by, 14);
+  if (who === 'dad') {
+    R(c, cx - 5, by - 8, 4, 8, '#2a3a6a'); R(c, cx + 1, by - 8, 4, 8, '#2a3a6a'); R(c, cx - 6, by - 1, 5, 1, '#1a1a1a'); R(c, cx + 1, by - 1, 5, 1, '#1a1a1a');
+    R(c, cx - 6, by - 19, 12, 11, '#2f8a7a'); R(c, cx - 6, by - 19, 12, 1, '#3aa892'); R(c, cx - 2, by - 19, 4, 2, '#e8f4f0'); R(c, cx - 6, by - 9, 12, 1, '#3a2a1a');
+    R(c, cx - 8, by - 18, 2, 5, '#2f8a7a'); R(c, cx + 6, by - 18, 2, 5, '#2f8a7a'); R(c, cx - 8, by - 13, 2, 3, SK); R(c, cx + 6, by - 13 - f, 2, 3, SK);
+    R(c, cx - 1, by - 20, 2, 1, SK); R(c, cx - 4, by - 28, 8, 8, SK);
+    R(c, cx - 5, by - 30, 10, 3, '#1e1a1a'); R(c, cx - 5, by - 28, 1, 3, '#1e1a1a'); R(c, cx + 4, by - 28, 1, 3, '#1e1a1a');
+    R(c, cx - 4, by - 25, 3, 1, '#2a2a2a'); R(c, cx + 1, by - 25, 3, 1, '#2a2a2a'); R(c, cx - 1, by - 25, 2, 1, '#2a2a2a');
+    R(c, cx - 3, by - 24, 1, 1, OL); R(c, cx + 2, by - 24, 1, 1, OL); R(c, cx - 2, by - 22, 4, 1, '#3a2a2a');
+  } else if (who === 'mom') {
+    R(c, cx - 6, by - 29, 12, 13, '#2a1a1a'); R(c, cx - 7, by - 22, 2, 6, '#2a1a1a'); R(c, cx + 5, by - 22, 2, 6, '#2a1a1a');
+    R(c, cx - 3, by - 3, 2, 3, SK); R(c, cx + 1, by - 3, 2, 3, SK); R(c, cx - 4, by - 1, 3, 1, '#c0304a'); R(c, cx + 1, by - 1, 3, 1, '#c0304a');
+    for (let i = 0; i < 9; i++) { const w = 8 + Math.floor(i * 0.9) * 2; R(c, cx - w / 2, by - 12 + i, w, 1, i === 8 ? '#ff7a9a' : '#e8496a'); }
+    R(c, cx - 4, by - 19, 8, 7, '#e8496a'); R(c, cx - 4, by - 13, 8, 1, '#ffd23f'); R(c, cx - 2, by - 19, 4, 1, '#fff4d0');
+    R(c, cx - 6, by - 18, 2, 7, SK); R(c, cx + 4, by - 18 - f, 2, 7, SK);
+    R(c, cx - 4, by - 27, 8, 8, SK); R(c, cx - 5, by - 29, 10, 3, '#2a1a1a'); R(c, cx - 5, by - 27, 1, 6, '#2a1a1a'); R(c, cx + 4, by - 27, 1, 6, '#2a1a1a');
+    R(c, cx - 3, by - 24, 1, 2, OL); R(c, cx + 2, by - 24, 1, 2, OL); R(c, cx - 4, by - 25, 2, 1, OL); R(c, cx + 2, by - 25, 2, 1, OL);
+    R(c, cx - 4, by - 22, 1, 1, '#ff9ec7'); R(c, cx + 3, by - 22, 1, 1, '#ff9ec7'); R(c, cx - 1, by - 21, 2, 1, '#e0305a');
+    R(c, cx + 3, by - 30, 3, 3, '#ff7ab8'); R(c, cx + 4, by - 29, 1, 1, '#ffe066');
+  } else {
+    R(c, cx - 4, by - 6, 3, 6, '#4a2a6a'); R(c, cx + 1, by - 6, 3, 6, '#4a2a6a'); R(c, cx - 4, by - 1, 3, 1, '#fff'); R(c, cx + 1, by - 1, 3, 1, '#fff');
+    R(c, cx - 5, by - 11, 10, 5, '#4a6ad8'); R(c, cx - 5, by - 7, 10, 1, '#3a58b8');
+    R(c, cx - 5, by - 18, 10, 7, '#c77dff'); R(c, cx - 1, by - 16, 2, 2, '#ffe066');
+    R(c, cx - 7, by - 17, 2, 7, SK); R(c, cx + 5, by - 17 - f, 2, 7, SK);
+    R(c, cx - 5, by - 27, 10, 7, '#6b3a1e'); R(c, cx + 5, by - 26, 3, 8, '#6b3a1e'); R(c, cx + 4, by - 26, 1, 2, '#ff4d6d');
+    R(c, cx - 4, by - 26, 8, 8, SK); R(c, cx - 4, by - 27, 8, 2, '#6b3a1e'); R(c, cx - 5, by - 26, 1, 4, '#6b3a1e');
+    R(c, cx - 3, by - 23, 1, 2, OL); R(c, cx + 2, by - 23, 1, 2, OL); R(c, cx - 3, by - 21, 1, 1, '#ff9ec7'); R(c, cx + 2, by - 21, 1, 1, '#ff9ec7'); R(c, cx - 1, by - 20, 2, 1, '#c0405a');
+  }
+}
+function famStamp(who, x, y, f = 0) { stamp(`fam|${who}|${f}`, 40, 44, 20, 38, Math.round(x - cam.x), Math.round(y - cam.y), (c, ax, ay) => drawFam(c, ax, ay, who, f)); }
+// a captive family member: iron cage (Ác Quỷ) or a block of ice (Kỷ Băng Hà); o.open once the boss is beaten
+function drawFamObj(o) {
+  const cx = Math.round(o.x - cam.x), by = Math.round(o.y - cam.y), wave = o.open ? Math.floor(time * 4) % 2 : 0;
+  famStamp(o.who, o.x, o.y, wave);
+  if (o.open) { if (Math.floor(time * 2) % 2) { R(b, cx - 9, by - 40, 3, 3, '#ff7ab8'); R(b, cx + 7, by - 37, 3, 3, '#ff7ab8'); } return; }
+  if (o.ice) {
+    b.globalAlpha = 0.55; R(b, cx - 13, by - 36, 26, 38, '#a8d8f0'); b.globalAlpha = 0.85; R(b, cx - 13, by - 36, 26, 2, '#e8fbff'); R(b, cx - 11, by - 32, 2, 22, '#e8fbff'); R(b, cx + 8, by - 20, 2, 10, '#e8fbff'); R(b, cx - 13, by + 1, 26, 1, '#6a9ac0'); b.globalAlpha = 1;
+  } else {
+    R(b, cx - 15, by - 40, 30, 3, '#5a5a6a'); R(b, cx - 15, by + 1, 30, 3, '#5a5a6a'); for (let dx = -14; dx <= 12; dx += 5) R(b, cx + dx, by - 38, 2, 40, '#8a8a9a');
+    b.globalAlpha = 0.25; R(b, cx - 15, by - 38, 30, 40, '#c77dff'); b.globalAlpha = 1; R(b, cx - 2, by - 20, 4, 4, '#ffd23f');
+  }
+}
+function famOpen() {
+  for (const o of objs) if (o.type === 'famCage' && !o.open) {
+    o.open = true; SFX.gate(); shake = Math.max(shake, 6);
+    addParts(o.x, o.y - 18, 30, o.ice ? ['#e8fbff', '#a8d8f0', '#fff'] : ['#ffe066', '#fff', '#ff9ec7'], 90, 0.9, -20);
+  }
+}
+// family members waiting with the kids in some stages (FAM_AT: stage key -> who), standing beside the team
+function famPlace(key) {
+  const list = (typeof FAM_AT !== 'undefined' && FAM_AT[key]) || [], p = players[0];
+  list.forEach((who, i) => objs.push({ type: 'fam', who, x: p.x - 30 - i * 18, y: p.y - 2 + (i % 2) * 6 }));
+}
+const FAM_AT = { lab: ['dad', 'sister'], dino: ['dad', 'sister'], ice: ['dad', 'sister'], portal: ['dad', 'mom', 'sister'], home: ['dad', 'mom', 'sister'] };
 function npcStamp(who, x, y, ph = 0) { stamp(`npc|${who}|${ph}`, 40, 44, 20, 38, Math.round(x - cam.x), Math.round(y - cam.y), (c, ax, ay) => drawNpc(c, ax, ay, who, ph)); }
 // ---------------- items
 const GEMC = ['#ff4d6d', '#4dd2ff', '#7dff6b', '#ffd23f', '#c77dff'];
@@ -848,26 +907,31 @@ function pixEllipseT(c, cx, cy, rx, ry, col) { c.fillStyle = col; for (let a = 0
 // ---------------- story
 const DLG = {
   intro: [
-    { who: 'narr', text: 'Ác Quỷ đã bị đánh bại. Nữ Hoàng Thiên Thần dẫn Trump, Poly và Pugi xuống một căn phòng bí mật dưới cung điện.' },
+    { who: 'narr', text: 'Ác Quỷ đã bị đánh bại. Nữ Hoàng Thiên Thần dẫn Trump, Poly, Pugi cùng Ba và Chị Gái xuống một căn phòng bí mật dưới cung điện.' },
     { who: 'queen', text: 'Ta biết một con đường có thể đưa các ngươi trở về.' },
     { who: 'narr', text: 'Giữa căn phòng là một cỗ máy khổng lồ: CỖ MÁY THỜI GIAN.' },
     { who: 'explorer', text: 'Cỗ máy này có thể mở một cánh cửa xuyên qua thời gian.' },
+    { who: 'poly', text: 'Nó có tìm được Mẹ không ạ? Mẹ bị cơn bão cuốn đi mất rồi...' },
+    { who: 'explorer', text: 'Mẹ các cháu đang lạc ở một thời đại khác. Cỗ máy sẽ đưa các cháu tới đó.' },
     { who: 'trump', text: 'Nó có đưa tụi cháu về nhà được không ạ?' },
     { who: 'explorer', text: 'Được. Nhưng cỗ máy đã rất lâu không hoạt động.' },
+    { who: 'dad', text: 'Cả nhà mình đi cùng nhau. Lần này không ai bị lạc nữa.' },
+    { who: 'sister', text: 'Chị sẽ nắm tay Poly thật chặt!' },
     { who: 'queen', text: 'Chúc may mắn, ba vị anh hùng nhỏ tuổi.' },
     { who: 'narr', text: 'Họ khởi động cỗ máy. ẦM! Một cánh cổng thời gian mở ra.' },
     { who: 'narr', text: 'Nhưng ngay khi cả nhóm bước vào... cỗ máy bị trục trặc!' },
-    { who: 'narr', text: 'Ánh sáng bao quanh họ. VÙÙÙÙ! Trump, Poly và Pugi biến mất.' }
+    { who: 'narr', text: 'Ánh sáng bao quanh họ. VÙÙÙÙ! Cả nhà biến mất.' }
   ],
   dino: [
-    { who: 'narr', text: 'Khi mở mắt ra, hai anh em đang đứng giữa một khu rừng khổng lồ. Những cây cao chưa từng thấy.' },
+    { who: 'narr', text: 'Khi mở mắt ra, cả nhà đang đứng giữa một khu rừng khổng lồ. Những cây cao chưa từng thấy.' },
     { who: 'narr', text: 'Mặt đất rung chuyển. Một đàn khủng long chạy ngang qua!' },
     { who: 'poly', text: 'Anh... đây là đâu vậy?' },
     { who: 'trump', text: '(nhìn một con khủng long khổng lồ) Anh nghĩ chúng ta vừa về quá khứ.' },
     { who: 'boogie', text: 'Gâu!' },
     { who: 'narr', text: 'Cỗ máy thời gian rơi theo họ về thời tiền sử, nhưng đã bị hỏng và không thể hoạt động trở lại.' },
-    { who: 'narr', text: 'Muốn đi tiếp, ba người phải tìm 5 mảnh năng lượng thời gian. Có mảnh bị chôn dưới đất, chỉ cái mũi của Pugi mới tìm ra.' },
-    { who: 'trump', text: 'Đường bị cây đổ chắn rồi. Để anh phá mở lối!' }
+    { who: 'dad', text: 'Ba sẽ ở lại sửa cỗ máy, Chị trông chừng giúp Ba. Hai con đi tìm 5 mảnh năng lượng thời gian nhé.' },
+    { who: 'sister', text: 'Có mảnh bị chôn dưới đất đó. Nhờ cái mũi của Pugi nha!' },
+    { who: 'trump', text: 'Đường bị cây đổ chắn rồi. Để con phá mở lối!' }
   ],
   trex: [
     { who: 'narr', text: 'Cả nhóm tìm đủ năng lượng và mở đường tới khu vực cuối cùng của thời đại này.' },
@@ -878,52 +942,64 @@ const DLG = {
   ],
   trexEnd: [
     { who: 'narr', text: 'Khủng long bạo chúa gầm lên lần cuối rồi bỏ chạy vào rừng sâu.' },
-    { who: 'narr', text: 'Phía sau nó là một TINH THỂ THỜI GIAN sáng lấp lánh. Hai anh em lắp tinh thể vào cỗ máy.' },
-    { who: 'poly', text: 'Về nhà thôi!' },
-    { who: 'narr', text: 'Cỗ máy bắt đầu hoạt động. Nhưng thay vì đưa họ về nhà... VÙÙÙÙ! Nó đưa cả nhóm đến một thời đại khác.' }
+    { who: 'narr', text: 'Phía sau nó là một TINH THỂ THỜI GIAN sáng lấp lánh. Hai anh em mang về cho Ba lắp vào cỗ máy.' },
+    { who: 'poly', text: 'Đi tìm Mẹ thôi!' },
+    { who: 'narr', text: 'Cỗ máy bắt đầu hoạt động. VÙÙÙÙ! Nó đưa cả nhà đến một thời đại khác.' }
   ],
   ice: [
-    { who: 'narr', text: 'Trump, Poly và Pugi rơi xuống một vùng đất phủ đầy tuyết. Gió lạnh thổi dữ dội. Mọi thứ đều đóng băng.' },
+    { who: 'narr', text: 'Cả nhà rơi xuống một vùng đất phủ đầy tuyết. Gió lạnh thổi dữ dội. Mọi thứ đều đóng băng.' },
     { who: 'poly', text: 'Lạnh quá!' },
     { who: 'trump', text: 'Chúng ta lại đi nhầm thời đại rồi.' },
-    { who: 'narr', text: 'Đây là KỶ BĂNG HÀ. Cỗ máy thời gian lại bị hỏng.' },
-    { who: 'narr', text: 'Muốn trở về hiện tại, họ cần tinh thể thời gian cuối cùng. Trước hết phải tìm 4 mảnh năng lượng giữa bão tuyết.' },
+    { who: 'sister', text: 'Khoan đã... nhìn kìa! Chiếc khăn quàng màu hồng trên tuyết... là của Mẹ!' },
+    { who: 'narr', text: 'Đây là KỶ BĂNG HÀ. Mẹ đang ở đâu đó trong vùng đất băng giá này.' },
+    { who: 'dad', text: 'Cỗ máy lại hỏng rồi. Ba cần thêm 4 mảnh năng lượng. Các con đi tìm Mẹ và tìm năng lượng nhé, cẩn thận!' },
     { who: 'trump', text: 'Pugi, đánh hơi tìm đường nhé! Anh sẽ phá băng mở lối. Poly bắn mấy con thú từ xa!' },
     { who: 'boogie', text: 'Gâu!' }
   ],
   mammoth: [
-    { who: 'narr', text: 'Cuối cùng họ tìm thấy tinh thể thời gian. Nhưng nó đang được một sinh vật khổng lồ bảo vệ.' },
+    { who: 'narr', text: 'Cuối đường là tinh thể thời gian cuối cùng... và MẸ, bị đóng băng trong một khối băng lớn!' },
+    { who: 'poly', text: 'MẸ ƠI!!!' },
     { who: 'narr', text: 'Một con VOI MA MÚT khổng lồ dậm chân. Băng tuyết rung chuyển!' },
-    { who: 'trump', text: 'Poly, phối hợp với anh! Pugi, giúp tụi anh nhé!' },
+    { who: 'trump', text: 'Poly, phối hợp với anh! Pugi, giúp tụi anh nhé! Mình phải cứu Mẹ!' },
     { who: 'boogie', text: 'GÂU GÂU!' }
   ],
   mammothEnd: [
     { who: 'narr', text: 'Voi ma mút chịu thua. Nó lùi lại và nhường đường.' },
+    { who: 'narr', text: 'RẮC... Khối băng vỡ tan. Mẹ được tự do!' },
+    { who: 'mom', text: 'Trump! Poly! Các con của mẹ!' },
+    { who: 'poly', text: 'Mẹ ơi! Con nhớ mẹ lắm!' },
+    { who: 'mom', text: '(ôm chặt hai anh em) Mẹ biết thế nào các con cũng tới mà.' },
+    { who: 'trump', text: 'Pugi giúp tụi con nhiều lắm đó mẹ.' },
+    { who: 'mom', text: 'Cảm ơn con nhé, Pugi. Từ nay con là thành viên của nhà mình!' },
+    { who: 'boogie', text: 'Gâu! (Pugi vẫy chiếc đuôi nhỏ)' },
     { who: 'narr', text: 'Hai anh em lấy được TINH THỂ THỜI GIAN CUỐI CÙNG.' }
   ],
   portal: [
-    { who: 'narr', text: 'Trump, Poly và Pugi đưa tinh thể vào cỗ máy thời gian. Các tinh thể phát sáng.' },
+    { who: 'narr', text: 'Ba và Mẹ đưa tinh thể vào cỗ máy thời gian. Các tinh thể phát sáng.' },
     { who: 'narr', text: 'Cỗ máy bắt đầu hoạt động ổn định. Một cánh cổng xuất hiện.' },
     { who: 'narr', text: 'Lần này, màn hình của cỗ máy hiện rõ: THỜI ĐIỂM: HIỆN TẠI - ĐIỂM ĐẾN: NHÀ.' },
     { who: 'poly', text: 'Lần này chắc chắn về nhà chứ?' },
     { who: 'trump', text: 'Anh hy vọng vậy.' },
     { who: 'boogie', text: 'Gâu!' },
-    { who: 'narr', text: 'Ba người bước vào cánh cổng. VÙÙÙÙ!' }
+    { who: 'narr', text: 'Cả nhà nắm tay nhau bước vào cánh cổng. VÙÙÙÙ!' }
   ],
   ending: [
-    { who: 'narr', text: 'Một luồng sáng xuất hiện. Trump, Poly và Pugi rơi xuống ngay trước ngôi nhà của hai anh em.' },
+    { who: 'narr', text: 'Một luồng sáng xuất hiện. Cả nhà rơi xuống ngay trước ngôi nhà thân yêu của mình.' },
     { who: 'narr', text: 'Không còn đảo hoang. Không còn thành phố bỏ hoang. Không còn Ác Quỷ. Không còn khủng long. Không còn băng tuyết.' },
-    { who: 'narr', text: 'Cuối cùng... họ đã về nhà.' },
+    { who: 'narr', text: 'Cuối cùng... cả nhà đã về nhà.' },
     { who: 'poly', text: 'Con về rồi!' },
     { who: 'trump', text: '(nhìn Pugi) Cuối cùng chúng ta cũng về được.' },
     { who: 'boogie', text: 'Gâu! (Pugi vẫy chiếc đuôi nhỏ)' },
-    { who: 'narr', text: 'Cả ba nhìn lại cỗ máy thời gian. Nó từ từ biến mất.' },
-    { who: 'narr', text: 'Buổi tối, hai anh em ngồi bên cửa sổ kể lại tất cả những cuộc phiêu lưu.', dark: true },
+    { who: 'mom', text: 'Cả nhà mình đã sum họp rồi.' },
+    { who: 'dad', text: 'Năm người và một chú chó. Không thiếu một ai!' },
+    { who: 'narr', text: 'Cả nhà nhìn lại cỗ máy thời gian. Nó từ từ biến mất.', fade: true },
+    { who: 'narr', text: 'Buổi tối, cả nhà quây quần bên cửa sổ. Hai anh em kể lại tất cả những cuộc phiêu lưu.', dark: true },
     { who: 'narr', text: 'Đảo Rồng, Thành Phố Bỏ Hoang, Sa Mạc, 18 Tầng Địa Ngục, Thành Phố Thiên Đường, Thời Tiền Sử, Kỷ Băng Hà...', dark: true },
     { who: 'poly', text: 'Anh nghĩ chúng ta còn đi phiêu lưu nữa không?', dark: true },
     { who: 'trump', text: 'Không. Lần này anh chỉ muốn ở nhà.', dark: true },
+    { who: 'mom', text: 'Mẹ cũng vậy!', dark: true },
     { who: 'boogie', text: 'Gâu!', dark: true },
-    { who: 'narr', text: 'Hai anh em bật cười. Ngôi nhà nằm yên dưới bầu trời đầy sao.', dark: true }
+    { who: 'narr', text: 'Cả nhà bật cười. Ngôi nhà nằm yên dưới bầu trời đầy sao.', dark: true }
   ]
 };
 // stage types: hub (walk to the NPC), scene (dialog only), explore, boss, waves, shop
@@ -1074,6 +1150,7 @@ function enterStage(i, resumed) {
   if (!st.last) save();
   if (st.type === 'shop') { openShop(nextStage); return; }
   buildStage(st);
+  famPlace(st.key);
   if (st.flashIn) { flashT = 1.4; SFX.boom(); }
   if (st.type === 'scene') { startDialog(DLG[st.talk], () => { if (st.last) { state = 'end'; endT = 0; playSong('end'); clearSave(); } else nextStage(); }); playSong(st.song); return; }
   const pre = !resumed && st.before ? DLG[st.before] : null;
@@ -1116,6 +1193,7 @@ function buildStage(st) {
     if (st.key === 'portal') { objs.push({ type: 'machine', x: 160, y: 128, on: true }); for (let y = 6; y <= 7; y++) for (let x = 9; x <= 10; x++) map.t[y * map.w + x] = O; placeTeam(160, 11 * 16); }
     if (st.arena === 'home') { objs.push({ type: 'house', x: 160, y: 8 * 16 }); objs.push({ type: 'machine', x: 15 * 16, y: 11 * 16, on: true, fade: 0 }); placeTeam(8 * 16, 10 * 16 + 8); }
     if (st.key === 'trex') boss = { kind: 'trex', x: 160, y: 7 * 16, hp: 1100, maxhp: 1100, r: 24, face: -1, step: 0, minY: 96 };
+    if (st.key === 'mammoth') objs.push({ type: 'famCage', who: 'mom', ice: true, x: 284, y: 140, open: false });
     if (st.key === 'mammoth') boss = { kind: 'mammoth', x: 160, y: 7 * 16, hp: 1300, maxhp: 1300, r: 26, face: -1, step: 0, minY: 100 };
     if (boss) Object.assign(boss, { t: 0, st: 'intro', stT: 1.4, subT: 0, count: 0, flash: 0, stun: 0, stunImm: 0, taunt: 0, tauntImm: 0, mouth: 0, dead: false, deadT: 0, last: '', summoned: 0 });
     return;
@@ -1645,6 +1723,7 @@ function updBoss(B, dt) {
   B.t += dt; B.flash -= dt; B.mouth = Math.max(0, B.mouth - dt); B.taunt = Math.max(0, B.taunt - dt); B.tauntImm -= dt; B.stunImm -= dt;
   if (B.dead) {
     B.deadT += dt;
+    if (B.deadT > 1.2) famOpen();
     if (B.kind === 'mega') B.y += dt * 6;
     if (B.kind === 'sdemon') B.fade = Math.min(1, B.deadT / 2.5);
     if (Math.random() < 0.3) addParts(B.x + rnd(-20, 20), B.y + rnd(-25, 10), 1, B.kind === 'sdemon' ? ['#2a0f3a', '#6a1a3a', '#000'] : ['#a8e0ff', '#fff'], 20, 0.8, -30);
@@ -2291,7 +2370,7 @@ function drawObj(o) {
     }
     case 'machine': {
       const on = o.on ? 1 : 0, f = Math.floor(time * 6) % 4;
-      if (o.fade !== undefined && STAGES[stageIdx].key === 'home' && state === 'dialog' && dialog && dialog.i >= 6) o.fade = Math.min(1, o.fade + 1 / 120);
+      if (o.fade !== undefined && STAGES[stageIdx].key === 'home' && state === 'dialog' && dialog && dialog.i >= dialog.lines.findIndex(l => l.fade)) o.fade = Math.min(1, o.fade + 1 / 120);
       if (o.fade >= 1) break;
       if (o.fade) b.globalAlpha = 1 - o.fade;
       stamp(`mach|${on}|${f}`, 56, 54, 24, 50, cx, by, (c, x, y) => drawMachine(c, x, y, on, f));
@@ -2299,6 +2378,8 @@ function drawObj(o) {
       if (!on && Math.random() < 0.04) addParts(o.x + rnd(-10, 10), o.y - 30, 2, ['#ffe066', '#fff'], 40, 0.3);
       break;
     }
+    case 'fam': famStamp(o.who, o.x, o.y); break;
+    case 'famCage': drawFamObj(o); break;
     case 'house': stamp('house', 80, 72, 40, 68, cx, by, (c, x, y) => drawHouse(c, x, y)); break;
     case 'block': {
       if (o.broken) break;
@@ -2352,7 +2433,7 @@ function drawWorld() {
   for (const p of players) list.push({ y: p.y, f: () => drawPlayer(p) });
   if (boogie) list.push({ y: boogie.y, f: drawPugi });
   for (const e of enemies) list.push({ y: e.y, f: () => drawEnemy(e) });
-  for (const o of objs) if (['npc', 'follower', 'freed', 'captive', 'citizen', 'crystal', 'totem', 'queenCage', 'machine', 'house', 'block'].includes(o.type)) list.push({ y: o.y, f: () => drawObj(o) });
+  for (const o of objs) if (['npc', 'follower', 'freed', 'captive', 'citizen', 'crystal', 'totem', 'queenCage', 'machine', 'house', 'block', 'fam', 'famCage'].includes(o.type)) list.push({ y: o.y, f: () => drawObj(o) });
   if (boss) {
     if (boss.kind === 'mega') list.push({ y: boss.y, f: () => megaStamp(boss) });
     if (boss.kind === 'sdemon') list.push({ y: boss.y + 40, f: () => sdemonStamp(boss) });
@@ -2469,12 +2550,12 @@ const portraitCan = mkCanvas(96, 96);
 const pc = portraitCan.getContext('2d');
 function drawPortrait(who, x, y) {
   pc.clearRect(0, 0, 96, 96);
-  const bg = { trump: ['#2c5fa8', '#3a7bd5'], poly: ['#3e9a44', '#5cc15c'], boogie: ['#5a3a20', '#8a5a33'], fisher: ['#2f7fc8', '#f2d98d'], explorer: ['#6a4a2a', '#b8975a'], brother: ['#2c5fa8', '#8ac0ff'], queen: ['#e8e4ff', '#ffe8a0'], demon: ['#3a0a2a', '#6a0a2a'], shadow: ['#000', '#100810'], citizen: ['#e8f0ff', '#ffe8a0'] }[who] || ['#333', '#555'];
+  const bg = { trump: ['#2c5fa8', '#3a7bd5'], poly: ['#3e9a44', '#5cc15c'], boogie: ['#5a3a20', '#8a5a33'], fisher: ['#2f7fc8', '#f2d98d'], explorer: ['#6a4a2a', '#b8975a'], brother: ['#2c5fa8', '#8ac0ff'], queen: ['#e8e4ff', '#ffe8a0'], demon: ['#3a0a2a', '#6a0a2a'], shadow: ['#000', '#100810'], citizen: ['#e8f0ff', '#ffe8a0'], sister: ['#8a4ab0', '#c77dff'], dad: ['#2a6a5a', '#3aa892'], mom: ['#b0304a', '#ff9ec7'] }[who] || ['#333', '#555'];
   R(b, x, y, 36, 36, '#f4e3c1'); R(b, x + 1, y + 1, 34, 34, bg[0]); R(b, x + 1, y + 24, 34, 11, bg[1]);
   if (who === 'trump' || who === 'poly') { drawKid(pc, 12, 26, who, 'down', 0, { noShadow: true }); b.drawImage(portraitCan, 3, who === 'trump' ? 1 : 4, 18, 18, x, y, 36, 36); }
   else if (who === 'boogie') { drawDog(pc, 20, 30, { face: 1, flash: 0, moving: false, barkT: Math.floor(time * 4) % 2 ? 0.2 : 0, biteT: 0, anim: 0 }, { noShadow: true }); b.drawImage(portraitCan, 20, 6, 18, 18, x, y, 36, 36); }
   else if (who === 'demon') { drawDemon(pc, 48, 60, { t: time, flash: 0, mouth: Math.floor(time * 4) % 2 ? 0.2 : 0, phase: 2 }); b.drawImage(portraitCan, 34, 24, 28, 28, x + 4, y + 5, 28, 28); }
-  else { drawNpc(pc, 20, 34, who); b.drawImage(portraitCan, 11, who === 'shadow' ? 0 : 7, 18, 18, x, y, 36, 36); }
+  else { drawNpc(pc, 20, 34, who); b.drawImage(portraitCan, 11, who === 'shadow' ? 0 : FAM.includes(who) ? 4 : 7, 18, 18, x, y, 36, 36); }
 }
 function drawDialog() {
   const L = dialog.lines[dialog.i], x = 6, y = H - 52, w = W - 12, h = 48;
@@ -2482,7 +2563,7 @@ function drawDialog() {
   const hasP = L.who !== 'narr';
   if (hasP) drawPortrait(L.who, x + 6, y + 6);
   const tx = hasP ? x + 48 : x + 10, mw = w - (tx - x) - 10;
-  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boogie: ['PUGI', '#8fd6ff'], fisher: ['ÔNG LÃO NGƯ DÂN', '#8fd6ff'], explorer: ['NGƯỜI THÁM HIỂM', '#ffb13b'], brother: ['EM TRAI', '#8ac0ff'], queen: ['NỮ HOÀNG THIÊN THẦN', '#ffe066'], demon: ['ÁC QUỶ', '#c77dff'], shadow: ['???', '#ff4d4d'], narr: ['', '#fff'] }[L.who];
+  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boogie: ['PUGI', '#8fd6ff'], fisher: ['ÔNG LÃO NGƯ DÂN', '#8fd6ff'], explorer: ['NGƯỜI THÁM HIỂM', '#ffb13b'], brother: ['EM TRAI', '#8ac0ff'], queen: ['NỮ HOÀNG THIÊN THẦN', '#ffe066'], demon: ['ÁC QUỶ', '#c77dff'], shadow: ['???', '#ff4d4d'], sister: ['CHỊ GÁI', '#d9a0ff'], dad: ['BA', '#7ee0c8'], mom: ['MẸ', '#ff9ec7'], narr: ['', '#fff'] }[L.who];
   if (NAME[0]) T(NAME[0], tx, y + 2, 10, NAME[1]);
   const lines = wrap(L.text, mw, 11);
   let left = Math.floor(dialog.ch);

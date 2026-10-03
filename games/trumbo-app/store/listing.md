@@ -9,7 +9,7 @@ Images in this folder:
 |---|---|---|---|
 | App icon 512 x 512 (same for all) | `icon-512.png` | | |
 | Feature graphic 1024 x 500 | `feature-en.png` | `feature-vi.png` | `feature-zh.png` |
-| Phone screenshots (1920 x 1080, Play takes at most 8: skip `5-ch2-demon.png`) | `screenshots/en/` | `screenshots/vi/` | `screenshots/zh/` |
+| Phone screenshots (1920 x 1080, Play takes at most 8: skip `6-ch3-megalodon.png`) | `screenshots/en/` | `screenshots/vi/` | `screenshots/zh/` |
 
 ---
 
@@ -21,15 +21,15 @@ Images in this folder:
 
 **Full description:**
 
-One afternoon, Trump (11) and little Poly (6) take a small boat out to sea - and a storm sweeps them away to the land of dragons. The Fire Dragon King gives them the Compass Orb to find their way home... but the Demon's curse makes it point the wrong way!
+One afternoon, the whole Trumbo family is out at sea when a storm breaks their boat apart. Trump (11) and little Poly (6) wash up in the land of dragons, while Big Sister, Dad and Mom are swept away. With Pugi, an orphan dog they rescue, the two kids set out to bring their whole family back together.
 
 TRUMBO is a pixel-art action adventure for 1 or 2 players on the same device. The story was dreamed up by an 11-year-old.
 
 ★ 4 PARTS
-• Part 1 - Dragon Island: build a campfire, free the baby dragons, cross the poison swamp and the volcano, face the Fire Dragon King.
-• Part 2 - The Lost City: find 5 gems, cross the desert, go down the 18 floors of the Underworld, forge new weapons and defeat the Demon.
-• Part 3 - Heavenly City: dive to the seabed, battle the giant Megalodon, rescue the Angel Queen and face the Super Demon.
-• Part 4 - The Time Machine: a broken time machine throws the kids into the age of dinosaurs and the Ice Age. Find the time energy shards, beat the Tyrannosaurus Rex and the Giant Mammoth, and finally find the way home.
+• Part 1 - Dragon Island: build a campfire, free the baby dragons, cross the poison swamp and the volcano, face the Fire Dragon King - and rescue Pugi, a lost little dog.
+• Part 2 - The Lost City: find 5 gems, cross the desert, go down the 18 floors of the Underworld and defeat the Demon to free Big Sister.
+• Part 3 - Heavenly City: dive to the seabed, battle the giant Megalodon, rescue the Angel Queen and beat the Super Demon to free Dad.
+• Part 4 - The Time Machine: a broken time machine throws the kids into the age of dinosaurs and the Ice Age. Find the time energy shards, beat the Tyrannosaurus Rex and the Giant Mammoth, free Mom from the ice and bring the whole family home.
 
 ★ THREE HEROES, THREE STRENGTHS
 • The big brother fights up close with a sword and a mace and has a whirlwind attack.
@@ -62,15 +62,15 @@ The greatest adventure is not how far you go, but always having someone by your 
 
 **Mô tả đầy đủ:**
 
-Một buổi chiều, hai anh em Trump (11 tuổi) và Poly (6 tuổi) chèo thuyền ra biển chơi thì bị bão cuốn tới xứ sở rồng. Hỏa Long Vương tặng hai bạn Ngọc La Bàn để tìm đường về nhà... nhưng lời nguyền của Ác Quỷ đã làm la bàn chỉ sai đường!
+Một buổi chiều, cả nhà Trumbo đi thuyền ra biển chơi thì gặp bão. Trump (11 tuổi) và Poly (6 tuổi) dạt vào xứ sở rồng, còn Chị Gái, Ba và Mẹ bị cuốn đi mỗi người một ngả. Cùng chú chó mồ côi Pugi, hai anh em lên đường tìm lại cả nhà.
 
 TRUMBO là trò chơi phiêu lưu hành động đồ họa pixel, chơi 1 người hoặc 2 người trên cùng một máy. Kịch bản do một bạn nhỏ 11 tuổi nghĩ ra.
 
 ★ 4 PHẦN PHIÊU LƯU
-• Phần 1 - Đảo Rồng: nhặt gỗ đốt lửa trại, giải cứu rồng con, vượt đầm lầy độc và núi lửa, đối đầu Hỏa Long Vương.
-• Phần 2 - Thành Phố Bị Lãng Quên: tìm 5 viên ngọc, vượt sa mạc, xuống 18 tầng địa ngục, rèn vũ khí và đánh bại Ác Quỷ.
-• Phần 3 - Thành Phố Thiên Đường: lặn xuống đáy biển, chiến đấu với cá mập Megalodon, giải cứu Nữ Hoàng Thiên Thần và đánh bại Siêu Ác Quỷ.
-• Phần 4 - Cỗ Máy Thời Gian: cỗ máy thời gian trục trặc đưa hai anh em về thời khủng long và kỷ băng hà. Tìm mảnh năng lượng thời gian, hạ Khủng Long Bạo Chúa và Voi Ma Mút, rồi cuối cùng tìm đường về nhà.
+• Phần 1 - Đảo Rồng: nhặt gỗ đốt lửa trại, giải cứu rồng con, vượt đầm lầy độc và núi lửa, đối đầu Hỏa Long Vương - và cứu chú chó mồ côi Pugi.
+• Phần 2 - Thành Phố Bị Lãng Quên: tìm 5 viên ngọc, vượt sa mạc, xuống 18 tầng địa ngục, đánh bại Ác Quỷ để cứu Chị Gái.
+• Phần 3 - Thành Phố Thiên Đường: lặn xuống đáy biển, chiến đấu với cá mập Megalodon, giải cứu Nữ Hoàng Thiên Thần, đánh bại Siêu Ác Quỷ để cứu Ba.
+• Phần 4 - Cỗ Máy Thời Gian: cỗ máy thời gian trục trặc đưa hai anh em về thời khủng long và kỷ băng hà. Tìm mảnh năng lượng thời gian, hạ Khủng Long Bạo Chúa và Voi Ma Mút, cứu Mẹ khỏi khối băng và đưa cả nhà về nhà.
 
 ★ BA NHÂN VẬT, BA SỨC MẠNH
 • Anh lớn đánh gần bằng kiếm và chùy, có chiêu lốc xoáy.
@@ -103,15 +103,15 @@ Cuộc phiêu lưu lớn nhất không phải là đi được bao xa, mà là l
 
 **完整说明：**
 
-一天下午，Trump（11岁）和Poly（6岁）划着小船出海，却被暴风雨卷到了龙之国度。火龙王送给他们罗盘宝珠来寻找回家的路……可是恶魔的诅咒让罗盘指错了方向！
+一天下午，Trumbo一家坐船出海，却遇上了暴风雨。Trump（11岁）和Poly（6岁）漂到了龙之国度，姐姐、爸爸和妈妈也被冲散了。兄妹俩和救下的流浪小狗Pugi一起，踏上了寻找家人的旅程。
 
 TRUMBO 是一款像素风动作冒险游戏，支持单人或同一台设备双人游玩。故事由一位11岁的小朋友创作。
 
 ★ 四部曲
-• 第一部·龙之岛：收集木头生篝火，救出小龙，穿过毒雾沼泽和火山，挑战火龙王。
-• 第二部·失落之城：找齐5颗宝石，穿越沙漠，走下十八层地狱，打造新武器，打败恶魔。
-• 第三部·天堂之城：潜入海底，大战巨齿鲨，营救天使女王，打败超级恶魔。
-• 第四部·时光机器：出故障的时光机器把兄妹俩送到了恐龙时代和冰河时代。收集时间能量碎片，打败霸王龙和巨型猛犸象，最终找到回家的路。
+• 第一部·龙之岛：收集木头生篝火，救出小龙，穿过毒雾沼泽和火山，挑战火龙王，还救下了流浪小狗Pugi。
+• 第二部·失落之城：找齐5颗宝石，穿越沙漠，走下十八层地狱，打败恶魔救出姐姐。
+• 第三部·天堂之城：潜入海底，大战巨齿鲨，营救天使女王，打败超级恶魔救出爸爸。
+• 第四部·时光机器：出故障的时光机器把兄妹俩送到了恐龙时代和冰河时代。收集时间能量碎片，打败霸王龙和巨型猛犸象，从冰块中救出妈妈，全家一起回家。
 
 ★ 三位主角，三种能力
 • 哥哥用剑和钉头锤近战，还有旋风剑。

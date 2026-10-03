@@ -762,21 +762,18 @@ function pixEllipseT(c, cx, cy, rx, ry, col) { c.fillStyle = col; for (let a = 0
 // ---------------- story
 const DLG = {
   intro: [
-    { who: 'narr', text: 'Hỏa Long Vương chở Trump và Poly bay qua biển mây. Hai anh em tưởng rằng cuối cùng cũng được về nhà...' },
+    { who: 'narr', text: 'Hỏa Long Vương chở Trump, Poly và Pugi bay qua biển mây. Ngọc La Bàn chỉ về phía một thành phố xa xa.' },
+    { who: 'poly', text: 'Anh ơi, la bàn đang chỉ đường tới chỗ Chị đó!' },
     { who: 'narr', text: 'Bỗng một cơn bão đen kịt ập tới. Ngọc La Bàn tối sầm lại, chiếc kim quay loạn xạ!' },
     { who: 'narr', text: 'Một luồng gió đen quật trúng cánh rồng. Hỏa Long Vương cố hết sức hạ cánh xuống một thành phố xa lạ.' },
     { who: 'narr', text: 'Rồng bị thương, phải bay về núi lửa chữa thương. Trước khi đi, rồng hứa: "Ta nhất định sẽ quay lại đón các cháu!"' },
-    { who: 'narr', text: 'Trước mắt hai anh em là một thành phố bỏ hoang. Những tòa nhà đổ nát, đường phố vắng tanh, không một bóng người.' },
-    { who: 'trump', text: 'Đây không phải nhà mình. La bàn cũng không chỉ đường nữa...' },
-    { who: 'poly', text: 'Vậy chúng ta đang ở đâu?' },
+    { who: 'narr', text: 'Trước mắt ba người là một thành phố bỏ hoang. Những tòa nhà đổ nát, đường phố vắng tanh, không một bóng người.' },
+    { who: 'boogie', text: 'Gâu! Gâu! (Pugi đánh hơi thấy gì đó trên mặt đất)' },
+    { who: 'poly', text: 'Cái kẹp tóc hình ngôi sao này... là của Chị!' },
+    { who: 'trump', text: 'Chị đã ở đây! Pugi, mình đi tìm Chị nào!' },
     { who: 'narr', text: 'RẦM... Một cánh cổng khổng lồ từ từ mở ra. Cuộc phiêu lưu mới bắt đầu!' },
     { who: 'narr', text: 'Lần này hai anh em có thêm vũ khí, và có thể nâng cấp vũ khí bằng xu nhặt được trên đường.' },
-    { who: 'narr', text: 'Bỗng từ trong đống đổ nát, một chú chó đen lao ra, sủa vang làm lũ chuột chạy tán loạn!' },
-    { who: 'boogie', text: 'GÂU! GÂU!' },
-    { who: 'poly', text: 'Ơ, một bạn chó! Thon gọn, chân dài như chó săn luôn!' },
-    { who: 'trump', text: 'Nó gan lì ghê. Cái vòng cổ ghi chữ PUGI. Pugi, đi cùng tụi anh nhé?' },
-    { who: 'boogie', text: 'Gâu! (vẫy cái đuôi nhỏ)' },
-    { who: 'narr', text: 'Pugi quyết định đi cùng Trump và Poly. Pugi không biết chữa thương, nhưng rất giỏi CẮN, SỦA và NHỬ kẻ địch.' },
+    { who: 'narr', text: 'Pugi không biết chữa thương, nhưng rất giỏi CẮN, SỦA và NHỬ kẻ địch.' },
     { who: 'trump', text: 'Cánh cổng ra khỏi thành phố có 5 cái lỗ hình viên ngọc. Mình phải tìm đủ 5 viên ngọc!' }
   ],
   gorilla: [
@@ -832,22 +829,29 @@ const DLG = {
   ],
   demon: [
     { who: 'narr', text: 'Sau cánh cửa cuối cùng là một lâu đài khổng lồ. Trên ngai vàng là ÁC QUỶ.' },
+    { who: 'narr', text: 'Bên cạnh ngai vàng là một chiếc lồng sắt. Trong lồng là... CHỊ GÁI!' },
+    { who: 'sister', text: 'Trump! Poly! Chị ở đây!' },
+    { who: 'poly', text: 'Chị ơi!!!' },
     { who: 'demon', text: 'Các ngươi đã vượt qua thành phố, sa mạc và 18 tầng địa ngục.' },
-    { who: 'demon', text: 'Chính ta đã yểm lời nguyền lên Ngọc La Bàn. Chừng nào ta còn đây, các ngươi đừng hòng về nhà!' },
-    { who: 'demon', text: 'Nhưng muốn đi tiếp, các ngươi phải đánh bại ta.' },
-    { who: 'trump', text: 'Pugi nhử nó! Poly bắn từ xa! Anh đánh gần!' },
+    { who: 'demon', text: 'Chính ta đã gọi cơn bão đen và yểm lời nguyền lên Ngọc La Bàn. Muốn cứu cô ta, hãy đánh bại ta!' },
+    { who: 'trump', text: 'Pugi nhử nó! Poly bắn từ xa! Anh đánh gần! Mình cứu Chị!' },
     { who: 'boogie', text: 'GÂU GÂU!' }
   ],
   ending: [
     { who: 'narr', text: 'Ác Quỷ hét lên một tiếng rồi tan biến thành làn khói đen.' },
     { who: 'demon', text: 'Ta... sẽ... quay lại...' },
+    { who: 'narr', text: 'Chiếc lồng sắt bật mở. Chị Gái chạy ào tới ôm chầm lấy hai em.' },
+    { who: 'sister', text: 'Trump! Poly! Hai đứa giỏi quá! Chị biết thế nào hai đứa cũng tới mà.' },
+    { who: 'poly', text: 'Chị ơi, em nhớ chị lắm!' },
+    { who: 'sister', text: 'Ơ, còn bạn chó dễ thương này là ai vậy?' },
+    { who: 'trump', text: 'Pugi đó chị! Tụi em cứu Pugi ở Đảo Rồng. Pugi giúp tụi em nhiều lắm.' },
+    { who: 'boogie', text: 'Gâu!' },
+    { who: 'sister', text: 'Chị nghe Ác Quỷ nói... hắn còn bắt Ba đi tới một nơi rất xa, trên những tầng mây.' },
+    { who: 'sister', text: 'Chị không biết đánh nhau, nhưng chị sẽ đi cùng hai đứa. Mình đi tìm Ba!' },
     { who: 'narr', text: 'Ngọc La Bàn khẽ lóe sáng rồi lại mờ đi. Lời nguyền vẫn chưa được phá hết.' },
     { who: 'narr', text: 'Cánh cửa phía sau ngai vàng từ từ mở ra...' },
-    { who: 'narr', text: 'Nhưng phía bên kia không phải là nhà. Đó là một vùng đất hoàn toàn mới, chưa ai biết đang có gì bên trong.' },
-    { who: 'poly', text: 'Anh... mình còn phải đi nữa à?' },
-    { who: 'trump', text: '(cầm vũ khí lên) Có vẻ vậy.' },
-    { who: 'boogie', text: 'Gâu!' },
-    { who: 'narr', text: 'Ba người bước qua cánh cửa.' }
+    { who: 'trump', text: '(cầm vũ khí lên) Đi thôi. Ba đang chờ mình.' },
+    { who: 'narr', text: 'Cả bốn người bước qua cánh cửa.' }
   ]
 };
 const STAGES = [
@@ -1050,7 +1054,7 @@ function buildStage(st) {
     map = genArena(st.key); placeTeam(10 * 16, 12 * 16 + 8); gateOpen = true;
     if (st.key === 'gorilla') boss = { kind: 'gorilla', minY: 124, x: 10 * 16, y: 8 * 16, hp: 360, maxhp: 360, r: 22, walk: 0, z: 0 };
     if (st.key === 'python') { boss = { kind: 'python', minY: 92, x: 10 * 16, y: 6 * 16, hp: 640, maxhp: 640, r: 11, ang: Math.PI / 2, hist: [], segs: [] }; }
-    if (st.key === 'demon') { boss = { kind: 'demon', minY: 112, x: 10 * 16, y: 7 * 16, hp: 1000, maxhp: 1000, r: 18, phase: 1 }; objs.push({ type: 'throne', x: 10 * 16, y: 6 * 16 + 8 }); }
+    if (st.key === 'demon') { boss = { kind: 'demon', minY: 112, x: 10 * 16, y: 7 * 16, hp: 1000, maxhp: 1000, r: 18, phase: 1 }; objs.push({ type: 'throne', x: 10 * 16, y: 6 * 16 + 8 }); if (APP) objs.push({ type: 'famCage', who: 'sister', x: 16 * 16, y: 8 * 16, open: false }); }
     Object.assign(boss, { t: 0, st: 'intro', stT: 1.2, subT: 0, count: 0, flash: 0, stun: 0, stunImm: 0, taunt: 0, tauntImm: 0, mouth: 0, dead: false, deadT: 0, last: '', summoned: 0 });
     if (boss.kind === 'python') for (let i = 0; i < 80; i++) boss.hist.push({ x: boss.x, y: boss.y - i * 1.5 });
     return;
@@ -1503,6 +1507,7 @@ function fanShots(x, y, tg, n, spread, spd, kind) {
 function updBoss(B, dt) {
   B.t += dt; B.flash -= dt; B.mouth = Math.max(0, B.mouth - dt); B.taunt = Math.max(0, B.taunt - dt); B.tauntImm -= dt; B.stunImm -= dt;
   if (B.dead) {
+    if (B.deadT > 1.2) famOpen();
     B.deadT += dt; if (B.z) B.z = Math.max(0, B.z - dt * 80);
     if (Math.random() < 0.3) addParts(B.x + rnd(-20, 20), B.y + rnd(-25, 10), 1, B.kind === 'demon' ? ['#2a0f3a', '#6a1a3a', '#000'] : ['#ffd1dc', '#ffe066', '#fff'], 20, 0.8, -30);
     if (B.kind === 'demon') B.fade = Math.min(1, B.deadT / 2.5);
@@ -1959,6 +1964,7 @@ function drawObj(o) {
     case 'smith': drawSmith(b, cx, by); if (!gateOpen && Math.floor(time * 2) % 2) T(prog >= 4 ? 'Mang lại đây!' : `Nguyên liệu ${prog}/4`, cx, by - 36, 9, '#ffe066', 'center'); break;
     case 'anvil': R(b, cx - 8, by - 9, 16, 4, '#4a4a56'); R(b, cx - 10, by - 10, 4, 2, '#4a4a56'); R(b, cx - 3, by - 5, 6, 5, '#3a3a44'); R(b, cx - 6, by - 1, 12, 2, '#3a3a44'); R(b, cx - 8, by - 9, 16, 1, '#8a8f9a'); break;
     case 'forgefire': { const fl = Math.floor(time * 10) % 2; R(b, cx - 10, by - 14, 20, 14, '#3a2a2a'); R(b, cx - 8, by - 12, 16, 8, '#1a0a0a'); R(b, cx - 6, by - 10 - fl, 12, 6, '#ff5a1f'); R(b, cx - 4, by - 11 + fl, 8, 4, '#ffb13b'); R(b, cx - 2, by - 12, 4, 2, '#ffe066'); R(b, cx - 4, by - 22, 8, 8, '#3a2a2a'); break; }
+    case 'famCage': drawFamObj(o); break;
     case 'throne': {
       R(b, cx - 18, by - 40, 36, 40, '#5a3a10'); R(b, cx - 16, by - 38, 32, 36, '#ffd23f'); R(b, cx - 12, by - 34, 24, 28, '#6a0a2a'); R(b, cx - 10, by - 32, 20, 3, '#8a1a3a');
       R(b, cx - 20, by - 46, 4, 10, '#ffd23f'); R(b, cx + 16, by - 46, 4, 10, '#ffd23f'); R(b, cx - 2, by - 46, 4, 6, '#ffd23f'); R(b, cx - 1, by - 44, 2, 2, '#ff4d6d');
@@ -1999,7 +2005,7 @@ function drawWorld() {
   for (const p of players) list.push({ y: p.y, f: () => drawPlayer(p) });
   if (boogie) list.push({ y: boogie.y, f: drawPugi });
   for (const e of enemies) list.push({ y: e.y, f: () => drawEnemy(e) });
-  for (const o of objs) if (['obelisk', 'smith', 'anvil', 'forgefire'].includes(o.type)) list.push({ y: o.y, f: () => drawObj(o) });
+  for (const o of objs) if (['obelisk', 'smith', 'anvil', 'forgefire', 'famCage'].includes(o.type)) list.push({ y: o.y, f: () => drawObj(o) });
   if (boss) {
     if (boss.kind === 'gorilla') list.push({ y: boss.y, f: () => gorillaStamp(boss) });
     if (boss.kind === 'python') list.push({ y: boss.y, f: () => drawPython(b, boss) });
@@ -2102,9 +2108,68 @@ function drawHUD() {
 }
 const portraitCan = mkCanvas(96, 96);
 const pc = portraitCan.getContext('2d');
+// ---------------- the Trumbo family: Chị Gái (Part 2), Ba (Part 3) and Mẹ (Part 4) are the ones the kids rescue.
+// They never fight. Shared by Part 2, 3 (inserted by the app's build-web.mjs) and Part 4 (make.py).
+const FAM = ['sister', 'dad', 'mom'];
+function drawFam(c, cx, by, who, f = 0) {
+  shadow(c, cx, by, 14);
+  if (who === 'dad') {
+    R(c, cx - 5, by - 8, 4, 8, '#2a3a6a'); R(c, cx + 1, by - 8, 4, 8, '#2a3a6a'); R(c, cx - 6, by - 1, 5, 1, '#1a1a1a'); R(c, cx + 1, by - 1, 5, 1, '#1a1a1a');
+    R(c, cx - 6, by - 19, 12, 11, '#2f8a7a'); R(c, cx - 6, by - 19, 12, 1, '#3aa892'); R(c, cx - 2, by - 19, 4, 2, '#e8f4f0'); R(c, cx - 6, by - 9, 12, 1, '#3a2a1a');
+    R(c, cx - 8, by - 18, 2, 5, '#2f8a7a'); R(c, cx + 6, by - 18, 2, 5, '#2f8a7a'); R(c, cx - 8, by - 13, 2, 3, SK); R(c, cx + 6, by - 13 - f, 2, 3, SK);
+    R(c, cx - 1, by - 20, 2, 1, SK); R(c, cx - 4, by - 28, 8, 8, SK);
+    R(c, cx - 5, by - 30, 10, 3, '#1e1a1a'); R(c, cx - 5, by - 28, 1, 3, '#1e1a1a'); R(c, cx + 4, by - 28, 1, 3, '#1e1a1a');
+    R(c, cx - 4, by - 25, 3, 1, '#2a2a2a'); R(c, cx + 1, by - 25, 3, 1, '#2a2a2a'); R(c, cx - 1, by - 25, 2, 1, '#2a2a2a');
+    R(c, cx - 3, by - 24, 1, 1, OL); R(c, cx + 2, by - 24, 1, 1, OL); R(c, cx - 2, by - 22, 4, 1, '#3a2a2a');
+  } else if (who === 'mom') {
+    R(c, cx - 6, by - 29, 12, 13, '#2a1a1a'); R(c, cx - 7, by - 22, 2, 6, '#2a1a1a'); R(c, cx + 5, by - 22, 2, 6, '#2a1a1a');
+    R(c, cx - 3, by - 3, 2, 3, SK); R(c, cx + 1, by - 3, 2, 3, SK); R(c, cx - 4, by - 1, 3, 1, '#c0304a'); R(c, cx + 1, by - 1, 3, 1, '#c0304a');
+    for (let i = 0; i < 9; i++) { const w = 8 + Math.floor(i * 0.9) * 2; R(c, cx - w / 2, by - 12 + i, w, 1, i === 8 ? '#ff7a9a' : '#e8496a'); }
+    R(c, cx - 4, by - 19, 8, 7, '#e8496a'); R(c, cx - 4, by - 13, 8, 1, '#ffd23f'); R(c, cx - 2, by - 19, 4, 1, '#fff4d0');
+    R(c, cx - 6, by - 18, 2, 7, SK); R(c, cx + 4, by - 18 - f, 2, 7, SK);
+    R(c, cx - 4, by - 27, 8, 8, SK); R(c, cx - 5, by - 29, 10, 3, '#2a1a1a'); R(c, cx - 5, by - 27, 1, 6, '#2a1a1a'); R(c, cx + 4, by - 27, 1, 6, '#2a1a1a');
+    R(c, cx - 3, by - 24, 1, 2, OL); R(c, cx + 2, by - 24, 1, 2, OL); R(c, cx - 4, by - 25, 2, 1, OL); R(c, cx + 2, by - 25, 2, 1, OL);
+    R(c, cx - 4, by - 22, 1, 1, '#ff9ec7'); R(c, cx + 3, by - 22, 1, 1, '#ff9ec7'); R(c, cx - 1, by - 21, 2, 1, '#e0305a');
+    R(c, cx + 3, by - 30, 3, 3, '#ff7ab8'); R(c, cx + 4, by - 29, 1, 1, '#ffe066');
+  } else {
+    R(c, cx - 4, by - 6, 3, 6, '#4a2a6a'); R(c, cx + 1, by - 6, 3, 6, '#4a2a6a'); R(c, cx - 4, by - 1, 3, 1, '#fff'); R(c, cx + 1, by - 1, 3, 1, '#fff');
+    R(c, cx - 5, by - 11, 10, 5, '#4a6ad8'); R(c, cx - 5, by - 7, 10, 1, '#3a58b8');
+    R(c, cx - 5, by - 18, 10, 7, '#c77dff'); R(c, cx - 1, by - 16, 2, 2, '#ffe066');
+    R(c, cx - 7, by - 17, 2, 7, SK); R(c, cx + 5, by - 17 - f, 2, 7, SK);
+    R(c, cx - 5, by - 27, 10, 7, '#6b3a1e'); R(c, cx + 5, by - 26, 3, 8, '#6b3a1e'); R(c, cx + 4, by - 26, 1, 2, '#ff4d6d');
+    R(c, cx - 4, by - 26, 8, 8, SK); R(c, cx - 4, by - 27, 8, 2, '#6b3a1e'); R(c, cx - 5, by - 26, 1, 4, '#6b3a1e');
+    R(c, cx - 3, by - 23, 1, 2, OL); R(c, cx + 2, by - 23, 1, 2, OL); R(c, cx - 3, by - 21, 1, 1, '#ff9ec7'); R(c, cx + 2, by - 21, 1, 1, '#ff9ec7'); R(c, cx - 1, by - 20, 2, 1, '#c0405a');
+  }
+}
+function famStamp(who, x, y, f = 0) { stamp(`fam|${who}|${f}`, 40, 44, 20, 38, Math.round(x - cam.x), Math.round(y - cam.y), (c, ax, ay) => drawFam(c, ax, ay, who, f)); }
+// a captive family member: iron cage (Ác Quỷ) or a block of ice (Kỷ Băng Hà); o.open once the boss is beaten
+function drawFamObj(o) {
+  const cx = Math.round(o.x - cam.x), by = Math.round(o.y - cam.y), wave = o.open ? Math.floor(time * 4) % 2 : 0;
+  famStamp(o.who, o.x, o.y, wave);
+  if (o.open) { if (Math.floor(time * 2) % 2) { R(b, cx - 9, by - 40, 3, 3, '#ff7ab8'); R(b, cx + 7, by - 37, 3, 3, '#ff7ab8'); } return; }
+  if (o.ice) {
+    b.globalAlpha = 0.55; R(b, cx - 13, by - 36, 26, 38, '#a8d8f0'); b.globalAlpha = 0.85; R(b, cx - 13, by - 36, 26, 2, '#e8fbff'); R(b, cx - 11, by - 32, 2, 22, '#e8fbff'); R(b, cx + 8, by - 20, 2, 10, '#e8fbff'); R(b, cx - 13, by + 1, 26, 1, '#6a9ac0'); b.globalAlpha = 1;
+  } else {
+    R(b, cx - 15, by - 40, 30, 3, '#5a5a6a'); R(b, cx - 15, by + 1, 30, 3, '#5a5a6a'); for (let dx = -14; dx <= 12; dx += 5) R(b, cx + dx, by - 38, 2, 40, '#8a8a9a');
+    b.globalAlpha = 0.25; R(b, cx - 15, by - 38, 30, 40, '#c77dff'); b.globalAlpha = 1; R(b, cx - 2, by - 20, 4, 4, '#ffd23f');
+  }
+}
+function famOpen() {
+  for (const o of objs) if (o.type === 'famCage' && !o.open) {
+    o.open = true; SFX.gate(); shake = Math.max(shake, 6);
+    addParts(o.x, o.y - 18, 30, o.ice ? ['#e8fbff', '#a8d8f0', '#fff'] : ['#ffe066', '#fff', '#ff9ec7'], 90, 0.9, -20);
+  }
+}
+// family members waiting with the kids in some stages (FAM_AT: stage key -> who), standing beside the team
+function famPlace(key) {
+  const list = (typeof FAM_AT !== 'undefined' && FAM_AT[key]) || [], p = players[0];
+  list.forEach((who, i) => objs.push({ type: 'fam', who, x: p.x - 30 - i * 18, y: p.y - 2 + (i % 2) * 6 }));
+}
+const FAM_AT = {};
 function drawPortrait(who, x, y) {
   pc.clearRect(0, 0, 96, 96);
-  const bg = { trump: ['#2c5fa8', '#3a7bd5'], poly: ['#3e9a44', '#5cc15c'], boogie: ['#5a3a20', '#8a5a33'], smith: ['#5a2a1a', '#8a3a1a'], demon: ['#3a0a2a', '#6a0a2a'] }[who];
+  const bg = { trump: ['#2c5fa8', '#3a7bd5'], poly: ['#3e9a44', '#5cc15c'], boogie: ['#5a3a20', '#8a5a33'], smith: ['#5a2a1a', '#8a3a1a'], demon: ['#3a0a2a', '#6a0a2a'], sister: ['#8a4ab0', '#c77dff'] }[who];
+  if (FAM.includes(who)) { R(b, x, y, 36, 36, '#f4e3c1'); R(b, x + 1, y + 1, 34, 34, bg[0]); R(b, x + 1, y + 24, 34, 11, bg[1]); drawFam(pc, 20, 34, who); b.drawImage(portraitCan, 11, 4, 18, 18, x, y, 36, 36); return; }
   R(b, x, y, 36, 36, '#f4e3c1'); R(b, x + 1, y + 1, 34, 34, bg[0]); R(b, x + 1, y + 24, 34, 11, bg[1]);
   if (who === 'trump' || who === 'poly') { drawKid(pc, 12, 26, who, 'down', 0, { noShadow: true }); b.drawImage(portraitCan, 3, who === 'trump' ? 1 : 4, 18, 18, x, y, 36, 36); }
   if (who === 'boogie') { drawDog(pc, 20, 30, { face: 1, flash: 0, moving: false, barkT: Math.floor(time * 4) % 2 ? 0.2 : 0, biteT: 0, anim: 0 }, { noShadow: true }); b.drawImage(portraitCan, 20, 6, 18, 18, x, y, 36, 36); }
@@ -2117,7 +2182,7 @@ function drawDialog() {
   const hasP = L.who !== 'narr';
   if (hasP) drawPortrait(L.who, x + 6, y + 6);
   const tx = hasP ? x + 48 : x + 10, mw = w - (tx - x) - 10;
-  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boogie: ['PUGI', '#8fd6ff'], smith: ['ÔNG THỢ RÈN', '#ffb13b'], demon: ['ÁC QUỶ', '#c77dff'], narr: ['', '#fff'] }[L.who];
+  const NAME = { trump: ['TRUMP', '#ffd166'], poly: ['POLY', '#8fe36b'], boogie: ['PUGI', '#8fd6ff'], smith: ['ÔNG THỢ RÈN', '#ffb13b'], demon: ['ÁC QUỶ', '#c77dff'], sister: ['CHỊ GÁI', '#d9a0ff'], narr: ['', '#fff'] }[L.who];
   if (NAME[0]) T(NAME[0], tx, y + 2, 10, NAME[1]);
   const lines = wrap(L.text, mw, 11);
   let left = Math.floor(dialog.ch);
