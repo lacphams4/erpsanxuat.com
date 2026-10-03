@@ -29,14 +29,13 @@ Daemon will be stopped at the end of the build
 > Task :app:parseReleaseLocalResources
 > Task :app:extractReleaseVersionControlInfo
 > Task :app:checkReleaseDuplicateClasses
-> Task :app:processReleaseManifestForPackage
-> Task :app:javaPreCompileRelease
 > Task :app:desugarReleaseFileDependencies
+> Task :app:javaPreCompileRelease
 > Task :app:mergeReleaseStartupProfile
+> Task :app:mergeExtDexRelease
 > Task :app:mergeReleaseShaders
 > Task :app:compileReleaseShaders NO-SOURCE
 > Task :app:generateReleaseAssets UP-TO-DATE
-> Task :app:mergeExtDexRelease
 > Task :app:mergeReleaseAssets
 > Task :app:processReleaseJavaRes NO-SOURCE
 > Task :app:mergeReleaseJniLibFolders
@@ -45,23 +44,15 @@ Daemon will be stopped at the end of the build
 > Task :app:writeReleaseAppMetadata
 > Task :app:mergeReleaseArtProfile
 > Task :app:collectReleaseDependencies
-> Task :app:processReleaseResources
 > Task :app:mergeReleaseJavaResource
 > Task :app:configureReleaseDependencies
-> Task :app:bundleReleaseResources
-> Task :app:compileReleaseJavaWithJavac
-> Task :app:dexBuilderRelease
 > Task :app:extractReleaseNativeSymbolTables NO-SOURCE
-> Task :app:mergeReleaseGlobalSynthetics
 > Task :app:extractProguardFiles
-> Task :app:mergeDexRelease
-> Task :app:generateReleaseLintVitalReportModel
-> Task :app:buildReleasePreBundle
-> Task :app:compileReleaseArtProfile
 > Task :app:preDebugBuild UP-TO-DATE
 > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
-> Task :app:javaPreCompileDebug
+> Task :app:processReleaseManifestForPackage
 > Task :app:parseReleaseIntegrityConfig
+> Task :app:javaPreCompileDebug
 > Task :app:checkDebugAarMetadata
 > Task :app:generateDebugResValues
 > Task :app:mapDebugSourceSetPaths
@@ -73,28 +64,37 @@ Daemon will be stopped at the end of the build
 > Task :app:parseDebugLocalResources
 > Task :app:processDebugMainManifest
 > Task :app:processDebugManifest
-> Task :app:mergeDebugShaders
 > Task :app:processDebugManifestForPackage
+> Task :app:processReleaseResources
+> Task :app:processDebugResources
+> Task :app:bundleReleaseResources
+> Task :app:compileReleaseJavaWithJavac
+> Task :app:dexBuilderRelease
+> Task :app:mergeReleaseGlobalSynthetics
+> Task :app:mergeDexRelease
+> Task :app:generateReleaseLintVitalReportModel
+> Task :app:buildReleasePreBundle
+> Task :app:compileReleaseArtProfile
+> Task :app:compileDebugJavaWithJavac
+> Task :app:mergeDebugShaders
 > Task :app:compileDebugShaders NO-SOURCE
 > Task :app:generateDebugAssets UP-TO-DATE
 > Task :app:mergeDebugAssets
 > Task :app:processDebugJavaRes NO-SOURCE
-> Task :app:mergeDebugJavaResource
-> Task :app:compressDebugAssets
 > Task :app:checkDebugDuplicateClasses
+> Task :app:compressDebugAssets
+> Task :app:mergeDebugJavaResource
 > Task :app:desugarDebugFileDependencies
 > Task :app:mergeExtDexDebug
+> Task :app:mergeLibDexDebug
+> Task :app:dexBuilderDebug
 > Task :app:mergeDebugJniLibFolders
 > Task :app:mergeDebugNativeLibs NO-SOURCE
-> Task :app:mergeLibDexDebug
 > Task :app:stripDebugDebugSymbols NO-SOURCE
 > Task :app:validateSigningDebug
 > Task :app:writeDebugAppMetadata
-> Task :app:writeDebugSigningConfigVersions
-> Task :app:processDebugResources
-> Task :app:compileDebugJavaWithJavac
-> Task :app:dexBuilderDebug
 > Task :app:mergeProjectDexDebug
+> Task :app:writeDebugSigningConfigVersions
 > Task :app:packageDebug
 > Task :app:createDebugApkListingFileRedirect
 > Task :app:assembleDebug
@@ -115,5 +115,5 @@ You can use '--warning-mode all' to show the individual deprecation warnings and
 
 For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
 
-BUILD SUCCESSFUL in 43s
+BUILD SUCCESSFUL in 46s
 76 actionable tasks: 76 executed
