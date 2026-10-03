@@ -103,6 +103,10 @@ function pollPads() {
   for (const code of ['KeyW', 'KeyS', 'KeyA', 'KeyD', 'KeyF', 'KeyG', 'KeyR', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'ShiftRight', 'KeyJ', 'Escape', 'KeyM', 'KeyQ']) setVKey(code, !!want[code]);
   if (pads.length) initAudio();
 }
+if (NX) {
+  addEventListener('error', e => { e.preventDefault(); reportError(e.error || e.message || e); });
+  addEventListener('unhandledrejection', e => { e.preventDefault(); reportError(e.reason); });
+}
 // The + button on controller 1 normally closes a homebrew app. Keep it as "pause" while playing; allow exit from the title screen.
 if (NX) addEventListener('beforeunload', e => { if (state !== 'title') e.preventDefault(); });
 const held = a => a.some(k => keys[k]);
@@ -2107,15 +2111,20 @@ function render() {
   g.imageSmoothingEnabled = false;
   g.drawImage(buf, 0, 0, W * S, H * S);
   if (NX && lastErr && lastErrT > 0) T('Lỗi: ' + lastErr, 4, H - 10, 8, '#ff8a8a', 'left', '#000');
+  if (NX && state === 'title') {
+    let n = 0, bts = ''; try { for (const p of navigator.getGamepads()) if (p) { n++; if (!bts) bts = p.buttons.map((x, i) => x.pressed ? i : '').filter(String).join(','); } } catch (e) {}
+    T(`v1.0.1 · tay cầm: ${n} · nút: ${bts || '-'} · khung: ${frameCount} · âm thanh: ${AC ? (SYNTH ? 'buf' : 'osc') : audioOff ? 'tắt' : '-'}`, W - 3, H - 9, 7, '#c9b8e8', 'right', '#000');
+  }
   flushText();
 }
 let last = performance.now();
 let lastErr = null, lastErrT = 0;
-function reportError(err) { console.error(err); lastErr = String((err && err.message) || err).slice(0, 80); lastErrT = 8; }
+let frameCount = 0;
+function reportError(err) { try { console.error(err); } catch (e) {} lastErr = String((err && err.message) || err).slice(0, 80); lastErrT = NX ? 1e9 : 8; }
 function frame(now) {
   requestAnimationFrame(frame);
   const dt = Math.min(0.05, (now - last) / 1000); last = now; time += dt;
-  lastErrT -= dt;
+  lastErrT -= dt; frameCount++;
   try { pollPads(); } catch (err) { reportError(err); }
   try { update(dt); render(); } catch (err) { reportError(err); }
   pressed = {};
@@ -2123,7 +2132,7 @@ function frame(now) {
 }
 async function loadFonts() {
   if (NX) {
-    try { const data = await Switch.readFile('romfs:/VT323.ttf'); if (data) fonts.add(new FontFace('VT323', data)); } catch (e) { console.log('font load failed', e); }
+    try { const data = await Switch.readFile('romfs:/VT323.ttf'); if (data) { const ff = new FontFace('VT323', data); if (ff.loaded && ff.loaded.catch) ff.loaded.catch(reportError); fonts.add(ff); } } catch (e) { reportError(e); }
     return;
   }
   if (document.fonts) await document.fonts.load("16px 'VT323'").catch(() => {});
