@@ -9,7 +9,7 @@ Images in this folder:
 |---|---|---|---|
 | App icon 512 x 512 (same for all) | `icon-512.png` | | |
 | Feature graphic 1024 x 500 | `feature-en.png` | `feature-vi.png` | `feature-zh.png` |
-| Phone screenshots (1920 x 1080) | `screenshots/en/` | `screenshots/vi/` | `screenshots/zh/` |
+| Phone screenshots (1920 x 1080, Play takes at most 8: skip `5-ch2-demon.png`) | `screenshots/en/` | `screenshots/vi/` | `screenshots/zh/` |
 
 ---
 
@@ -25,10 +25,11 @@ One afternoon, Trump (11) and little Poly (6) take a small boat out to sea - and
 
 TRUMBO is a pixel-art action adventure for 1 or 2 players on the same device. The story was dreamed up by an 11-year-old.
 
-★ 3 PARTS
+★ 4 PARTS
 • Part 1 - Dragon Island: build a campfire, free the baby dragons, cross the poison swamp and the volcano, face the Fire Dragon King.
 • Part 2 - The Lost City: find 5 gems, cross the desert, go down the 18 floors of the Underworld, forge new weapons and defeat the Demon.
-• Part 3 - Heavenly City: dive to the seabed, battle the giant Megalodon, rescue the Angel Queen and face the Super Demon in the final battle.
+• Part 3 - Heavenly City: dive to the seabed, battle the giant Megalodon, rescue the Angel Queen and face the Super Demon.
+• Part 4 - The Time Machine: a broken time machine throws the kids into the age of dinosaurs and the Ice Age. Find the time energy shards, beat the Tyrannosaurus Rex and the Giant Mammoth, and finally find the way home.
 
 ★ THREE HEROES, THREE STRENGTHS
 • The big brother fights up close with a sword and a mace and has a whirlwind attack.
@@ -49,7 +50,7 @@ TRUMBO is a pixel-art action adventure for 1 or 2 players on the same device. Th
 • No data collected, no permissions, plays offline.
 • Progress saves automatically.
 
-When friends work together and look out for each other, they can overcome any challenge.
+The greatest adventure is not how far you go, but always having someone by your side to come home with.
 
 ---
 
@@ -65,10 +66,11 @@ Một buổi chiều, hai anh em Trump (11 tuổi) và Poly (6 tuổi) chèo thu
 
 TRUMBO là trò chơi phiêu lưu hành động đồ họa pixel, chơi 1 người hoặc 2 người trên cùng một máy. Kịch bản do một bạn nhỏ 11 tuổi nghĩ ra.
 
-★ 3 PHẦN PHIÊU LƯU
+★ 4 PHẦN PHIÊU LƯU
 • Phần 1 - Đảo Rồng: nhặt gỗ đốt lửa trại, giải cứu rồng con, vượt đầm lầy độc và núi lửa, đối đầu Hỏa Long Vương.
 • Phần 2 - Thành Phố Bị Lãng Quên: tìm 5 viên ngọc, vượt sa mạc, xuống 18 tầng địa ngục, rèn vũ khí và đánh bại Ác Quỷ.
-• Phần 3 - Thành Phố Thiên Đường: lặn xuống đáy biển, chiến đấu với cá mập Megalodon, giải cứu Nữ Hoàng Thiên Thần và trận chiến cuối cùng với Siêu Ác Quỷ.
+• Phần 3 - Thành Phố Thiên Đường: lặn xuống đáy biển, chiến đấu với cá mập Megalodon, giải cứu Nữ Hoàng Thiên Thần và đánh bại Siêu Ác Quỷ.
+• Phần 4 - Cỗ Máy Thời Gian: cỗ máy thời gian trục trặc đưa hai anh em về thời khủng long và kỷ băng hà. Tìm mảnh năng lượng thời gian, hạ Khủng Long Bạo Chúa và Voi Ma Mút, rồi cuối cùng tìm đường về nhà.
 
 ★ BA NHÂN VẬT, BA SỨC MẠNH
 • Anh lớn đánh gần bằng kiếm và chùy, có chiêu lốc xoáy.
@@ -89,7 +91,7 @@ TRUMBO là trò chơi phiêu lưu hành động đồ họa pixel, chơi 1 ngư�
 • Không thu thập dữ liệu, không cần quyền truy cập nào, chơi không cần mạng.
 • Tiến độ được tự động lưu.
 
-Khi biết phối hợp và bảo vệ nhau, những người bạn có thể vượt qua mọi thử thách.
+Cuộc phiêu lưu lớn nhất không phải là đi được bao xa, mà là luôn có người đồng hành để cùng trở về nhà.
 
 ---
 
@@ -105,10 +107,11 @@ Khi biết phối hợp và bảo vệ nhau, những người bạn có thể v�
 
 TRUMBO 是一款像素风动作冒险游戏，支持单人或同一台设备双人游玩。故事由一位11岁的小朋友创作。
 
-★ 三部曲
+★ 四部曲
 • 第一部·龙之岛：收集木头生篝火，救出小龙，穿过毒雾沼泽和火山，挑战火龙王。
 • 第二部·失落之城：找齐5颗宝石，穿越沙漠，走下十八层地狱，打造新武器，打败恶魔。
-• 第三部·天堂之城：潜入海底，大战巨齿鲨，营救天使女王，在最终决战中挑战超级恶魔。
+• 第三部·天堂之城：潜入海底，大战巨齿鲨，营救天使女王，打败超级恶魔。
+• 第四部·时光机器：出故障的时光机器把兄妹俩送到了恐龙时代和冰河时代。收集时间能量碎片，打败霸王龙和巨型猛犸象，最终找到回家的路。
 
 ★ 三位主角，三种能力
 • 哥哥用剑和钉头锤近战，还有旋风剑。
@@ -129,7 +132,7 @@ TRUMBO 是一款像素风动作冒险游戏，支持单人或同一台设备双�
 • 不收集数据，不需要任何权限，无需联网。
 • 自动存档。
 
-只要齐心协力、互相保护，朋友们就能战胜一切挑战。
+最伟大的冒险不在于走了多远，而在于总有人陪你一起回家。
 
 ---
 
@@ -138,7 +141,7 @@ TRUMBO 是一款像素风动作冒险游戏，支持单人或同一台设备双�
 - **Privacy policy:** publish `../web/privacy.html` (English, Tiếng Việt, 中文) at a public web address, replace `[SUPPORT EMAIL]` / `[EMAIL HỖ TRỢ]`, and paste the link.
 - **App access:** all functionality is available without special access.
 - **Ads:** No.
-- **Content rating (IARC):** Game. Mild cartoon/fantasy violence (dragons, monsters, demons), no blood, no bad language, no gambling, no user interaction or sharing, no purchases.
+- **Content rating (IARC):** Game. Mild cartoon/fantasy violence (dragons, dinosaurs, monsters, demons), no blood, no bad language, no gambling, no user interaction or sharing, no purchases.
 - **Target audience:** choose the age groups (for example 6-8, 9-12, 13-15). With children under 13 the app must follow the Google Play Families Policy; this app has no ads and collects no data.
 - **Data safety:** no data collected, no data shared.
 - **Category:** Game > Adventure. **Price:** Free. **Countries:** all.

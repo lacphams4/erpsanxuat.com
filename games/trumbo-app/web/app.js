@@ -8,7 +8,12 @@
 'use strict';
 const KEY = 'trumbo-app-v1';
 const DEF = { unlocked: 1, current: 1, mode: 0, done: false };
-function loadProgress() { try { return Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { return Object.assign({}, DEF); } }
+function loadProgress() {
+  let p; try { p = Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { p = Object.assign({}, DEF); }
+  // players who finished the 3-part version (1.1.x): Part 4 is waiting for them
+  if (p.done && p.unlocked < 4) { p.done = false; p.unlocked = 4; p.current = 4; }
+  return p;
+}
 function saveProgress(p) { try { localStorage.setItem(KEY, JSON.stringify(p)); } catch (e) {} }
 const touch = (window.matchMedia && matchMedia('(pointer: coarse)').matches) || 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 const chapter = +(document.documentElement.dataset.chapter || 0);
@@ -28,12 +33,12 @@ function detectLang() {
 }
 const LANG = ['vi', 'en', 'zh'].includes(prog.lang) ? prog.lang : detectLang();
 const UI = {
-  vi: { part: n => `PHẦN ${n}`, parts: ['Đảo Rồng', 'Thành Phố Bị Lãng Quên', 'Thành Phố Thiên Đường'], homeQ: 'Về màn hình chính?', homeNote: 'Tiến độ được lưu ở đầu mỗi màn.', home: 'Về màn hình chính', stay: 'Chơi tiếp' },
-  en: { part: n => `PART ${n}`, parts: ['Dragon Island', 'The Lost City', 'Heavenly City'], homeQ: 'Back to the main menu?', homeNote: 'Progress is saved at the start of every stage.', home: 'Main menu', stay: 'Keep playing' },
-  zh: { part: n => `第${'一二三'[n - 1]}部`, parts: ['龙之岛', '失落之城', '天堂之城'], homeQ: '返回主菜单？', homeNote: '每一关开始时都会自动存档。', home: '返回主菜单', stay: '继续游戏' }
+  vi: { part: n => `PHẦN ${n}`, parts: ['Đảo Rồng', 'Thành Phố Bị Lãng Quên', 'Thành Phố Thiên Đường', 'Cỗ Máy Thời Gian'], homeQ: 'Về màn hình chính?', homeNote: 'Tiến độ được lưu ở đầu mỗi màn.', home: 'Về màn hình chính', stay: 'Chơi tiếp' },
+  en: { part: n => `PART ${n}`, parts: ['Dragon Island', 'The Lost City', 'Heavenly City', 'The Time Machine'], homeQ: 'Back to the main menu?', homeNote: 'Progress is saved at the start of every stage.', home: 'Main menu', stay: 'Keep playing' },
+  zh: { part: n => `第${'一二三四'[n - 1]}部`, parts: ['龙之岛', '失落之城', '天堂之城', '时光机器'], homeQ: '返回主菜单？', homeNote: '每一关开始时都会自动存档。', home: '返回主菜单', stay: '继续游戏' }
 };
 const CHAPTERS = {};
-for (const n of [1, 2, 3]) CHAPTERS[n] = { file: `ch${n}.html`, label: UI[LANG].part(n), name: UI[LANG].parts[n - 1] };
+for (const n of [1, 2, 3, 4]) CHAPTERS[n] = { file: `ch${n}.html`, label: UI[LANG].part(n), name: UI[LANG].parts[n - 1] };
 const DEFAULT_NAMES = { trump: 'Trump', poly: 'Poly' };
 const names = Object.assign({}, DEFAULT_NAMES, prog.names || {});
 const customNames = names.trump !== 'Trump' || names.poly !== 'Poly';
@@ -127,7 +132,7 @@ const APP = window.TRUMBO_APP = {
   next() {
     if (APP.leaving) return;
     const p = loadProgress();
-    if (chapter >= 3) { p.done = true; p.unlocked = 3; p.current = 3; saveProgress(p); go('index.html?done=1'); return; }
+    if (chapter >= 4) { p.done = true; p.unlocked = 4; p.current = 4; saveProgress(p); go('index.html?done=1'); return; }
     p.unlocked = Math.max(p.unlocked, chapter + 1); p.current = chapter + 1; p.pending = 'new'; saveProgress(p);
     go(chapterUrl(chapter + 1, 'new'));
   },

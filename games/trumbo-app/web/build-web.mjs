@@ -1,9 +1,10 @@
-// Builds the app's web content (www/) from the three standalone chapter games:
+// Builds the app's web content (www/) from the four standalone chapter games:
 //   games/trump-po/index.html  -> ch1.html  (Chương 1: Đảo Rồng)
 //   games/trumbo-2/index.html  -> ch2.html  (Chương 2: Thành Phố Bị Lãng Quên)
 //   games/trumbo-3/index.html  -> ch3.html  (Chương 3: Thành Phố Thiên Đường)
+//   games/trumbo-4/index.html  -> ch4.html  (Chương 4: Cỗ Máy Thời Gian)
 // Each chapter gets: local font, app.js (navigation, touch controls, gamepads), a direct start from
-// the home screen, and the story changes that join the three parts into one adventure with a real ending.
+// the home screen, and the story changes that join the four parts into one adventure with a real ending.
 // Usage: node build-web.mjs [outDir]   (default: ../android/app/src/main/assets/www)
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -143,16 +144,15 @@ function chapter3(s) {
     line('trump', '(nhìn Pugi) Nếu không có mày, chắc anh em mình thua rồi.') +
     line('boogie', 'Gâu!') +
     line('poly', 'Có pháo hoa kìa! Đẹp quá!') +
-    line('queen', 'Ác Quỷ đã bị tiêu diệt, lời nguyền của hắn cũng tan biến. Các ngươi xem Ngọc La Bàn kìa.') +
-    line('narr', 'Ngọc La Bàn bỗng sáng rực. Lần đầu tiên sau bao lâu, chiếc kim chỉ thẳng về một hướng: NHÀ.') +
-    line('trump', 'Hóa ra suốt thời gian qua, lời nguyền của Ác Quỷ làm la bàn chỉ sai đường!') +
-    line('narr', 'GRÀOOO! Trên mây cao vang lên một tiếng gầm quen thuộc. Hỏa Long Vương đã quay lại, đúng như lời hứa.') +
-    line('poly', 'Ông Rồng! Mình được về nhà thật rồi!') +
-    line('trump', 'Pugi, về nhà với tụi anh nhé. Từ nay mày là thành viên của gia đình mình!') +
-    line('boogie', 'GÂU GÂU! (Pugi vẫy đuôi rối rít)') +
-    line('narr', 'Rồng chở ba người bay qua biển mây. Ngôi nhà thân yêu hiện ra, bố mẹ chạy ra ôm chầm lấy hai anh em.') +
-    line('narr', 'Đêm hôm đó, cả nhà ngủ thật ngon. Trên kệ sách, Ngọc La Bàn khẽ chớp sáng...', ', dark: true') +
-    line('narr', 'Chiếc kim từ từ xoay sang một hướng mới. Pugi ngẩng đầu lên, khẽ "gâu" một tiếng...', ', dark: true').replace(/,\n$/, '') +
+    line('narr', 'Lời nguyền tan biến. Ngọc La Bàn sáng lên... nhưng chiếc kim cứ quay tròn mãi, không chịu dừng lại.') +
+    line('narr', 'GRÀOOO! Hỏa Long Vương quay lại đúng như lời hứa. Nhưng rồng lắc đầu buồn bã.') +
+    line('narr', 'Rồng có thể bay qua biển mây, nhưng không thể bay xuyên qua thời gian.') +
+    line('trump', 'Xuyên qua thời gian? Ý ông Rồng là sao ạ?') +
+    line('queen', 'Cơn bão đen của Ác Quỷ đã cuốn các ngươi đi rất xa, xa khỏi cả thời gian của chính các ngươi.') +
+    line('queen', 'Vì thế la bàn không tìm ra nhà: ngôi nhà của các ngươi ở một thời điểm khác.') +
+    line('poly', 'Vậy... tụi con không về nhà được nữa sao?') +
+    line('queen', 'Đừng lo. Ta biết một con đường có thể đưa các ngươi trở về.') +
+    line('boogie', 'Gâu?').replace(/,\n$/, '') +
     s.slice(z);
   // the night scene shows the glowing Compass Orb instead of the old shadow figure
   s = rep(s, "if (darkK > 0.6) stamp('npc|shadow|0', 40, 44, 20, 38, W / 2, H / 2 + 6, (c, ax, ay) => drawNpc(c, ax, ay, 'shadow'));",
@@ -175,19 +175,25 @@ function drawFinalCard() {
   R(b, 0, 0, W, H, '#07040f');
   for (let i = 0; i < 46; i++) { const tw = (Math.floor(time * 2 + i) % 7) === 0; R(b, (i * 73 + 11) % W, (i * 37 + 5) % 92, 1, 1, tw ? '#fff' : i % 4 ? '#5a4a8a' : '#c9b8e8'); }
   if (endT > 0.5) stamp('orb|' + (Math.floor(time * 3) % 2), 40, 40, 20, 20, W / 2, 28, (c, ax, ay) => drawOrb(c, ax, ay, Math.floor(time * 3) % 2));
-  if (endT > 1) T('HẾT', W / 2, 52, 26, '#ffd23f', 'center', '#7a1f5a');
+  if (endT > 1) T('HẾT PHẦN 3', W / 2, 52, 26, '#ffd23f', 'center', '#7a1f5a');
   if (endT > 1.8) T('CUỘC PHIÊU LƯU ANH EM NHÀ TRUMBO', W / 2, 80, 11, '#fff', 'center', '#4a1f6a');
-  if (endT > 2.8) wrap('Ba anh em đã về nhà an toàn. Nhưng Ngọc La Bàn vẫn đang chỉ về một nơi rất xa...', 270, 10).forEach((l, i) => T(l, W / 2, 98 + i * 11, 10, '#e8dcff', 'center'));
-  if (endT > 4) T('Ý tưởng và kịch bản: @AUTHOR@  ·  Cảm ơn bạn đã chơi!', W / 2, 128, 9, '#8fd6ff', 'center', null);
-  if (endT > 6 && Math.floor(time * 2) % 2) T(PAD ? 'Nhấn A để về màn hình chính' : 'Nhấn ENTER để về màn hình chính', W / 2, 152, 10, '#fff', 'center', null);
+  if (endT > 2.8) wrap('Ác Quỷ đã bị đánh bại. Nhưng đường về nhà còn xa hơn họ tưởng: xuyên qua cả thời gian...', 270, 10).forEach((l, i) => T(l, W / 2, 98 + i * 11, 10, '#e8dcff', 'center'));
+  if (endT > 6 && Math.floor(time * 2) % 2) T(PAD ? 'Nhấn A để sang Phần 4' : 'Nhấn ENTER để sang Phần 4', W / 2, 140, 10, '#fff', 'center', null);
 }
 function drawShop() {`);
   return s;
 }
 
-const SRC = { 1: 'trump-po', 2: 'trumbo-2', 3: 'trumbo-3' };
-const FN = { 1: chapter1, 2: chapter2, 3: chapter3 };
-for (const n of [1, 2, 3]) {
+// Phần 4 (games/trumbo-4 is generated from Part 3 by its make.py): the last chapter, its THE END card goes back home
+function chapter4(s) {
+  s = engine23(s, 4);
+  s = rep(s, "Ý tưởng và kịch bản: Trump  ·  Cảm ơn bạn đã chơi!", 'Ý tưởng và kịch bản: @AUTHOR@  ·  Cảm ơn bạn đã chơi!');
+  return s;
+}
+
+const SRC = { 1: 'trump-po', 2: 'trumbo-2', 3: 'trumbo-3', 4: 'trumbo-4' };
+const FN = { 1: chapter1, 2: chapter2, 3: chapter3, 4: chapter4 };
+for (const n of [1, 2, 3, 4]) {
   const src = readFileSync(join(games, SRC[n], 'index.html'), 'utf8');
   writeFileSync(join(out, `ch${n}.html`), FN[n](src));
   console.log(`ch${n}.html`);

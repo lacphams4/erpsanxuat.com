@@ -1,10 +1,10 @@
 # TRUMBO - Cuộc Phiêu Lưu Anh Em Nhà Trumbo - Cốt truyện trọn bộ
 
-Tên quốc tế: TRUMBO - Part 1: Dragon Island · Part 2: The Lost City · Part 3: Heavenly City (game có Tiếng Việt, English, 中文).
+Tên quốc tế: TRUMBO - Part 1: Dragon Island · Part 2: The Lost City · Part 3: Heavenly City · Part 4: The Time Machine (game có Tiếng Việt, English, 中文).
 
 Nhân vật: **Trump** (11 tuổi, đánh gần), **Poly** (6 tuổi, bắn xa và hồi máu), chú chó săn **Pugi** (gặp ở Chương 2).
 
-Sợi chỉ xuyên suốt cả 3 chương là **Ngọc La Bàn**: viên ngọc biết chỉ đường về nhà, nhưng đã bị Ác Quỷ yểm lời nguyền.
+Sợi chỉ xuyên suốt là **đường về nhà**: Ngọc La Bàn biết chỉ đường nhưng bị Ác Quỷ yểm lời nguyền (Phần 1-3), rồi Cỗ Máy Thời Gian đưa ba người xuyên qua các thời đại (Phần 4).
 
 ## Phần 1 - Đảo Rồng (Dragon Island)
 
@@ -39,15 +39,26 @@ Thành phố đang bị Ác Quỷ xâm chiếm. Cả ba giải cứu người d�
 
 Ở lãnh địa của mình, Ác Quỷ trở lại thành **Siêu Ác Quỷ** cầm thanh kiếm khổng lồ. Nhờ Pugi nhiều lần lao vào cứu chủ, hai anh em đánh bại hắn. BOOOOOOM!
 
-## Kết thúc
+## Kết Phần 3
 
 - Thành phố mở lễ hội. Trump nói với Pugi: "Nếu không có mày, chắc anh em mình thua rồi."
-- Lời nguyền tan biến, Ngọc La Bàn sáng rực và chỉ thẳng về nhà.
-- Hỏa Long Vương quay lại đúng như lời hứa. Rồng chở cả ba bay về, và Pugi trở thành thành viên của gia đình.
-- Đêm hôm đó, trên kệ sách, Ngọc La Bàn khẽ chớp sáng. Chiếc kim xoay sang một hướng mới...
+- Lời nguyền tan biến, nhưng kim la bàn cứ quay tròn mãi. Hỏa Long Vương quay lại đúng hẹn, nhưng rồng không thể bay xuyên qua thời gian.
+- Nữ Hoàng giải thích: cơn bão đen của Ác Quỷ đã cuốn ba người ra khỏi thời gian của chính mình, nên la bàn không tìm ra nhà. "Ta biết một con đường có thể đưa các ngươi trở về."
 
-**HẾT.** Ba anh em đã về nhà an toàn, nhưng Ngọc La Bàn vẫn đang chỉ về một nơi rất xa.
+## Phần 4 - Cỗ Máy Thời Gian (The Time Machine)
+
+1. **Căn phòng bí mật**: Nữ Hoàng dẫn cả ba xuống dưới cung điện. Nhà thám hiểm giới thiệu Cỗ Máy Thời Gian. Trump hỏi: "Nó có đưa tụi cháu về nhà được không?" - "Được. Nhưng cỗ máy đã rất lâu không hoạt động." ẦM! Cánh cổng mở, cỗ máy trục trặc, VÙÙÙÙ, cả ba biến mất.
+2. **Rừng Khủng Long**: rừng cây khổng lồ, đàn khủng long, đầm lầy, cây đổ chắn đường (Trump phá mở lối). Tìm 5 mảnh năng lượng thời gian, có mảnh bị chôn mà chỉ Pugi đánh hơi ra. Quái: khủng long săn mồi, khủng long ba sừng, thằn lằn bay.
+3. **Boss Khủng Long Bạo Chúa**: cắn lao tới, quật đuôi, tiếng gầm làm choáng hai anh em và làm đá rơi, dậm chân, gọi bầy khủng long nhỏ. Thua, nó để lại Tinh Thể Thời Gian. Cỗ máy chạy... nhưng đưa cả nhóm tới một thời đại khác.
+4. **Vùng Đất Băng Giá (Kỷ Băng Hà)**: "Lạnh quá!" - "Chúng ta lại đi nhầm thời đại rồi." Bão tuyết, hồ băng, băng nhũ rơi, tường băng chắn đường. Tìm 4 mảnh năng lượng. Quái: sói tuyết, hổ răng kiếm, người tuyết ném tuyết.
+5. **Boss Voi Ma Mút**: húc bằng ngà (đâm vào tường thì bị choáng - lúc đó đánh mạnh hơn), dậm chân tạo sóng tuyết, ném tuyết, bão tuyết xoáy, gọi bầy sói. Pugi nhiều lần lao vào cứu chủ. Lấy được tinh thể cuối cùng.
+6. **Trở về**: màn hình cỗ máy hiện "THỜI ĐIỂM: HIỆN TẠI - ĐIỂM ĐẾN: NHÀ". "Lần này chắc chắn về nhà chứ?" - "Anh hy vọng vậy." - "Gâu!"
+7. **Về nhà**: cả ba rơi xuống trước cửa nhà. "Con về rồi!" Cỗ máy từ từ biến mất. Buổi tối bên cửa sổ, hai anh em kể lại Đảo Rồng, Thành Phố Bỏ Hoang, Sa Mạc, 18 Tầng Địa Ngục, Thành Phố Thiên Đường, Thời Tiền Sử, Kỷ Băng Hà. "Anh nghĩ chúng ta còn đi phiêu lưu nữa không?" - "Không. Lần này anh chỉ muốn ở nhà." - "Gâu!" Cả nhà bật cười dưới bầu trời đầy sao.
+
+**THE END.**
 
 ## Thông điệp
+
+Cuộc phiêu lưu lớn nhất không phải là đi được bao xa, mà là luôn có người đồng hành để cùng trở về nhà.
 
 Mỗi người có một sức mạnh khác nhau. Khi biết phối hợp và bảo vệ nhau, những người bạn có thể vượt qua mọi thử thách.

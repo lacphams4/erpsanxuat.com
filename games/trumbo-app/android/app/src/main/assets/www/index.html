@@ -49,7 +49,7 @@ button{cursor:pointer}
 .box p,.box li{font-size:calc(5.2*var(--u));line-height:1.15;margin:0 0 calc(1.2*var(--u))}
 .box ul{margin:0;padding-left:1.2em}
 .box .k{color:var(--gold)}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(2*var(--u))}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:calc(2*var(--u))}
 .card{white-space:normal;align-self:stretch;background:#2a1f45;border:calc(.5*var(--u)) solid var(--line);border-radius:calc(1*var(--u));padding:calc(2*var(--u));text-align:left;font-size:calc(5*var(--u))}
 .card b{display:block;color:var(--gold);font-weight:normal;font-size:1.1em}
 .card span{display:block;font-size:1.35em;line-height:1}
@@ -137,10 +137,10 @@ button{cursor:pointer}
 const APP = window.TRUMBO_APP, CH = APP.CHAPTERS;
 const TXT = {
   vi: {
-    kicker: 'CUỘC PHIÊU LƯU', title: 'ANH EM NHÀ TRUMBO', sub: '{T}, {P} và chú chó Pugi - 3 phần phiêu lưu',
+    kicker: 'CUỘC PHIÊU LƯU', title: 'ANH EM NHÀ TRUMBO', sub: '{T}, {P} và chú chó Pugi - 4 phần phiêu lưu',
     continue: '▶ Chơi tiếp', newGame: 'Chơi mới', chapters: 'Chọn phần', names: 'Đặt tên nhân vật', help: 'Cách chơi', about: 'Giới thiệu',
     players: 'Người chơi:', p1: '1 người', p2: '2 người', language: 'Ngôn ngữ:',
-    status: 'Đã mở: <b>{n}/3 phần</b>', playing: 'Đang chơi: <b>{c}</b>', doneAll: '★ ĐÃ HOÀN THÀNH CẢ 3 PHẦN ★',
+    status: 'Đã mở: <b>{n}/4 phần</b>', playing: 'Đang chơi: <b>{c}</b>', doneAll: '★ ĐÃ HOÀN THÀNH CẢ 4 PHẦN ★',
     passed: '✓ Đã qua', current: 'Đang chơi', locked: 'Chưa mở',
     close: 'Đóng', cancel: 'Thôi', start: 'Bắt đầu', save: 'Lưu', reset: 'Về tên gốc',
     newQ: 'Chơi mới?', newText: 'Bắt đầu lại từ Phần 1. Các phần đã mở vẫn được giữ, có thể chọn lại bất cứ lúc nào.',
@@ -153,16 +153,16 @@ const TXT = {
       <li><span class="k">Tay cầm Bluetooth:</span> tay cầm 1 là {T}, tay cầm 2 là {P}. Nút cảm ứng tự ẩn khi có tay cầm.</li>
       <li><span class="k">Bàn phím:</span> {T} dùng W A S D, F đánh, G chiêu, R đổi vũ khí. {P} dùng mũi tên, Enter, Shift phải, J. P tạm dừng.</li>
       <li>Một người ngã thì người kia đứng sát bên để cứu dậy. Chơi 1 người thì máy điều khiển {P}.</li></ul>`,
-    aboutBody: `<p>Hai anh em <span class="k">{T}</span> và <span class="k">{P}</span> bị bão cuốn tới xứ sở rồng. Hỏa Long Vương tặng hai bạn Ngọc La Bàn để tìm đường về nhà, nhưng lời nguyền của Ác Quỷ đã làm la bàn chỉ sai đường...</p>
+    aboutBody: `<p>Hai anh em <span class="k">{T}</span> và <span class="k">{P}</span> bị bão cuốn tới xứ sở rồng. Hỏa Long Vương tặng hai bạn Ngọc La Bàn để tìm đường về nhà, nhưng lời nguyền của Ác Quỷ đã làm la bàn chỉ sai đường... Hành trình về nhà sẽ đưa ba người qua thành phố bỏ hoang, thiên đường, thời tiền sử và cả kỷ băng hà.</p>
       <p>Ý tưởng và kịch bản: <span class="k">Trump</span> (11 tuổi). Thực hiện: S4 Family.</p>
       <p>Miễn phí, không quảng cáo, không thu thập dữ liệu, chơi không cần mạng.</p>
       <p>Phông chữ VT323 và Fusion Pixel (SIL Open Font License).</p>`
   },
   en: {
-    kicker: 'THE ADVENTURES OF', title: 'TRUMBO', sub: '{T}, {P} and Pugi the dog in 3 adventures',
+    kicker: 'THE ADVENTURES OF', title: 'TRUMBO', sub: '{T}, {P} and Pugi the dog in 4 adventures',
     continue: '▶ Continue', newGame: 'New game', chapters: 'Choose a part', names: 'Name the heroes', help: 'How to play', about: 'About',
     players: 'Players:', p1: '1 player', p2: '2 players', language: 'Language:',
-    status: 'Unlocked: <b>{n}/3 parts</b>', playing: 'Now playing: <b>{c}</b>', doneAll: '★ ALL 3 PARTS COMPLETE ★',
+    status: 'Unlocked: <b>{n}/4 parts</b>', playing: 'Now playing: <b>{c}</b>', doneAll: '★ ALL 4 PARTS COMPLETE ★',
     passed: '✓ Completed', current: 'Now playing', locked: 'Locked',
     close: 'Close', cancel: 'Cancel', start: 'Start', save: 'Save', reset: 'Original names',
     newQ: 'New game?', newText: 'Start again from Part 1. Unlocked parts stay unlocked, and you can pick them any time.',
@@ -174,16 +174,16 @@ const TXT = {
       <li><span class="k">Bluetooth controllers:</span> controller 1 is {T}, controller 2 is {P}. Touch buttons hide when a controller is connected.</li>
       <li><span class="k">Keyboard:</span> {T} uses W A S D, F attack, G special, R switch weapon. {P} uses the arrows, Enter, Right Shift, J. P pauses.</li>
       <li>If one hero falls, the other stands close by to help them up. In 1-player mode the computer plays {P}.</li></ul>`,
-    aboutBody: `<p><span class="k">{T}</span> and <span class="k">{P}</span> are swept by a storm to the land of dragons. The Fire Dragon King gives them the Compass Orb to find their way home, but the Demon's curse makes it point the wrong way...</p>
+    aboutBody: `<p><span class="k">{T}</span> and <span class="k">{P}</span> are swept by a storm to the land of dragons. The Fire Dragon King gives them the Compass Orb to find their way home, but the Demon's curse makes it point the wrong way... The road home leads through a lost city, a heavenly city, the age of dinosaurs and the Ice Age.</p>
       <p>Story and ideas by <span class="k">Trump</span>, age 11. Made by S4 Family.</p>
       <p>Free, no ads, no data collected, plays offline.</p>
       <p>Fonts: VT323 and Fusion Pixel (SIL Open Font License).</p>`
   },
   zh: {
-    kicker: '冒险故事', title: 'TRUMBO', sub: '{T}、{P}和小狗Pugi的三部曲冒险',
+    kicker: '冒险故事', title: 'TRUMBO', sub: '{T}、{P}和小狗Pugi的四部曲冒险',
     continue: '▶ 继续游戏', newGame: '新游戏', chapters: '选择章节', names: '给主角起名', help: '玩法', about: '关于',
     players: '玩家：', p1: '1人', p2: '2人', language: '语言：',
-    status: '已解锁：<b>{n}/3部</b>', playing: '正在玩：<b>{c}</b>', doneAll: '★ 已通关全部三部 ★',
+    status: '已解锁：<b>{n}/4部</b>', playing: '正在玩：<b>{c}</b>', doneAll: '★ 已通关全部四部 ★',
     passed: '✓ 已通关', current: '正在玩', locked: '未解锁',
     close: '关闭', cancel: '取消', start: '开始', save: '保存', reset: '恢复原名',
     newQ: '开始新游戏？', newText: '从第一部重新开始。已解锁的章节会保留，随时都可以选择。',
@@ -195,7 +195,7 @@ const TXT = {
       <li><span class="k">蓝牙手柄：</span>1号手柄是{T}，2号手柄是{P}。连接手柄后触屏按钮会自动隐藏。</li>
       <li><span class="k">键盘：</span>{T}用W A S D、F攻击、G特技、R切换武器。{P}用方向键、Enter、右Shift、J。P暂停。</li>
       <li>一个人倒下，另一个人站到旁边就能把他救起来。单人模式下由电脑控制{P}。</li></ul>`,
-    aboutBody: `<p><span class="k">{T}</span>和<span class="k">{P}</span>被暴风雨卷到了龙之国度。火龙王送给他们罗盘宝珠来寻找回家的路，可是恶魔的诅咒让罗盘指错了方向……</p>
+    aboutBody: `<p><span class="k">{T}</span>和<span class="k">{P}</span>被暴风雨卷到了龙之国度。火龙王送给他们罗盘宝珠来寻找回家的路，可是恶魔的诅咒让罗盘指错了方向……回家的路将穿过失落之城、天堂之城、恐龙时代和冰河时代。</p>
       <p>创意与剧本：<span class="k">Trump</span>（11岁）。制作：S4 Family。</p>
       <p>免费、无广告、不收集任何数据、无需联网。</p>
       <p>字体：VT323、Fusion Pixel（SIL开源字体许可证）。</p>`
@@ -219,7 +219,7 @@ function render() {
   for (const b of $('seg').children) b.classList.toggle('on', +b.dataset.m === mode);
   for (const b of $('langs').children) b.classList.toggle('on', b.dataset.l === lang);
   const cards = $('cards'); cards.innerHTML = '';
-  for (const n of [1, 2, 3]) {
+  for (const n of [1, 2, 3, 4]) {
     const c = document.createElement('button'); c.className = 'card m'; c.style.minWidth = '0';
     const st = n <= p.unlocked ? (n < p.unlocked || p.done ? t.passed : t.current) : t.locked;
     c.innerHTML = `<b>${CH[n].label}</b><span>${CH[n].name}</span><i>${st}</i>`;
