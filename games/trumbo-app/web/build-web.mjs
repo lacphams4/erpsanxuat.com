@@ -124,8 +124,9 @@ function engine23(s, n) {
   s = common(s, n, `Part ${n}`);
   s = rep(s, "    case 'title': {", "    case 'title': {\n      if (APP) { APP.home(); break; }");
   s = rep(s, "if (tap(['KeyQ'])) { save(); saveData = loadSave(); state = 'title'; menuSel = 0; }", "if (tap(['KeyQ'])) { save(); saveData = loadSave(); state = 'title'; menuSel = 0; if (APP) APP.home(); }");
-  s = rep(s, "case 'end': endT += dt; if (endT > 6 && tap(CONFIRM)) { saveData = null; state = 'title'; menuSel = 0; } break;",
-    "case 'end': endT += dt; if (endT > 6 && tap(CONFIRM)) { saveData = null; if (APP) { clearSave(); APP.next(); } else { state = 'title'; menuSel = 0; } } break;");
+  s = s.replace(/case 'end': endT \+= dt; if \(endT > ([\d.]+) && tap\(CONFIRM\)\) \{ saveData = null; state = 'title'; menuSel = 0; \} break;/,
+    (m, t) => `case 'end': endT += dt; if (endT > ${t} && tap(CONFIRM)) { saveData = null; if (APP) { clearSave(); APP.next(); } else { state = 'title'; menuSel = 0; } } break;`);
+  if (!s.includes('APP.next(); } else { state = \'title\'')) throw new Error('end screen exit');
   s = rep(s, 'loadFonts().finally(() => { if (!NX) cv.focus(); requestAnimationFrame(frame); });', `// started from the app's home screen: skip the title and go straight into the chapter
 function appStart() {
   ${appHooks}
@@ -296,7 +297,6 @@ function drawShop() {`);
 // Phần 4 (games/trumbo-4 is generated from Part 3 by its make.py): the last chapter, its THE END card goes back home
 function chapter4(s) {
   s = engine23(s, 4);
-  s = rep(s, "Ý tưởng và kịch bản: Trump  ·  Cảm ơn bạn đã chơi!", 'Ý tưởng và kịch bản: @AUTHOR@  ·  Cảm ơn bạn đã chơi!');
   return s;
 }
 

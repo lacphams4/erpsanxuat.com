@@ -58,6 +58,8 @@ Cả bốn tới một bãi biển xa lạ. Chị Gái chờ ở những nơi an
 
 **THE END.**
 
+Màn kết: TÁC GIẢ - **Pham Lac Nguyen & Pham Lac Vien**, với sự hỗ trợ của Claude. "Cảm ơn gia đình đã luôn bên con. Hai con yêu gia đình."
+
 ## Thông điệp
 
 Cuộc phiêu lưu lớn nhất không phải là đi được bao xa, mà là luôn có người đồng hành để cùng trở về nhà.

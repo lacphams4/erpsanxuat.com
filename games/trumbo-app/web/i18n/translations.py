@@ -713,6 +713,13 @@ T = [
 ('Buổi tối, cả nhà quây quần bên cửa sổ. Hai anh em kể lại tất cả những cuộc phiêu lưu.', 'That evening, the family gathers by the window. The kids tell the story of all their adventures.', '晚上，一家人围坐在窗边。兄妹俩讲起了所有的冒险。'),
 ('Mẹ cũng vậy!', 'Me too!', '妈妈也是！'),
 ('Cả nhà bật cười. Ngôi nhà nằm yên dưới bầu trời đầy sao.', 'Everyone bursts out laughing. The house rests quietly under a sky full of stars.', '一家人都笑了。小屋静静地躺在满天星空下。'),
+# ---------------------------------------------------------------- credits at the end of Part 4
+('TÁC GIẢ', 'CREATED BY', '作者'),
+('Pham Lac Nguyen & Pham Lac Vien', 'Pham Lac Nguyen & Pham Lac Vien', 'Pham Lac Nguyen & Pham Lac Vien'),
+('với sự hỗ trợ của Claude', 'with help from Claude', '在Claude的帮助下完成'),
+('Cảm ơn gia đình đã luôn bên con.', 'Thank you, family, for always being there for us.', '谢谢家人一直陪伴在我们身边。'),
+('Hai con yêu gia đình', 'We love our family', '我们爱我们的家'),
+('Cảm ơn bạn đã chơi!', 'Thanks for playing!', '感谢游玩！'),
 ]
 
 here = os.path.dirname(os.path.abspath(__file__))

@@ -595,12 +595,22 @@ s = replace_fn(s, 'drawEnd', r"""function drawEnd() {
   if (endT > 0.3) stamp('house', 80, 72, 40, 68, W / 2, H + 16, (c, x, y) => drawHouse(c, x, y));
   if (endT > 0.3) { R(b, W / 2 - 25, H - 13, 10, 10, '#ffd86a'); R(b, W / 2 + 15, H - 13, 10, 10, '#ffd86a'); }
   if (endT > 0.8) T('THE END', W / 2, 10, 26, '#ffd23f', 'center', '#7a1f5a');
-  if (endT > 1.8) T('Đảo Rồng · Thành Phố Bỏ Hoang · Sa Mạc · 18 Tầng Địa Ngục', W / 2, 42, 9, '#c9b8e8', 'center', null);
-  if (endT > 2.3) T('Thành Phố Thiên Đường · Thời Tiền Sử · Kỷ Băng Hà · Nhà', W / 2, 52, 9, '#c9b8e8', 'center', null);
-  if (endT > 3.2) wrap('Cuộc phiêu lưu lớn nhất không phải là đi được bao xa, mà là luôn có người đồng hành để cùng trở về nhà.', 270, 11).forEach((l, i) => T(l, W / 2, 70 + i * 12, 11, '#fff', 'center'));
-  if (endT > 4.4) T('Ý tưởng và kịch bản: Trump  ·  Cảm ơn bạn đã chơi!', W / 2, 106, 9, '#8fd6ff', 'center', null);
-  if (endT > 6 && Math.floor(time * 2) % 2) T(NX ? 'Nhấn A để về màn hình chính' : 'Nhấn ENTER để về màn hình chính', W / 2, 120, 10, '#fff', 'center', null);
+  // first the journey and the message, then the credits
+  if (endT < 8) {
+    if (endT > 1.8) T('Đảo Rồng · Thành Phố Bỏ Hoang · Sa Mạc · 18 Tầng Địa Ngục', W / 2, 42, 9, '#c9b8e8', 'center', null);
+    if (endT > 2.3) T('Thành Phố Thiên Đường · Thời Tiền Sử · Kỷ Băng Hà · Nhà', W / 2, 52, 9, '#c9b8e8', 'center', null);
+    if (endT > 3.2) wrap('Cuộc phiêu lưu lớn nhất không phải là đi được bao xa, mà là luôn có người đồng hành để cùng trở về nhà.', 270, 11).forEach((l, i) => T(l, W / 2, 70 + i * 12, 11, '#fff', 'center'));
+  } else {
+    if (endT > 8.2) T('TÁC GIẢ', W / 2, 42, 9, '#ffd23f', 'center', null);
+    if (endT > 8.6) T('Pham Lac Nguyen & Pham Lac Vien', W / 2, 52, 14, '#ffffff', 'center', '#4a1f6a');
+    if (endT > 9.2) T('với sự hỗ trợ của Claude', W / 2, 70, 10, '#c9b8e8', 'center', null);
+    if (endT > 10) T('Cảm ơn gia đình đã luôn bên con.', W / 2, 88, 11, '#ff9ec7', 'center', null);
+    if (endT > 10.8) { T('Hai con yêu gia đình', W / 2, 101, 12, '#ff9ec7', 'center', null); const hw = measure('Hai con yêu gia đình', 12) / 2; drawHeart(b, Math.round(W / 2 - hw - 14), 104, 1); drawHeart(b, Math.round(W / 2 + hw + 6), 104, 1); }
+    if (endT > 11.5) T('Cảm ơn bạn đã chơi!', W / 2, 116, 9, '#8fd6ff', 'center', null);
+  }
+  if (endT > 12.5 && Math.floor(time * 2) % 2) T(NX ? 'Nhấn A để về màn hình chính' : 'Nhấn ENTER để về màn hình chính', W / 2, 126, 10, '#fff', 'center', null);
 }""")
+rep("case 'end': endT += dt; if (endT > 6 && tap(CONFIRM))", "case 'end': endT += dt; if (endT > 12.5 && tap(CONFIRM))")
 rep("  if (flashT > 0) { b.globalAlpha = Math.min(1, flashT);", "  if (flashT > 0 && state !== 'play') flashT = Math.max(0, flashT - 1 / 60);\n  if (flashT > 0) { b.globalAlpha = Math.min(1, flashT);")
 rep("  gateOpen = false; prog = 0; toast = null; banner = null;", "  gateOpen = false; prog = 0; toast = null; banner = null; blizzT = 0; iceT = 2;")
 
