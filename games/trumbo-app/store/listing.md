@@ -1,64 +1,144 @@
-# Nội dung trang Google Play - Anh Em Nhà Trumbo
+# TRUMBO - Google Play store listing
 
-Dán các mục dưới đây vào Play Console (Grow > Store presence > Main store listing).
+Play Console > Grow > Store presence > Main store listing. Default language: **English (en-US)**.
+Add translations for **Tiếng Việt (vi)** and **中文简体 (zh-CN)** with "Manage translations > Add your own translations".
 
-## Tên ứng dụng (tối đa 30 ký tự)
+Images in this folder:
 
-Anh Em Nhà Trumbo
+| Play Console item | English | Tiếng Việt | 中文 |
+|---|---|---|---|
+| App icon 512 x 512 (same for all) | `icon-512.png` | | |
+| Feature graphic 1024 x 500 | `feature-en.png` | `feature-vi.png` | `feature-zh.png` |
+| Phone screenshots (1920 x 1080) | `screenshots/en/` | `screenshots/vi/` | `screenshots/zh/` |
 
-## Mô tả ngắn (tối đa 80 ký tự)
+---
 
-Phiêu lưu pixel 2 anh em và chú chó Pugi. Miễn phí, không quảng cáo.
+## English (en-US)
 
-## Mô tả đầy đủ
+**App name (max 30):** TRUMBO
+
+**Short description (max 80):** A pixel adventure for two kids and their dog Pugi. Free, no ads.
+
+**Full description:**
+
+One afternoon, Trump (11) and little Poly (6) take a small boat out to sea - and a storm sweeps them away to the land of dragons. The Fire Dragon King gives them the Compass Orb to find their way home... but the Demon's curse makes it point the wrong way!
+
+TRUMBO is a pixel-art action adventure for 1 or 2 players on the same device. The story was dreamed up by an 11-year-old.
+
+★ 3 PARTS
+• Part 1 - Dragon Island: build a campfire, free the baby dragons, cross the poison swamp and the volcano, face the Fire Dragon King.
+• Part 2 - The Lost City: find 5 gems, cross the desert, go down the 18 floors of the Underworld, forge new weapons and defeat the Demon.
+• Part 3 - Heavenly City: dive to the seabed, battle the giant Megalodon, rescue the Angel Queen and face the Super Demon in the final battle.
+
+★ THREE HEROES, THREE STRENGTHS
+• The big brother fights up close with a sword and a mace and has a whirlwind attack.
+• The little one shoots a slingshot and a pistol and blows healing bubbles.
+• Pugi the dog bites, barks to stun monsters, lures enemies, sniffs out hidden things and rushes in to save the kids.
+
+★ MAKE IT YOURS
+• Give the two heroes your own names.
+• Play in English, Tiếng Việt or 中文.
+
+★ PLAY TOGETHER
+• 1 player: the computer plays the little one.
+• 2 players on one device: the left half of the screen is player 1, the right half is player 2.
+• Bluetooth controllers supported.
+
+★ SAFE FOR KIDS
+• Completely free, no ads, no in-app purchases.
+• No data collected, no permissions, plays offline.
+• Progress saves automatically.
+
+When friends work together and look out for each other, they can overcome any challenge.
+
+---
+
+## Tiếng Việt (vi)
+
+**Tên ứng dụng:** TRUMBO - Anh Em Nhà Trumbo
+
+**Mô tả ngắn:** Phiêu lưu pixel của 2 anh em và chú chó Pugi. Miễn phí, không quảng cáo.
+
+**Mô tả đầy đủ:**
 
 Một buổi chiều, hai anh em Trump (11 tuổi) và Poly (6 tuổi) chèo thuyền ra biển chơi thì bị bão cuốn tới xứ sở rồng. Hỏa Long Vương tặng hai bạn Ngọc La Bàn để tìm đường về nhà... nhưng lời nguyền của Ác Quỷ đã làm la bàn chỉ sai đường!
 
-Anh Em Nhà Trumbo là trò chơi phiêu lưu hành động đồ họa pixel, chơi 1 người hoặc 2 người trên cùng một máy. Kịch bản do một bạn nhỏ 11 tuổi nghĩ ra.
+TRUMBO là trò chơi phiêu lưu hành động đồ họa pixel, chơi 1 người hoặc 2 người trên cùng một máy. Kịch bản do một bạn nhỏ 11 tuổi nghĩ ra.
 
-★ 3 CHƯƠNG PHIÊU LƯU
-• Chương 1 - Đảo Rồng: nhặt gỗ đốt lửa trại, giải cứu rồng con, vượt đầm lầy độc và núi lửa, đối đầu Hỏa Long Vương.
-• Chương 2 - Thành Phố Bị Lãng Quên: tìm 5 viên ngọc, vượt sa mạc, xuống 18 tầng địa ngục, rèn vũ khí và đánh bại Ác Quỷ.
-• Chương 3 - Thành Phố Thiên Đường: lặn xuống đáy biển, chiến đấu với cá mập Megalodon, giải cứu Nữ Hoàng Thiên Thần và trận chiến cuối cùng với Siêu Ác Quỷ.
+★ 3 PHẦN PHIÊU LƯU
+• Phần 1 - Đảo Rồng: nhặt gỗ đốt lửa trại, giải cứu rồng con, vượt đầm lầy độc và núi lửa, đối đầu Hỏa Long Vương.
+• Phần 2 - Thành Phố Bị Lãng Quên: tìm 5 viên ngọc, vượt sa mạc, xuống 18 tầng địa ngục, rèn vũ khí và đánh bại Ác Quỷ.
+• Phần 3 - Thành Phố Thiên Đường: lặn xuống đáy biển, chiến đấu với cá mập Megalodon, giải cứu Nữ Hoàng Thiên Thần và trận chiến cuối cùng với Siêu Ác Quỷ.
 
 ★ BA NHÂN VẬT, BA SỨC MẠNH
-• Trump đánh gần bằng kiếm và chùy, có chiêu lốc xoáy.
-• Poly bắn ná, bắn súng lục và thổi bong bóng hồi máu.
+• Anh lớn đánh gần bằng kiếm và chùy, có chiêu lốc xoáy.
+• Em nhỏ bắn ná, bắn súng lục và thổi bong bóng hồi máu.
 • Chú chó Pugi biết cắn, sủa làm quái choáng, nhử quái, đánh hơi đồ bị giấu và lao vào cứu chủ.
 
+★ CỦA RIÊNG BẠN
+• Đặt tên riêng cho hai nhân vật.
+• Chơi bằng Tiếng Việt, English hoặc 中文.
+
 ★ CHƠI CÙNG NHAU
-• 1 người: máy điều khiển Poly.
-• 2 người trên 1 máy: nửa trái màn hình là Trump, nửa phải là Poly.
+• 1 người: máy điều khiển em nhỏ.
+• 2 người trên 1 máy: nửa trái màn hình là người chơi 1, nửa phải là người chơi 2.
 • Hỗ trợ tay cầm Bluetooth.
 
 ★ AN TOÀN CHO TRẺ EM
 • Miễn phí hoàn toàn, không quảng cáo, không mua hàng trong ứng dụng.
 • Không thu thập dữ liệu, không cần quyền truy cập nào, chơi không cần mạng.
-• Tiến độ được tự động lưu, chơi tiếp bất cứ lúc nào.
+• Tiến độ được tự động lưu.
 
-Thông điệp của trò chơi: khi biết phối hợp và bảo vệ nhau, những người bạn có thể vượt qua mọi thử thách.
+Khi biết phối hợp và bảo vệ nhau, những người bạn có thể vượt qua mọi thử thách.
 
-## Phân loại
+---
 
-- Loại ứng dụng: Trò chơi
-- Thể loại: Phiêu lưu (Adventure)
-- Thẻ gợi ý: Phiêu lưu, Hành động, Pixel, Chơi cùng nhau, Trẻ em
+## 中文简体 (zh-CN)
 
-## Hình ảnh (đã có sẵn trong thư mục này)
+**应用名称：** TRUMBO
 
-| Mục trên Play Console | File |
-|---|---|
-| Biểu tượng ứng dụng 512 x 512 | `icon-512.png` |
-| Hình ảnh nổi bật 1024 x 500 | `feature-1024x500.png` |
-| Ảnh chụp màn hình điện thoại (2-8 ảnh, 1920 x 1080) | `screenshots/1-home.png` ... `screenshots/7-ch3-superdemon.png` |
+**简短说明：** 两个孩子和小狗Pugi的像素冒险。免费，无广告。
 
-## Các mục khai báo (App content)
+**完整说明：**
 
-- **Chính sách quyền riêng tư:** đăng file `../web/privacy.html` lên một địa chỉ web công khai (ví dụ website công ty), thay `[EMAIL HỖ TRỢ]` bằng email hỗ trợ, rồi dán đường link vào Play Console.
-- **Quyền truy cập ứng dụng:** Tất cả chức năng đều dùng được mà không cần đăng nhập.
-- **Quảng cáo:** Không, ứng dụng không chứa quảng cáo.
-- **Xếp hạng nội dung (IARC):** Trò chơi. Có bạo lực hoạt hình nhẹ, nhân vật giả tưởng (rồng, quái vật, quỷ), không máu me, không ngôn ngữ thô tục, không đánh bạc, không cho người dùng trò chuyện hay chia sẻ nội dung, không mua hàng.
-- **Đối tượng mục tiêu:** chọn các nhóm tuổi phù hợp (ví dụ 6-8, 9-12, 13-15). Khi chọn trẻ dưới 13 tuổi, ứng dụng phải theo Chính sách Gia đình của Google Play: ứng dụng này không có quảng cáo, không thu thập dữ liệu nên đáp ứng sẵn.
-- **An toàn dữ liệu (Data safety):** Ứng dụng không thu thập và không chia sẻ dữ liệu người dùng.
-- **Ứng dụng chính phủ / tài chính / sức khỏe:** Không.
-- **Giá:** Miễn phí.
+一天下午，Trump（11岁）和Poly（6岁）划着小船出海，却被暴风雨卷到了龙之国度。火龙王送给他们罗盘宝珠来寻找回家的路……可是恶魔的诅咒让罗盘指错了方向！
+
+TRUMBO 是一款像素风动作冒险游戏，支持单人或同一台设备双人游玩。故事由一位11岁的小朋友创作。
+
+★ 三部曲
+• 第一部·龙之岛：收集木头生篝火，救出小龙，穿过毒雾沼泽和火山，挑战火龙王。
+• 第二部·失落之城：找齐5颗宝石，穿越沙漠，走下十八层地狱，打造新武器，打败恶魔。
+• 第三部·天堂之城：潜入海底，大战巨齿鲨，营救天使女王，在最终决战中挑战超级恶魔。
+
+★ 三位主角，三种能力
+• 哥哥用剑和钉头锤近战，还有旋风剑。
+• 小家伙用弹弓和手枪远程射击，还会吹治疗泡泡。
+• 小狗Pugi会咬、会叫（震晕怪物）、引诱敌人、嗅出隐藏的东西，还会冲上去救主人。
+
+★ 专属于你
+• 给两位主角起自己的名字。
+• 支持 English、Tiếng Việt、中文。
+
+★ 一起玩
+• 单人：电脑控制小家伙。
+• 一台设备两人玩：屏幕左半边是玩家1，右半边是玩家2。
+• 支持蓝牙手柄。
+
+★ 适合儿童
+• 完全免费，无广告，无应用内购买。
+• 不收集数据，不需要任何权限，无需联网。
+• 自动存档。
+
+只要齐心协力、互相保护，朋友们就能战胜一切挑战。
+
+---
+
+## App content (declarations)
+
+- **Privacy policy:** publish `../web/privacy.html` (English, Tiếng Việt, 中文) at a public web address, replace `[SUPPORT EMAIL]` / `[EMAIL HỖ TRỢ]`, and paste the link.
+- **App access:** all functionality is available without special access.
+- **Ads:** No.
+- **Content rating (IARC):** Game. Mild cartoon/fantasy violence (dragons, monsters, demons), no blood, no bad language, no gambling, no user interaction or sharing, no purchases.
+- **Target audience:** choose the age groups (for example 6-8, 9-12, 13-15). With children under 13 the app must follow the Google Play Families Policy; this app has no ads and collects no data.
+- **Data safety:** no data collected, no data shared.
+- **Category:** Game > Adventure. **Price:** Free. **Countries:** all.

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="vi" data-chapter="2"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"></head><body>
-<title>Anh Em Nhà Trumbo - Chương 2</title>
-<style>@font-face{font-family:'VT323';src:url(fonts/VT323.ttf) format('truetype');font-display:block}</style>
+<title>TRUMBO - Part 2</title>
+<style>@font-face{font-family:'VT323';src:url(fonts/VT323.ttf) format('truetype');font-display:block}@font-face{font-family:'TrumboCJK';src:url(fonts/cjk.woff2) format('woff2');unicode-range:U+2E80-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF;size-adjust:78%;font-display:block}</style>
 <style>
 /* Layout: one full-window pixel canvas, integer-scaled and letterboxed on a dusk-city ground. Single dark look by design. */
 :root{
@@ -24,6 +24,7 @@ body{
 #game:focus-visible{box-shadow:0 0 0 2px var(--gold), 0 12px 40px rgba(0,0,0,0.6)}
 </style>
 <canvas id="game" tabindex="0" aria-label="Game Anh Em Nhà Trumbo Phần 2. Trump dùng W A S D, F, G, R. Poly dùng phím mũi tên, Enter, Shift phải, J."></canvas>
+<script src="i18n.js"></script>
 <script src="app.js"></script>
 <script>
 (() => {
@@ -38,7 +39,9 @@ const W = 320, H = 180, TS = 16;
 const NX = typeof Switch !== 'undefined' && typeof screen !== 'undefined' && typeof document === 'undefined';
 // APP = started from the Android app / home screen: touch controls and Bluetooth gamepads arrive as gamepads
 const APP = (!NX && globalThis.TRUMBO_APP) || null, PAD = NX || !!APP;
-const FONT = NX ? 'VT323' : "'VT323', ui-monospace, monospace";
+// TR: translate a visible text (English / Chinese) and put in the players' chosen names; TRL: same for dialog lines
+const TR = s => APP ? APP.tr(s) : s, TRL = ls => APP ? ls.map(l => Object.assign({}, l, { text: TR(l.text) })) : ls, CJK = /[\u2e80-\u9fff\uff00-\uffef]/;
+const FONT = NX ? 'VT323' : "'VT323', 'TrumboCJK', ui-monospace, monospace";
 function mkCanvas(w, h) { if (NX) return new OffscreenCanvas(w, h); const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
 const hasFocus = () => NX || !!APP || document.hasFocus();
 const cv = NX ? screen : document.getElementById('game');
@@ -232,7 +235,7 @@ function musicTick() {
 
 // ---------------- text
 let TQ = [];
-function T(s, x, y, size = 10, col = '#fff', align = 'left', sh = '#1a0f2a') { TQ.push([s, x, y, size, col, align, sh]); }
+function T(s, x, y, size = 10, col = '#fff', align = 'left', sh = '#1a0f2a') { TQ.push([TR(s), x, y, size, col, align, sh]); }
 // Text is pre-rendered once per (string, size, color) into a small canvas at screen resolution.
 const TXT = new Map();
 function textCanvas(s, size, col, sh) {
@@ -262,7 +265,7 @@ function flushText() {
   }
   TQ = [];
 }
-function measure(s, size) { g.font = `${Math.round(size * S)}px ${FONT}`; return g.measureText(s).width / S; }
+function measure(s, size) { g.font = `${Math.round(size * S)}px ${FONT}`; return g.measureText(TR(s)).width / S; }
 const WRAP = new Map();
 function wrap(s, maxW, size) {
   const key = `${s}|${maxW}|${size}|${S}`; let r = WRAP.get(key);
@@ -270,8 +273,10 @@ function wrap(s, maxW, size) {
   return r;
 }
 function wrapRaw(s, maxW, size) {
-  const words = s.split(' '), lines = []; let cur = '';
-  for (const w of words) { const t = cur ? cur + ' ' + w : w; if (measure(t, size) > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
+  s = TR(s);
+  const cj = CJK.test(s), words = cj ? s.match(/[\u2e80-\u9fff\uff00-\uffef]|[^\s\u2e80-\u9fff\uff00-\uffef]+|\s+/g) : s.split(' '), lines = []; let cur = '';
+  for (const w of words) { const t = cur ? cur + (cj ? '' : ' ') + w : w; if (measure(t, size) > maxW && cur.trim()) { lines.push(cur.trim()); cur = w.trim() ? w : ''; } else cur = t; }
+  if (cj && cur) cur = cur.trim();
   if (cur) lines.push(cur); return lines;
 }
 
@@ -1095,7 +1100,7 @@ function spawnFloorWave(f) {
 }
 function startDialog(lines, then) {
   if (!lines || !lines.length) { if (then) then(); return; }
-  dialog = { lines, i: 0, ch: 0, then }; state = 'dialog';
+  dialog = { lines: TRL(lines), i: 0, ch: 0, then }; state = 'dialog';
 }
 function say(text, t = 2.6) { toast = { text, t }; }
 function stageClear(text, then) { state = 'clear'; clearT = 2.2; clearThen = then; banner = { text, sub: '', t: 2.2 }; SFX.win(); }
@@ -2044,7 +2049,7 @@ function drawPlayerPanel(p, x) {
   b.drawImage(memo(`pp|${p.id}|${p.hp}|${p.maxhp}|${p.w}|${upg.armor > 0}|${upg.legend}|${cq}`, 114, 29, 0, 0, c => playerPanelRaw(c, p, cq)), x, 3);
   T(p.name, x + 25, 2, 10, PDEF[p.id].col);
   const alt = p.id === 'trump' ? (upg.hammer ? (p.w === 'sword' ? 'hammer' : 'sword') : null) : (upg.bow ? (p.w === 'sling' ? 'bow' : 'sling') : null);
-  T(`${weaponName(p)} ${'★'.repeat(weaponLv(p))}${alt && !p.ai ? (PAD ? ' (L/R)' : p.id === 'trump' ? ' (R)' : ' (J)') : ''}`, x + 37, 20, 8, upg.legend ? '#ffb13b' : '#c9b8e8', 'left', null);
+  T(`${TR(weaponName(p))} ${'★'.repeat(weaponLv(p))}${alt && !p.ai ? (PAD ? ' (L/R)' : p.id === 'trump' ? ' (R)' : ' (J)') : ''}`, x + 37, 20, 8, upg.legend ? '#ffb13b' : '#c9b8e8', 'left', null);
   T(p.ai ? 'MÁY' : PAD ? 'X/Y' : (p.id === 'trump' ? 'G' : 'Shift'), x + 105, 19, 7, cd <= 0 ? '#fff' : '#8a7fa0', 'center');
 }
 function playerPanelRaw(c, p, cq) {
@@ -2088,7 +2093,7 @@ function drawHUD() {
   }
   if (st.type !== 'boss') drawArrow();
   if (toast && toast.text) { const w = Math.min(W - 20, measure(toast.text, 10) + 14); panel(W / 2 - w / 2, 36, w, 14, 0.9, '#2a1a45'); T(toast.text, W / 2, 36, 10, '#fff', 'center'); }
-  if (banner) {
+  if (banner && state !== 'paused') {
     const a = clamp(banner.t, 0, 1);
     b.globalAlpha = a * 0.85; R(b, 0, H / 2 - 22, W, 40, '#120c1c'); b.globalAlpha = a; R(b, 0, H / 2 - 22, W, 1, '#ffd23f'); R(b, 0, H / 2 + 17, W, 1, '#ffd23f'); b.globalAlpha = 1;
     if (a > 0.3) { T(banner.text, W / 2, H / 2 - 21, 18, '#ffd23f', 'center', '#7a1f5a'); if (banner.sub) T(banner.sub, W / 2, H / 2 + 1, 11, '#fff', 'center'); }
@@ -2116,7 +2121,7 @@ function drawDialog() {
   if (NAME[0]) T(NAME[0], tx, y + 2, 10, NAME[1]);
   const lines = wrap(L.text, mw, 11);
   let left = Math.floor(dialog.ch);
-  lines.forEach((ln, i) => { if (left <= 0) return; T(ln.slice(0, left), tx, y + (NAME[0] ? 12 : 6) + i * 10, 11, L.who === 'narr' ? '#e8dcff' : '#fff'); left -= ln.length + 1; });
+  lines.forEach((ln, i) => { if (left <= 0) return; T(ln.slice(0, left), tx, y + (NAME[0] ? 12 : 6) + i * 10, 11, L.who === 'narr' ? '#e8dcff' : '#fff'); left -= ln.length + (CJK.test(L.text) ? 0 : 1); });
   if (dialog.ch >= L.text.length && Math.floor(time * 3) % 2) { R(b, x + w - 12, y + h - 8, 5, 2, '#ffd23f'); R(b, x + w - 11, y + h - 6, 3, 1, '#ffd23f'); }
   T(`${dialog.i + 1}/${dialog.lines.length}  ${PAD ? 'A' : 'Enter'} ▸`, x + w - 16, y + h - 11, 8, '#9a8fb8', 'right', null);
 }
@@ -2230,7 +2235,7 @@ function drawEnd() {
     return;
   }
   b.globalAlpha = clamp((endT - 3) / 1.5, 0, 1);
-  T(APP ? 'HẾT CHƯƠNG 2' : 'TO BE CONTINUED...', W / 2, 46, 26, '#ffd23f', 'center', '#7a1f5a');
+  T(APP ? 'HẾT PHẦN 2' : 'TO BE CONTINUED...', W / 2, 46, 26, '#ffd23f', 'center', '#7a1f5a');
   b.globalAlpha = 1;
   if (endT > 4.5) {
     const msg = wrap('Mỗi người có một sức mạnh khác nhau. Khi biết phối hợp, cả ba có thể vượt qua những thử thách mà một người không thể vượt qua.', 260, 11);
@@ -2238,7 +2243,7 @@ function drawEnd() {
     const m = Math.floor(totalT / 60), s = Math.floor(totalT % 60);
     T(`Thời gian: ${m} phút ${s} giây  ·  Xu còn lại: ${coins}`, W / 2, 128, 9, '#8a7fa0', 'center', null);
   }
-  if (endT > 6 && Math.floor(time * 2) % 2) T(APP ? 'Nhấn A để sang Chương 3' : PAD ? 'Nhấn A để về màn hình chính' : 'Nhấn ENTER để về màn hình chính', W / 2, 150, 10, '#fff', 'center', null);
+  if (endT > 6 && Math.floor(time * 2) % 2) T(APP ? 'Nhấn A để sang Phần 3' : PAD ? 'Nhấn A để về màn hình chính' : 'Nhấn ENTER để về màn hình chính', W / 2, 150, 10, '#fff', 'center', null);
 }
 function render() {
   b.imageSmoothingEnabled = false;
@@ -2300,7 +2305,7 @@ async function loadFonts() {
     try { const data = await Switch.readFile('romfs:/VT323.ttf'); if (data) { const ff = new FontFace('VT323', data); if (ff.loaded && ff.loaded.catch) ff.loaded.catch(reportError); fonts.add(ff); } } catch (e) { reportError(e); }
     return;
   }
-  if (document.fonts) await document.fonts.load("16px 'VT323'").catch(() => {});
+  if (document.fonts) { await document.fonts.load("16px 'VT323'").catch(() => {}); if (APP && APP.lang === 'zh') await document.fonts.load("16px 'TrumboCJK'", '中').catch(() => {}); }
 }
 // started from the app's home screen: skip the title and go straight into the chapter
 function appStart() {

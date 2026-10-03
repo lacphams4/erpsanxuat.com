@@ -1,10 +1,12 @@
-# Cuộc Phiêu Lưu Anh Em Nhà Trumbo - Cốt truyện trọn bộ
+# TRUMBO - Cuộc Phiêu Lưu Anh Em Nhà Trumbo - Cốt truyện trọn bộ
+
+Tên quốc tế: TRUMBO - Part 1: Dragon Island · Part 2: The Lost City · Part 3: Heavenly City (game có Tiếng Việt, English, 中文).
 
 Nhân vật: **Trump** (11 tuổi, đánh gần), **Poly** (6 tuổi, bắn xa và hồi máu), chú chó săn **Pugi** (gặp ở Chương 2).
 
 Sợi chỉ xuyên suốt cả 3 chương là **Ngọc La Bàn**: viên ngọc biết chỉ đường về nhà, nhưng đã bị Ác Quỷ yểm lời nguyền.
 
-## Chương 1 - Đảo Rồng
+## Phần 1 - Đảo Rồng (Dragon Island)
 
 Bão cuốn thuyền của hai anh em tới một hòn đảo hoang ở xứ sở rồng. Hai anh em đi qua 5 chặng:
 1. Bãi biển: nhặt 6 khúc gỗ đốt lửa trại.
@@ -15,7 +17,7 @@ Bão cuốn thuyền của hai anh em tới một hòn đảo hoang ở xứ s�
 
 Rồng chịu thua, trao **Ngọc La Bàn** và hứa chở hai anh em bay về nhà.
 
-## Chương 2 - Thành Phố Bị Lãng Quên
+## Phần 2 - Thành Phố Bị Lãng Quên (The Lost City)
 
 Giữa đường bay về, một cơn bão đen ập tới. La bàn tối sầm, kim quay loạn xạ. Hỏa Long Vương bị thương, đành hạ cánh xuống một thành phố bỏ hoang rồi bay đi chữa thương, hứa sẽ quay lại đón.
 
@@ -26,7 +28,7 @@ Hai anh em gặp chú chó Pugi, rồi lần lượt vượt qua các thử thá
 
 Cuối cùng là Ác Quỷ. Hắn thú nhận chính hắn đã yểm lời nguyền lên la bàn. Ác Quỷ bị đánh bại nhưng hét lên "Ta sẽ quay lại...", còn lời nguyền vẫn chưa tan hết. Cả ba bước qua cánh cửa sau ngai vàng.
 
-## Chương 3 - Thành Phố Thiên Đường
+## Phần 3 - Thành Phố Thiên Đường (Heavenly City)
 
 Cả ba tới một bãi biển xa lạ:
 - Giúp ông lão đánh cá tìm báu vật dưới đáy biển; Pugi đánh hơi ra những món bị giấu. Ông lão tặng chiếc thuyền.

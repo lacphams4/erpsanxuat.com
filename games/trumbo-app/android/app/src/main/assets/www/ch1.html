@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="vi" data-chapter="1"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"></head><body>
-<title>Anh Em Nhà Trumbo - Chương 1</title>
-<style>@font-face{font-family:'VT323';src:url(fonts/VT323.ttf) format('truetype');font-display:block}</style>
+<title>TRUMBO - Part 1</title>
+<style>@font-face{font-family:'VT323';src:url(fonts/VT323.ttf) format('truetype');font-display:block}@font-face{font-family:'TrumboCJK';src:url(fonts/cjk.woff2) format('woff2');unicode-range:U+2E80-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF;size-adjust:78%;font-display:block}</style>
 <style>
 /* Layout: one full-window pixel canvas, integer-scaled and letterboxed on a night-sea ground. Single dark look by design. */
 :root{
@@ -24,6 +24,7 @@ body{
 #game:focus-visible{box-shadow:0 0 0 2px var(--gold), 0 12px 40px rgba(0,0,0,0.6)}
 </style>
 <canvas id="game" tabindex="0" aria-label="Game Cuộc Phiêu Lưu Anh Em Nhà Trump-Po. Trump dùng W A S D, F, G. Poly dùng phím mũi tên, Enter, Shift phải."></canvas>
+<script src="i18n.js"></script>
 <script src="app.js"></script>
 <script>
 (() => {
@@ -37,7 +38,9 @@ const W = 320, H = 180, TS = 16;
 const NX = typeof Switch !== 'undefined' && typeof screen !== 'undefined' && typeof document === 'undefined';
 // APP = started from the Android app / home screen: touch controls and Bluetooth gamepads arrive as gamepads
 const APP = (!NX && globalThis.TRUMBO_APP) || null, PAD = NX || !!APP;
-const FONT = NX ? 'VT323' : "'VT323', ui-monospace, monospace";
+// TR: translate a visible text (English / Chinese) and put in the players' chosen names; TRL: same for dialog lines
+const TR = s => APP ? APP.tr(s) : s, TRL = ls => APP ? ls.map(l => Object.assign({}, l, { text: TR(l.text) })) : ls, CJK = /[\u2e80-\u9fff\uff00-\uffef]/;
+const FONT = NX ? 'VT323' : "'VT323', 'TrumboCJK', ui-monospace, monospace";
 function mkCanvas(w, h) { if (NX) return new OffscreenCanvas(w, h); const c = document.createElement('canvas'); c.width = w; c.height = h; return c; }
 const hasFocus = () => NX || !!APP || document.hasFocus();
 const cv = NX ? screen : document.getElementById('game');
@@ -221,7 +224,7 @@ function musicTick() {
 
 // ---------------- text (drawn crisp on the display canvas)
 let TQ = [];
-function T(s, x, y, size = 10, col = '#fff', align = 'left', sh = '#1a0f2a') { TQ.push([s, x, y, size, col, align, sh]); }
+function T(s, x, y, size = 10, col = '#fff', align = 'left', sh = '#1a0f2a') { TQ.push([TR(s), x, y, size, col, align, sh]); }
 function flushText() {
   g.textBaseline = 'top';
   for (const [s, x, y, size, col, align, sh] of TQ) {
@@ -232,10 +235,12 @@ function flushText() {
   }
   TQ = [];
 }
-function measure(s, size) { g.font = `${Math.round(size * S)}px ${FONT}`; return g.measureText(s).width / S; }
+function measure(s, size) { g.font = `${Math.round(size * S)}px ${FONT}`; return g.measureText(TR(s)).width / S; }
 function wrap(s, maxW, size) {
-  const words = s.split(' '), lines = []; let cur = '';
-  for (const w of words) { const t = cur ? cur + ' ' + w : w; if (measure(t, size) > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
+  s = TR(s);
+  const cj = CJK.test(s), words = cj ? s.match(/[\u2e80-\u9fff\uff00-\uffef]|[^\s\u2e80-\u9fff\uff00-\uffef]+|\s+/g) : s.split(' '), lines = []; let cur = '';
+  for (const w of words) { const t = cur ? cur + (cj ? '' : ' ') + w : w; if (measure(t, size) > maxW && cur.trim()) { lines.push(cur.trim()); cur = w.trim() ? w : ''; } else cur = t; }
+  if (cj && cur) cur = cur.trim();
   if (cur) lines.push(cur); return lines;
 }
 
@@ -706,7 +711,7 @@ function showZoneBanner() {
   banner = { text: `MÀN ${zi + 1}: ${ZONES[zi].name.toUpperCase()}`, sub: OBJ_TEXT[zi], t: 3.2 };
   if (ZONES[zi].boss) { playSong('boss'); SFX.roar(); shake = 8; } else playSong('explore');
 }
-function startDialog(lines, then) { dialog = { lines, i: 0, ch: 0, then, blip: 0 }; state = 'dialog'; }
+function startDialog(lines, then) { dialog = { lines: TRL(lines), i: 0, ch: 0, then, blip: 0 }; state = 'dialog'; }
 function say(text, t = 2.6) { toast = { text, t }; }
 
 // ---------------- collision & movement
@@ -1441,7 +1446,7 @@ function drawHUD() {
     panel(W / 2 - w / 2, 34, w, 14, 0.9, '#2a1a45');
     T(toast.text, W / 2, 34, 10, '#fff', 'center');
   }
-  if (banner) {
+  if (banner && state !== 'paused') {
     const a = clamp(banner.t, 0, 1);
     b.globalAlpha = a * 0.85; R(b, 0, H / 2 - 22, W, 40, '#140d22'); b.globalAlpha = a;
     R(b, 0, H / 2 - 22, W, 1, '#ffd23f'); R(b, 0, H / 2 + 17, W, 1, '#ffd23f'); b.globalAlpha = 1;
@@ -1475,7 +1480,7 @@ function drawDialog() {
   if (NAME[0]) T(NAME[0], tx, y + 2, 10, NAME[1]);
   const lines = wrap(L.text, mw, 11);
   let left = Math.floor(dialog.ch);
-  lines.forEach((ln, i) => { if (left <= 0) return; const s = ln.slice(0, left); left -= ln.length + 1; T(s, tx, y + (NAME[0] ? 12 : 6) + i * 10, 11, L.who === 'narr' ? '#e8dcff' : '#fff'); });
+  lines.forEach((ln, i) => { if (left <= 0) return; const s = ln.slice(0, left); left -= ln.length + (CJK.test(L.text) ? 0 : 1); T(s, tx, y + (NAME[0] ? 12 : 6) + i * 10, 11, L.who === 'narr' ? '#e8dcff' : '#fff'); });
   if (dialog.ch >= L.text.length && Math.floor(time * 3) % 2) { R(b, x + w - 12, y + h - 8, 5, 2, '#ffd23f'); R(b, x + w - 11, y + h - 6, 3, 1, '#ffd23f'); }
   T(`${dialog.i + 1}/${dialog.lines.length}  ${PAD ? 'A' : 'Enter'} ▸`, x + w - 16, y + h - 11, 8, '#9a8fb8', 'right', null);
 }
@@ -1560,11 +1565,11 @@ function drawWin() {
   drawKid(b, x + 8, y - 24, 'poly', 'left', 0, { noShadow: true });
   for (let i = 0; i < 16; i++) { const a = time * 2 + i; R(b, Math.round((i * 41 + time * 20) % W), Math.round((i * 23 + time * 30) % H), 2, 2, ['#ffd23f', '#ff9ec7', '#8fe36b', '#4dd2ff'][i % 4]); }
   T('CHIẾN THẮNG!', W / 2, 8, 30, '#ffd23f', 'center', '#b5179e');
-  T(APP ? 'HẾT CHƯƠNG 1 - Hỏa Long Vương chở hai anh em bay về nhà...' : 'Hai anh em Trump & Poly cưỡi rồng bay về nhà!', W / 2, 38, 11, '#fff', 'center', '#4a1f6a');
+  T(APP ? 'HẾT PHẦN 1 - Hỏa Long Vương chở hai anh em bay về nhà...' : 'Hai anh em Trump & Poly cưỡi rồng bay về nhà!', W / 2, 38, 11, '#fff', 'center', '#4a1f6a');
   const m = Math.floor(totalT / 60), s = Math.floor(totalT % 60);
   panel(W / 2 - 60, 140, 120, 30, 0.9);
   T(`Thời gian: ${m} phút ${s} giây`, W / 2, 141, 10, '#ffe066', 'center');
-  if (winT > 2) T(APP ? 'Nhấn A để sang Chương 2' : PAD ? 'Nhấn A để chơi lại' : 'Nhấn ENTER để chơi lại', W / 2, 153, 10, '#fff', 'center');
+  if (winT > 2) T(APP ? 'Nhấn A để sang Phần 2' : PAD ? 'Nhấn A để chơi lại' : 'Nhấn ENTER để chơi lại', W / 2, 153, 10, '#fff', 'center');
 }
 function render() {
   b.imageSmoothingEnabled = false;
@@ -1650,7 +1655,7 @@ async function loadFonts() {
     try { const data = await Switch.readFile('romfs:/VT323.ttf'); if (data) { const ff = new FontFace('VT323', data); if (ff.loaded && ff.loaded.catch) ff.loaded.catch(reportError); fonts.add(ff); } } catch (e) { reportError(e); }
     return;
   }
-  if (document.fonts) await document.fonts.load("16px 'VT323'").catch(() => {});
+  if (document.fonts) { await document.fonts.load("16px 'VT323'").catch(() => {}); if (APP && APP.lang === 'zh') await document.fonts.load("16px 'TrumboCJK'", '中').catch(() => {}); }
 }
 loadFonts().finally(() => {
   window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});

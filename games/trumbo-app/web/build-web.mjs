@@ -30,20 +30,31 @@ function common(s, n, title) {
   // page head: local font instead of Google Fonts, no zooming, chapter id for app.js
   s = s.replace(/<link rel="preconnect"[^>]*>\n/g, '');
   s = rep(s, '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap&subset=vietnamese">',
-    "<style>@font-face{font-family:'VT323';src:url(fonts/VT323.ttf) format('truetype');font-display:block}</style>", 'font link');
+    "<style>@font-face{font-family:'VT323';src:url(fonts/VT323.ttf) format('truetype');font-display:block}@font-face{font-family:'TrumboCJK';src:url(fonts/cjk.woff2) format('woff2');unicode-range:U+2E80-9FFF,U+F900-FAFF,U+FE30-FE4F,U+FF00-FFEF;size-adjust:78%;font-display:block}</style>", 'font link');
   s = rep(s, '<html lang="vi">', `<html lang="vi" data-chapter="${n}">`);
   s = rep(s, '<meta name="viewport" content="width=device-width,initial-scale=1">', '<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">');
-  s = s.replace(/<title>[^<]*<\/title>/, `<title>Anh Em Nhà Trumbo - ${title}</title>`);
-  s = rep(s, '<script>\n(() => {', '<script src="app.js"></script>\n<script>\n(() => {', 'game script');
+  s = s.replace(/<title>[^<]*<\/title>/, `<title>TRUMBO - ${title}</title>`);
+  s = rep(s, '<script>\n(() => {', '<script src="i18n.js"></script>\n<script src="app.js"></script>\n<script>\n(() => {', 'game script');
   // app mode flags
   const nx = "const NX = typeof Switch !== 'undefined' && typeof screen !== 'undefined' && typeof document === 'undefined';";
-  s = rep(s, nx, nx + "\n// APP = started from the Android app / home screen: touch controls and Bluetooth gamepads arrive as gamepads\nconst APP = (!NX && globalThis.TRUMBO_APP) || null, PAD = NX || !!APP;");
+  s = rep(s, nx, nx + "\n// APP = started from the Android app / home screen: touch controls and Bluetooth gamepads arrive as gamepads\nconst APP = (!NX && globalThis.TRUMBO_APP) || null, PAD = NX || !!APP;\n// TR: translate a visible text (English / Chinese) and put in the players' chosen names; TRL: same for dialog lines\nconst TR = s => APP ? APP.tr(s) : s, TRL = ls => APP ? ls.map(l => Object.assign({}, l, { text: TR(l.text) })) : ls, CJK = /[\\u2e80-\\u9fff\\uff00-\\uffef]/;");
   s = rep(s, 'const hasFocus = () => NX || document.hasFocus();', 'const hasFocus = () => NX || !!APP || document.hasFocus();');
   s = rep(s, '  if (!NX || !navigator.getGamepads) return;\n  const pads = Array.from(navigator.getGamepads()).filter(Boolean);',
     '  if (!NX && !APP) return;\n  const pads = (APP ? APP.pads() : Array.from(navigator.getGamepads())).filter(Boolean);', 'pollPads');
   // the first animation frame can be stamped slightly before the page's start time: never let game time run backwards
   s = rep(s, 'const dt = Math.min(0.05, (now - last) / 1000);', 'const dt = Math.max(0, Math.min(0.05, (now - last) / 1000));');
   s = padHints(s);
+  // all visible text goes through TR; Chinese text wraps per character
+  s = rep(s, '\n  if (banner) {\n', "\n  if (banner && state !== 'paused') {\n", 'banner under pause');
+  s = s.replace("const FONT = NX ? 'VT323' : \"'VT323', ui-monospace, monospace\";", "const FONT = NX ? 'VT323' : \"'VT323', 'TrumboCJK', ui-monospace, monospace\";");
+  s = rep(s, 'TQ.push([s, x, y, size, col, align, sh]);', 'TQ.push([TR(s), x, y, size, col, align, sh]);');
+  s = rep(s, 'return g.measureText(s).width / S;', 'return g.measureText(TR(s)).width / S;');
+  s = rep(s, "  const words = s.split(' '), lines = []; let cur = '';\n  for (const w of words) { const t = cur ? cur + ' ' + w : w; if (measure(t, size) > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }",
+    "  s = TR(s);\n  const cj = CJK.test(s), words = cj ? s.match(/[\\u2e80-\\u9fff\\uff00-\\uffef]|[^\\s\\u2e80-\\u9fff\\uff00-\\uffef]+|\\s+/g) : s.split(' '), lines = []; let cur = '';\n  for (const w of words) { const t = cur ? cur + (cj ? '' : ' ') + w : w; if (measure(t, size) > maxW && cur.trim()) { lines.push(cur.trim()); cur = w.trim() ? w : ''; } else cur = t; }\n  if (cj && cur) cur = cur.trim();", 'wrap');
+  s = s.replace(/dialog = \{ lines, i: 0/, 'dialog = { lines: TRL(lines), i: 0');
+  s = rep(s, 'left -= ln.length + 1;', 'left -= ln.length + (CJK.test(L.text) ? 0 : 1);');
+  s = s.split('${weaponName(p)}').join('${TR(weaponName(p))}');
+  s = rep(s, "if (document.fonts) await document.fonts.load(\"16px 'VT323'\").catch(() => {});", "if (document.fonts) { await document.fonts.load(\"16px 'VT323'\").catch(() => {}); if (APP && APP.lang === 'zh') await document.fonts.load(\"16px 'TrumboCJK'\", '中').catch(() => {}); }");
   s = s.split("'Tay cầm 1 là Trump, tay cầm 2 là Poly'").join("(APP && APP.touch ? 'Nửa trái màn hình: Trump · nửa phải: Poly' : 'Tay cầm 1 là Trump, tay cầm 2 là Poly')");
   return s;
 }
@@ -51,7 +62,7 @@ const appHooks = `Object.assign(APP, { gesture: initAudio, state: () => state, a
 
 // ---------------------------------------------------------------- Chương 1
 function chapter1(s) {
-  s = common(s, 1, 'Chương 1');
+  s = common(s, 1, 'Part 1');
   s = rep(s, "    case 'title':\n      playSong('title');", "    case 'title':\n      if (APP) { APP.home(); break; }\n      playSong('title');");
   s = rep(s, "      if (tap(['KeyQ'])) { state = 'title'; }", "      if (tap(['KeyQ'])) { state = 'title'; if (APP) APP.home(); }");
   s = rep(s, "      if (winT > 2 && tap(CONFIRM)) state = 'title';", "      if (winT > 2 && tap(CONFIRM)) { if (APP) { APP.save(1, null); APP.next(); } else state = 'title'; }");
@@ -67,14 +78,14 @@ function chapter1(s) {
 `);
   // win screen: the dragon takes them "home"... (Chương 2 shows what happens on the way)
   s = rep(s, "T('Hai anh em Trump & Poly cưỡi rồng bay về nhà!', W / 2, 38, 11, '#fff', 'center', '#4a1f6a');",
-    "T(APP ? 'HẾT CHƯƠNG 1 - Hỏa Long Vương chở hai anh em bay về nhà...' : 'Hai anh em Trump & Poly cưỡi rồng bay về nhà!', W / 2, 38, 11, '#fff', 'center', '#4a1f6a');");
-  s = rep(s, "T(PAD ? 'Nhấn A để chơi lại'", "T(APP ? 'Nhấn A để sang Chương 2' : PAD ? 'Nhấn A để chơi lại'");
+    "T(APP ? 'HẾT PHẦN 1 - Hỏa Long Vương chở hai anh em bay về nhà...' : 'Hai anh em Trump & Poly cưỡi rồng bay về nhà!', W / 2, 38, 11, '#fff', 'center', '#4a1f6a');");
+  s = rep(s, "T(PAD ? 'Nhấn A để chơi lại'", "T(APP ? 'Nhấn A để sang Phần 2' : PAD ? 'Nhấn A để chơi lại'");
   return s;
 }
 
 // ---------------------------------------------------------------- Chương 2 and 3 (same engine)
 function engine23(s, n) {
-  s = common(s, n, `Chương ${n}`);
+  s = common(s, n, `Part ${n}`);
   s = rep(s, "    case 'title': {", "    case 'title': {\n      if (APP) { APP.home(); break; }");
   s = rep(s, "if (tap(['KeyQ'])) { save(); saveData = loadSave(); state = 'title'; menuSel = 0; }", "if (tap(['KeyQ'])) { save(); saveData = loadSave(); state = 'title'; menuSel = 0; if (APP) APP.home(); }");
   s = rep(s, "case 'end': endT += dt; if (endT > 6 && tap(CONFIRM)) { saveData = null; state = 'title'; menuSel = 0; } break;",
@@ -111,8 +122,8 @@ function chapter2(s) {
     "    { who: 'narr', text: 'Ác Quỷ hét lên một tiếng rồi tan biến thành làn khói đen.' },\n" +
     line('demon', 'Ta... sẽ... quay lại...') +
     line('narr', 'Ngọc La Bàn khẽ lóe sáng rồi lại mờ đi. Lời nguyền vẫn chưa được phá hết.'));
-  s = rep(s, "T('TO BE CONTINUED...', W / 2, 46, 26, '#ffd23f', 'center', '#7a1f5a');", "T(APP ? 'HẾT CHƯƠNG 2' : 'TO BE CONTINUED...', W / 2, 46, 26, '#ffd23f', 'center', '#7a1f5a');");
-  s = rep(s, "T(PAD ? 'Nhấn A để về màn hình chính'", "T(APP ? 'Nhấn A để sang Chương 3' : PAD ? 'Nhấn A để về màn hình chính'");
+  s = rep(s, "T('TO BE CONTINUED...', W / 2, 46, 26, '#ffd23f', 'center', '#7a1f5a');", "T(APP ? 'HẾT PHẦN 2' : 'TO BE CONTINUED...', W / 2, 46, 26, '#ffd23f', 'center', '#7a1f5a');");
+  s = rep(s, "T(PAD ? 'Nhấn A để về màn hình chính'", "T(APP ? 'Nhấn A để sang Phần 3' : PAD ? 'Nhấn A để về màn hình chính'");
   return s;
 }
 
@@ -167,7 +178,7 @@ function drawFinalCard() {
   if (endT > 1) T('HẾT', W / 2, 52, 26, '#ffd23f', 'center', '#7a1f5a');
   if (endT > 1.8) T('CUỘC PHIÊU LƯU ANH EM NHÀ TRUMBO', W / 2, 80, 11, '#fff', 'center', '#4a1f6a');
   if (endT > 2.8) wrap('Ba anh em đã về nhà an toàn. Nhưng Ngọc La Bàn vẫn đang chỉ về một nơi rất xa...', 270, 10).forEach((l, i) => T(l, W / 2, 98 + i * 11, 10, '#e8dcff', 'center'));
-  if (endT > 4) T('Ý tưởng và kịch bản: Trump  ·  Cảm ơn bạn đã chơi!', W / 2, 128, 9, '#8fd6ff', 'center', null);
+  if (endT > 4) T('Ý tưởng và kịch bản: @AUTHOR@  ·  Cảm ơn bạn đã chơi!', W / 2, 128, 9, '#8fd6ff', 'center', null);
   if (endT > 6 && Math.floor(time * 2) % 2) T(PAD ? 'Nhấn A để về màn hình chính' : 'Nhấn ENTER để về màn hình chính', W / 2, 152, 10, '#fff', 'center', null);
 }
 function drawShop() {`);
@@ -181,6 +192,11 @@ for (const n of [1, 2, 3]) {
   writeFileSync(join(out, `ch${n}.html`), FN[n](src));
   console.log(`ch${n}.html`);
 }
+// translations: i18n/en.json and i18n/zh.json (keys are the Vietnamese originals) -> one script
+const dict = {};
+for (const l of ['en', 'zh']) { const f = join(here, 'i18n', `${l}.json`); dict[l] = existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : {}; }
+writeFileSync(join(out, 'i18n.js'), `// generated by build-web.mjs from i18n/*.json\nwindow.TRUMBO_I18N = ${JSON.stringify(dict)};\n`);
+for (const f of ['cjk.woff2', 'FusionPixel-OFL.txt']) if (existsSync(join(here, 'fonts', f))) copyFileSync(join(here, 'fonts', f), join(out, 'fonts', f));
 for (const f of ['index.html', 'app.js', 'privacy.html']) if (existsSync(join(here, f))) copyFileSync(join(here, f), join(out, f));
 const font = join(games, 'trumbo-3', 'switch', 'romfs');
 copyFileSync(join(font, 'VT323.ttf'), join(out, 'fonts', 'VT323.ttf'));

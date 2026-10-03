@@ -6,11 +6,6 @@
 // - Bluetooth gamepads, Android back button, pausing when the app goes to the background
 (() => {
 'use strict';
-const CHAPTERS = {
-  1: { file: 'ch1.html', label: 'CHƯƠNG 1', name: 'Đảo Rồng' },
-  2: { file: 'ch2.html', label: 'CHƯƠNG 2', name: 'Thành Phố Bị Lãng Quên' },
-  3: { file: 'ch3.html', label: 'CHƯƠNG 3', name: 'Thành Phố Thiên Đường' }
-};
 const KEY = 'trumbo-app-v1';
 const DEF = { unlocked: 1, current: 1, mode: 0, done: false };
 function loadProgress() { try { return Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { return Object.assign({}, DEF); } }
@@ -23,6 +18,73 @@ const mode = qs.get('mode') === '2' ? 2 : qs.get('mode') === '1' ? 1 : (prog.mod
 // how the chapter should start (new / continue): from the link, or from progress when a host drops the query string
 const startMode = qs.get('start') || prog.pending || 'new';
 if (prog.pending) { prog.pending = null; saveProgress(prog); }
+
+// ---------------- language and character names
+// lang: 'vi' (the original text), 'en' or 'zh'. Game text is translated with dictionaries keyed by the Vietnamese
+// original (i18n.js); patterns like "Ngọc {0}/5" cover text with numbers or names in it.
+function detectLang() {
+  const l = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+  return l.startsWith('vi') ? 'vi' : l.startsWith('zh') ? 'zh' : 'en';
+}
+const LANG = ['vi', 'en', 'zh'].includes(prog.lang) ? prog.lang : detectLang();
+const UI = {
+  vi: { part: n => `PHẦN ${n}`, parts: ['Đảo Rồng', 'Thành Phố Bị Lãng Quên', 'Thành Phố Thiên Đường'], homeQ: 'Về màn hình chính?', homeNote: 'Tiến độ được lưu ở đầu mỗi màn.', home: 'Về màn hình chính', stay: 'Chơi tiếp' },
+  en: { part: n => `PART ${n}`, parts: ['Dragon Island', 'The Lost City', 'Heavenly City'], homeQ: 'Back to the main menu?', homeNote: 'Progress is saved at the start of every stage.', home: 'Main menu', stay: 'Keep playing' },
+  zh: { part: n => `第${'一二三'[n - 1]}部`, parts: ['龙之岛', '失落之城', '天堂之城'], homeQ: '返回主菜单？', homeNote: '每一关开始时都会自动存档。', home: '返回主菜单', stay: '继续游戏' }
+};
+const CHAPTERS = {};
+for (const n of [1, 2, 3]) CHAPTERS[n] = { file: `ch${n}.html`, label: UI[LANG].part(n), name: UI[LANG].parts[n - 1] };
+const DEFAULT_NAMES = { trump: 'Trump', poly: 'Poly' };
+const names = Object.assign({}, DEFAULT_NAMES, prog.names || {});
+const customNames = names.trump !== 'Trump' || names.poly !== 'Poly';
+const DICT = LANG === 'vi' ? null : ((window.TRUMBO_I18N || {})[LANG] || null);
+const VIET = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+let patterns = null, lower = null;
+const escRe = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function compile() {
+  patterns = []; lower = new Map();
+  for (const k of Object.keys(DICT)) {
+    lower.set(k.toLowerCase(), DICT[k]);
+    if (!/\{\d\}/.test(k)) continue;
+    const parts = k.split(/\{(\d)\}/), order = []; let re = '^';
+    parts.forEach((p, i) => { if (i % 2) { re += '(.+?)'; order.push(+p); } else re += escRe(p); });
+    patterns.push({ re: new RegExp(re + '$', 's'), order, out: DICT[k], lit: k.replace(/\{\d\}/g, '').length });
+  }
+  patterns.sort((a, c) => c.lit - a.lit);
+}
+const missing = new Set();
+function look(s) {
+  if (!DICT || !s) return s;
+  if (DICT[s] != null) return DICT[s];
+  if (!patterns) compile();
+  const lo = lower.get(s.toLowerCase());
+  // upper-case variants of known text (stage names in banners, BOSS: NAME)
+  if (lo != null && s === s.toUpperCase()) return lo.toUpperCase();
+  for (const p of patterns) {
+    const m = p.re.exec(s);
+    if (m) { let o = p.out; p.order.forEach((idx, gi) => { o = o.split('{' + idx + '}').join(look(m[gi + 1])); }); return o; }
+  }
+  if (VIET.test(s)) missing.add(s);
+  return s;
+}
+function nameSub(s) {
+  if (customNames) {
+    s = s.replace(/\bTrump\b/g, names.trump).replace(/\bTRUMP\b/g, names.trump.toUpperCase())
+      .replace(/\bPoly\b/g, names.poly).replace(/\bPOLY\b/g, names.poly.toUpperCase());
+  }
+  return s.split('@AUTHOR@').join('Trump');
+}
+const trCache = new Map(), trDone = new Set();
+function tr(s) {
+  if (typeof s !== 'string' || trDone.has(s)) return s;
+  let r = trCache.get(s);
+  if (r === undefined) {
+    r = nameSub(look(s));
+    if (trCache.size > 4000) { trCache.clear(); trDone.clear(); }
+    trCache.set(s, r); trDone.add(r);
+  }
+  return r;
+}
 
 // ---------------- virtual gamepads (touch) merged with real gamepads
 // held = finger is on the button; latch = pressed since the last poll (a quick tap still counts for one frame)
@@ -53,7 +115,7 @@ function go(url) { APP.leaving = true; location.href = url; }
 function chapterUrl(n, start) { return `${CHAPTERS[n].file}?mode=${mode}&start=${start}`; }
 
 const APP = window.TRUMBO_APP = {
-  chapter, mode, touch, CHAPTERS,
+  chapter, mode, touch, CHAPTERS, lang: LANG, names, DEFAULT_NAMES, tr, missing, UI: UI[LANG],
   start: startMode,
   pads,
   progress: loadProgress,
@@ -103,7 +165,8 @@ function openConfirm() {
   if (confirmEl) return;
   confirmEl = document.createElement('div');
   confirmEl.className = 'tb-confirm';
-  confirmEl.innerHTML = '<div class="tb-box"><p>Về màn hình chính?</p><small>Tiến độ được lưu ở đầu mỗi màn.</small><div><button data-a="home">Về màn hình chính</button><button data-a="stay">Chơi tiếp</button></div></div>';
+  const u = UI[LANG];
+  confirmEl.innerHTML = `<div class="tb-box"><p>${u.homeQ}</p><small>${u.homeNote}</small><div><button data-a="home">${u.home}</button><button data-a="stay">${u.stay}</button></div></div>`;
   confirmEl.addEventListener('click', e => { const a = e.target.dataset && e.target.dataset.a; if (a === 'home') APP.home(); if (a === 'stay') closeConfirm(); });
   document.body.appendChild(confirmEl);
 }
@@ -180,7 +243,7 @@ function vibrate() { try { if (navigator.vibrate) navigator.vibrate(8); } catch 
 const CSS = `
 #game,#game:focus-visible{box-shadow:none!important;outline:none}
 html,body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
-#tc{position:fixed;inset:0;z-index:5;pointer-events:none;font-family:'VT323',monospace}
+#tc{position:fixed;inset:0;z-index:5;pointer-events:none;font-family:'VT323','TrumboCJK',monospace}
 #tc .tc-zone{position:absolute;bottom:0;height:78%;pointer-events:auto;touch-action:none}
 #tc.one .tc-zone.l{left:0;width:46%}
 #tc.two .tc-zone{height:40%}
@@ -205,11 +268,11 @@ html,body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-to
 .tc-btn.plus,.tc-btn.minus{top:1.5vh;width:min(11vh,8vw);height:min(11vh,8vw);font-size:min(7vh,5vw);border-radius:28%;opacity:.8}
 .tc-btn.plus{left:1vw}.tc-btn.minus{right:1vw}
 body.has-pad #tc{display:none}
-.tb-card{position:fixed;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;pointer-events:none;background:rgba(10,6,20,.82);transition:opacity 1s;font-family:'VT323',monospace;text-align:center}
+.tb-card{position:fixed;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;pointer-events:none;background:rgba(10,6,20,.82);transition:opacity 1s;font-family:'VT323','TrumboCJK',monospace;text-align:center}
 .tb-card b{display:block;font-size:min(9vh,7vw);color:#ffd23f;font-weight:normal;text-shadow:0 3px 0 #7a1f5a;letter-spacing:.05em}
 .tb-card span{display:block;font-size:min(13vh,9vw);color:#fff;text-shadow:0 3px 0 #4a1f6a}
 .tb-card.out{opacity:0}
-.tb-confirm{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:rgba(10,6,20,.7);font-family:'VT323',monospace}
+.tb-confirm{position:fixed;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:rgba(10,6,20,.7);font-family:'VT323','TrumboCJK',monospace}
 .tb-box{background:#1d1430;border:3px solid #f4e3c1;padding:3vh 4vw;text-align:center;color:#fff;max-width:80vw}
 .tb-box p{margin:0 0 1vh;font-size:min(8vh,6vw);color:#ffd23f}
 .tb-box small{display:block;font-size:min(5vh,4vw);color:#c9b8e8;margin-bottom:2vh}
